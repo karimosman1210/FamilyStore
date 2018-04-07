@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.example.osman.grandresturant.Sign">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/intentSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="300dp"
+            android:background="@drawable/input"
+            android:text="Sign In"
+            android:textColor="#8af26522"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="4dp"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Sign Up For Free"
+        android:textAlignment="center"
+        android:textColor="#9ff26522"
+        android:textSize="30sp"
+        android:fontFamily="casual"
+        android:textStyle="bold"
+
+        />
+
+    <EditText
+        android:id="@+id/nameEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/name"
+        android:hint="  your Name . . . "
+        android:padding="7dp"
+        android:textColor="@color/home"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp"
+        />
+    <EditText
+        android:id="@+id/phone_Et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/name"
+        android:hint="  your phone . . . "
+        android:padding="7dp"
+        android:textColor="@color/home"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp"
+        />
+    <EditText
+        android:id="@+id/category_Et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/name"
+        android:hint="  your Category . . . "
+        android:padding="7dp"
+        android:textColor="@color/home"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp"
+        />
+
+
+
+    <EditText
+        android:id="@+id/emailEtSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/ic_email"
+        android:hint="  Email "
+        android:padding="7dp"
+        android:textColor="@color/home"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp"
+
+
+        />
+
+
+    <EditText
+        android:id="@+id/passwordEtSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/ic_lock_outline"
+        android:hint="  Password "
+        android:inputType="textPassword"
+        android:padding="7dp"
+        android:textColor="@color/home"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/surepassSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/ic_lock_outline"
+        android:hint="  Re-Type password "
+        android:inputType="textPassword"
+        android:textColor="@color/home"
+        android:padding="7dp"
+        android:textColorHint="#A6B9CA"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/signUpBtnSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btninput"
+        android:fontFamily="serif"
+        android:text="Sign Up"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="22sp" />
+
+
+</LinearLayout>

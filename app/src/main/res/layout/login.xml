@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7ffffff"
+
+    android:orientation="vertical"
+    tools:context="com.example.osman.grandresturant.Login">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login Form"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:textColor="#b8f26522"
+        android:textStyle="bold"
+        android:fontFamily="casual"
+        android:layout_marginTop="50dp" />
+
+    <EditText
+    android:layout_marginTop="50dp"
+        android:id="@+id/emailEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/ic_email"
+        android:hint="  Email "
+        android:padding="7dp"
+        android:textColor="#000"
+        android:textColorHint="#A6B9CA"
+        android:textSize="20sp"
+        android:layout_gravity="center" />
+
+
+    <EditText
+        android:id="@+id/passwordEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/input"
+        android:drawableStart="@drawable/ic_lock_outline"
+        android:hint="  Password "
+        android:layout_gravity="center"
+        android:inputType="textPassword"
+        android:padding="7dp"
+        android:textColor="#000"
+        android:textColorHint="#A6B9CA"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/btninput"
+        android:fontFamily="serif"
+        android:text="Log IN"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="No Account yet? Creat One"
+        android:textColor="#A6B9CA"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+
+
+        />
+
+
+</LinearLayout>
