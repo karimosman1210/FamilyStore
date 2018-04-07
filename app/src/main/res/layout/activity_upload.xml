@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:fontFamily="casual"
-        android:text="اضف aaaaaaaaaaaaa"
+        android:text="اضف aaaaaaaaaaaa"
         android:textAlignment="center"
         android:textColor="#9ff26522"
         android:textSize="24sp"
