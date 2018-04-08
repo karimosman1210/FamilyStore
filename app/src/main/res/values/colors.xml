@@ -5,5 +5,11 @@
     <color name="colorAccent">#FF4081</color>
     <color name="home">#304560</color>
     <color name="Default">#F37235</color>
+    <color name="white">#ffffff</color>
+    <color name="priceColor">#2063ff</color>
+    <color name="textItemColor">#898989</color>
+    <color name="uploadItemEditeTextColor">#000</color>
+    <color name="colorCardView">#ffffff</color>
+    <color name="colorView">#d9d9d9</color>
 
 </resources>

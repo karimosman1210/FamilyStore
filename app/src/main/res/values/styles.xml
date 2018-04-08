@@ -18,4 +18,16 @@
         <item name="color">#b8f26522</item>
     </style>
 
+
+
+        <!-- Base application theme. -->
+
+
+        <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+
 </resources>

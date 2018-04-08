@@ -1,6 +1,7 @@
 package com.example.osman.grandresturant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,13 @@ ArrayList<Item_recycle> arrayList;
 
             imageView=(ImageView)itemView.findViewById(R.id.iv_item_category);
             textView=(TextView)itemView.findViewById(R.id.tv_item_category);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    context.startActivity(new Intent(context, ItemsRecycler.class));
+                }
+            });
 
 
         }

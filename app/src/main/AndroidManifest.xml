@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
         <activity android:name=".Sign" />
         <activity android:name=".DrawLayout">
             <intent-filter>
@@ -18,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VistorType"></activity>
-        <activity android:name=".Activity_upload"></activity>
+        <activity android:name=".VistorType" />
+        <activity android:name=".Activity_upload" />
+        <activity android:name=".ItemScreen" />
+        <activity android:name=".ItemsRecycler"></activity>
     </application>
 
 </manifest>
