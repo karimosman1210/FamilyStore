@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -89,6 +90,8 @@ String User_Type   , myEmail;
         }
         else {
 
+            HelperMethods.showDialog(Sign.this, "Wait...","Create new user");
+
             auth.createUserWithEmailAndPassword(myEmail,myPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -110,6 +113,7 @@ String User_Type   , myEmail;
                             currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
                             currentuser_db.child("country").setValue(user_country.getText().toString());
                             currentuser_db.child("profile_image").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
+                            HelperMethods.hideDialog(Sign.this);
 
                             Toast.makeText(Sign.this, "Signed Up Successfully", Toast.LENGTH_SHORT).show();
 

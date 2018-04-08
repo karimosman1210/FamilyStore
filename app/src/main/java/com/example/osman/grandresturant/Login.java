@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -89,6 +90,7 @@ public class Login extends AppCompatActivity {
         if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPassword)) {
             Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
         } else {
+            HelperMethods.showDialog(Login.this, "Wait...","Create new user");
             auth.signInWithEmailAndPassword(myEmail, myPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -98,6 +100,7 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(Login.this, "email or password is incorrect", Toast.LENGTH_SHORT).show();
 
                     }
+                    HelperMethods.hideDialog(Login.this);
 
                 }
             });
