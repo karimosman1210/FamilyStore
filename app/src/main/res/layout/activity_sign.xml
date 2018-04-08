@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,181 +7,240 @@
     android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.Sign">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-    </LinearLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btns_layout"
+        android:paddingTop="50dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/input"
-            android:gravity="right"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-            <RadioGroup
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:padding="20dp"
-                android:layout_gravity="right"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/radio_user"
-                    android:layout_width="0dp"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_weight="1"
-                    android:layoutDirection="rtl"
-                    android:text="مستخدم"
-                    android:onClick="onRadioButtonClicked"
-                    android:textAlignment="textStart"
-                  />
+                    android:padding="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/input"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="right"
+                            android:orientation="horizontal"
+                            android:padding="20dp"
+                            android:weightSum="2">
 
 
-                <RadioButton
-                    android:id="@+id/radio_company"
-                    android:layout_width="0dp"
+                            <RadioButton
+                                android:id="@+id/radio_user"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_weight="1"
+                                android:layoutDirection="rtl"
+                                android:onClick="onRadioButtonClicked"
+                                android:text="مستخدم"
+                                android:textAlignment="textStart" />
+
+
+                            <RadioButton
+                                android:id="@+id/radio_company"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_weight="1"
+                                android:layoutDirection="rtl"
+                                android:onClick="onRadioButtonClicked"
+                                android:text="تاجر"
+                                android:textAlignment="textStart" />
+                        </RadioGroup>
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/nameEt"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layoutDirection="rtl"
-                    android:textAlignment="textStart"
-                    android:layout_gravity="start"
-                    android:onClick="onRadioButtonClicked"
-                    android:text="تاجر" />
-            </RadioGroup>
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/name"
+                    android:hint="  your Name . . . "
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/phone_Et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/name"
+                    android:hint="  your phone . . . "
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/country_Et"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/name"
+                    android:hint="  your Country . . . "
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
 
 
-        </RelativeLayout>
+                <EditText
+                    android:id="@+id/emailEtSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/ic_email"
+                    android:hint="  Email "
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp"
+
+
+                    />
+
+
+                <EditText
+                    android:id="@+id/passwordEtSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/ic_lock_outline"
+                    android:hint="  Password "
+                    android:inputType="textPassword"
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/surepassSignUp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/input"
+                    android:drawableStart="@drawable/ic_lock_outline"
+                    android:hint="  Re-Type password "
+                    android:inputType="textPassword"
+                    android:padding="7dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
     </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/nameEt"
+    <LinearLayout
+        android:id="@+id/btns_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/name"
-        android:hint="  your Name . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:weightSum="2">
 
-    <EditText
-        android:id="@+id/phone_Et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/name"
-        android:hint="  your phone . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/country_Et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="22dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/name"
-        android:hint="  your Country . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
+            <Button
+                android:id="@+id/signUpBtnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btninputcancel"
+                android:fontFamily="serif"
+                android:text="Cancel"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#000"
+                android:textSize="22sp" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-    <EditText
-        android:id="@+id/emailEtSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/ic_email"
-        android:hint="  Email "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp"
+            <Button
+                android:id="@+id/signUpBtnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/btninput"
+                android:fontFamily="serif"
+                android:text="Sign Up"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 
-        />
-
-
-    <EditText
-        android:id="@+id/passwordEtSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/ic_lock_outline"
-        android:hint="  Password "
-        android:inputType="textPassword"
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/surepassSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/input"
-        android:drawableStart="@drawable/ic_lock_outline"
-        android:hint="  Re-Type password "
-        android:inputType="textPassword"
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/signUpBtnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/btninput"
-        android:fontFamily="serif"
-        android:text="Sign Up"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#fff"
-        android:textSize="22sp" />
-
-
-</LinearLayout>
+</RelativeLayout>

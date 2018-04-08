@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -46,7 +47,7 @@ public class DrawLayout extends AppCompatActivity implements NavigationView.OnNa
     DatabaseReference databaseReference;
     ArrayList<Item_recycle> arrayList;
     ImageButton imageButton;
-
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,16 @@ public class DrawLayout extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.drawlayout);
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.mytoolpar);
         //setSupportActionBar(toolbar);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DrawLayout.this, "Go to Upload screen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mydraw);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_cat);
         imageButton = (ImageButton) findViewById(R.id.add_adsIb);
