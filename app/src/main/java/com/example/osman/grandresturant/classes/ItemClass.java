@@ -12,9 +12,10 @@ public class ItemClass {
 
     ;
 
-   private String ID, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price, UploadedTime , UserID , UserName , UserEmail , UserNumber , UserImage  ;
+   private String ID, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber , UserImage  ;
+    private long UploadedTime;
 
-    public ItemClass(String ID, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String uploadedTime, String userID, String userName, String userEmail, String userNumber, String userImage) {
+    public ItemClass(String ID, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String userID, String userName, String userEmail, String userNumber, String userImage, long uploadedTime) {
         this.ID = ID;
         Name = name;
         this.image = image;
@@ -23,12 +24,12 @@ public class ItemClass {
         ItemType = itemType;
         PlaceLocation = placeLocation;
         Price = price;
-        UploadedTime = uploadedTime;
         UserID = userID;
         UserName = userName;
         UserEmail = userEmail;
         UserNumber = userNumber;
         UserImage = userImage;
+        UploadedTime = uploadedTime;
     }
 
     public String getID() {
@@ -95,14 +96,6 @@ public class ItemClass {
         Price = price;
     }
 
-    public String getUploadedTime() {
-        return UploadedTime;
-    }
-
-    public void setUploadedTime(String uploadedTime) {
-        UploadedTime = uploadedTime;
-    }
-
     public String getUserID() {
         return UserID;
     }
@@ -141,5 +134,13 @@ public class ItemClass {
 
     public void setUserImage(String userImage) {
         UserImage = userImage;
+    }
+
+    public long getUploadedTime() {
+        return UploadedTime;
+    }
+
+    public void setUploadedTime(long uploadedTime) {
+        UploadedTime = uploadedTime;
     }
 }

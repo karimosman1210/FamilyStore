@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,160 +7,223 @@
     android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.Activity_upload">
 
-
-    <TextView
-        android:id="@+id/image_button"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/tow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="casual"
-        android:text="اضف اعلانك"
-        android:textAlignment="center"
-        android:textColor="#9ff26522"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <ImageButton
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_gravity="center"
-        android:background="@drawable/upload_icon"
-        android:src="@drawable/placeholder"
-        />
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/one"
+        android:layout_below="@+id/tow">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/image_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="casual"
+                android:text="اضف اعلانك"
+                android:textAlignment="center"
+                android:textColor="#9ff26522"
+                android:textSize="24sp"
+                android:textStyle="bold"
+
+                />
+
+            <ImageButton
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center"
+                android:background="@drawable/upload_icon"
+                android:id="@+id/image_new_item"
+                android:src="@drawable/placeholder" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/type_design_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="اختار قسم المنتج "
+                        android:textColorHint="#05ab9a" />
+                </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/et_upload_title"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/country_design_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="اختار المحافظة "
+                        android:textColorHint="#05ab9a" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_upload_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/input"
+                    android:hint="العنوان"
+                    android:padding="7dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_upload_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/input"
+                    android:hint="أسم المنتج"
+                    android:padding="7dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_upload_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/input"
+                    android:hint="التفاصيل"
+                    android:padding="7dp"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_upload_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input"
+                    android:hint="  السعر "
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/home"
+                    android:textColorHint="#A6B9CA"
+                    android:textSize="18sp"
+
+
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/one"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp">
 
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-        android:hint="  Title . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <Spinner
-        android:id="@+id/spinner_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-        android:padding="20dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp">
-
-    </Spinner>
+        <Button
+            android:id="@+id/upload_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btninput"
+            android:fontFamily="serif"
+            android:text="أضافة المنتج"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="22sp" />
+    </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/et_upload_description"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-        android:hint="  Description . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="100"
-        android:layout_marginTop="5dp"
-        >
-
-    <EditText
-        android:id="@+id/et_upload_price"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="50"
-        android:background="@drawable/input"
-        android:hint="  price  . . . "
-        android:inputType="number"
-        android:padding="10dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp"
-
-
-        />
-
-
-    <Spinner
-        android:id="@+id/et_uplaod_location"
-        android:layout_weight="50"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/input"
-        android:hint="  Location . . . "
-        android:padding="22dp"
-
-
-        />
-    </LinearLayout>
-    <EditText
-        android:id="@+id/et_upload_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-        android:hint="  Name . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/et_upload_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-
-        android:hint="  phone Number . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/et_upload_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="5dp"
-        android:background="@drawable/input"
-        android:hint="  Email . . . "
-        android:padding="7dp"
-        android:textColor="@color/home"
-        android:textColorHint="#A6B9CA"
-        android:textSize="18sp" />
-    <Button
-        android:id="@+id/upload_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="10dp"
-        android:background="@drawable/btninput"
-        android:fontFamily="serif"
-        android:text="upload"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="#fff"
-        android:textSize="22sp" />
-
-
-</LinearLayout>
+</RelativeLayout>

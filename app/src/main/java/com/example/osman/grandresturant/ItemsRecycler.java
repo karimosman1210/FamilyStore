@@ -58,7 +58,7 @@ public class ItemsRecycler extends AppCompatActivity {
                 viewHolder.setItemName(model.getName());
                 viewHolder.setItemImage(model.getImage());
                 viewHolder.setPlace(model.getCountryLocation());
-                viewHolder.setItemType(model.getItemType());
+               /* viewHolder.setItemType(model.getItemType());*/
                 viewHolder.setPrice(model.getPrice());
                 viewHolder.setUserName(model.getUserName());
 
@@ -67,6 +67,7 @@ public class ItemsRecycler extends AppCompatActivity {
                     public void onClick(View view) {
 
                         HelperMethods.items_recycler_name = model.getName();
+                        HelperMethods.items_recycler_image = model.getImage();
                         HelperMethods.items_recycler_desc = model.getDescription();
                         HelperMethods.items_recycler_place = model.getPlaceLocation();
                         HelperMethods.items_recycler_price = model.getPrice();
@@ -104,7 +105,7 @@ public class ItemsRecycler extends AppCompatActivity {
             item_name = (TextView) view.findViewById(R.id.item_recycler_name);
             item_price = (TextView) view.findViewById(R.id.item_recycler_price);
             item_place = (TextView) view.findViewById(R.id.item_recycler_place);
-            item_type = (TextView) view.findViewById(R.id.item_recycler_type);
+//            item_type = (TextView) view.findViewById(R.id.item_recycler_type);
             item_user_name = (TextView) view.findViewById(R.id.item_recycler_user_name);
             item_image = (ImageView) view.findViewById(R.id.item_recycler_image);
 
@@ -130,10 +131,7 @@ public class ItemsRecycler extends AppCompatActivity {
             item_user_name.setText(userName);
         }
 
-        public void setItemType(String type) {
 
-            item_type.setText(type);
-        }
 
         public void setItemImage(String image) {
             Glide.with(view.getContext()).load(image).fitCenter().into(item_image);

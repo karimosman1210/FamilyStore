@@ -316,13 +316,17 @@
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/item_screen_add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="أضف الى السله" />
+            android:text="أضف الى السله"
+            android:background="@drawable/btninput"
+            android:fontFamily="serif"
+            android:textSize="25dp"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -3,10 +3,12 @@ package com.example.osman.grandresturant;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,14 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +43,7 @@ public class DrawLayout extends AppCompatActivity implements NavigationView.OnNa
     ArrayList<Item_recycle> arrayList;
     ImageButton imageButton;
     FloatingActionButton fab;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,45 +56,23 @@ public class DrawLayout extends AppCompatActivity implements NavigationView.OnNa
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(DrawLayout.this, "Go to Upload screen", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(DrawLayout.this, Activity_upload.class);
+                startActivity(intent);
             }
         });
-        
+
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.mydraw);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_cat);
-        imageButton = (ImageButton) findViewById(R.id.add_adsIb);
+
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         navigationView = (NavigationView) findViewById(R.id.myNav);
         navigationView.setNavigationItemSelectedListener(this);
         auth = FirebaseAuth.getInstance();
-        loginTv = (TextView) findViewById(R.id.loginTv);
-        if (auth.getCurrentUser() == null) {
-            loginTv.setVisibility(View.VISIBLE);
-        }
-        if(auth.getCurrentUser()!=null){
-            imageButton.setVisibility(View.VISIBLE);
-        }
 
-        loginTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DrawLayout.this, Login.class));
-                finish();
-            }
-        });
 
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent=new Intent(DrawLayout.this,Activity_upload.class);
-                startActivity(intent);
-
-            }
-        });
         arrayList = new ArrayList<>();
 
         final Adapter_category adapter = new Adapter_category(this, arrayList);
@@ -144,12 +118,39 @@ public class DrawLayout extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.logOut) {
             auth.signOut();
             finish();
-            startActivity(new Intent(getApplicationContext(), DrawLayout.class));
+            startActivity(new Intent(getApplicationContext(), Login.class));
 
             Toast.makeText(this, "Logout Done ", Toast.LENGTH_SHORT).show();
 
         }
 
         return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.mydraw);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (doubleBackToExitPressedOnce) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        }
     }
 }

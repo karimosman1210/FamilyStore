@@ -8,6 +8,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ItemScreen extends AppCompatActivity {
 
     TextView Item_name, Item_country, Item_place, Item_time, Item_price, Item_desc, user_name, user_number, user_mail;
@@ -27,13 +31,18 @@ public class ItemScreen extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.item_screen_company_name);
         user_number = (TextView) findViewById(R.id.item_screen_company_number);
         user_mail = (TextView) findViewById(R.id.item_screen_company_mail);
-        user_image = (ImageView) findViewById(R.id.item_screen_item_img);
-        Item_image = (ImageView) findViewById(R.id.item_screen_company_image);
+        Item_image= (ImageView) findViewById(R.id.item_screen_item_img);
+        user_image = (ImageView) findViewById(R.id.item_screen_company_image);
 
         Item_name.setText(HelperMethods.items_recycler_name);
         Item_country.setText(HelperMethods.items_recycler_country);
         Item_place.setText(HelperMethods.items_recycler_place);
-        Item_time.setText(HelperMethods.items_recycler_Time);
+
+
+
+        long timestamp = Long.parseLong(String.valueOf(HelperMethods.items_recycler_Time)) * 1000L;
+        Item_time.setText(getDate(timestamp));
+
         Item_price.setText(HelperMethods.items_recycler_price);
         Item_desc.setText(HelperMethods.items_recycler_desc);
         user_name.setText(HelperMethods.items_recycler_user_name);
@@ -44,4 +53,16 @@ public class ItemScreen extends AppCompatActivity {
         Glide.with(ItemScreen.this).load(HelperMethods.items_recycler_image).fitCenter().into(Item_image);
 
     }
+
+    private String getDate(long timeStamp) {
+
+        try {
+            DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+            Date netDate = (new Date(timeStamp));
+            return sdf.format(netDate);
+        } catch (Exception ex) {
+            return "xx";
+        }
+    }
+
 }

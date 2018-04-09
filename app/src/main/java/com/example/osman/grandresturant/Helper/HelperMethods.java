@@ -27,7 +27,7 @@ public class HelperMethods {
     public static String items_recycler_user_email;
     public static String items_recycler_user_number;
     public static String items_recycler_user_Image;
-    public static String items_recycler_Time;
+    public static long items_recycler_Time;
     public static String items_recycler_desc;
 
 

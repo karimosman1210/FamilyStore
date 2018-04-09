@@ -2,7 +2,10 @@ package com.example.osman.grandresturant;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -90,7 +93,7 @@ public class Login extends AppCompatActivity {
         if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPassword)) {
             Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
         } else {
-            HelperMethods.showDialog(Login.this, "Wait...","Create new user");
+            HelperMethods.showDialog(Login.this, "Wait...", "Create new user");
             auth.signInWithEmailAndPassword(myEmail, myPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -106,6 +109,16 @@ public class Login extends AppCompatActivity {
             });
 
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
 
     }
 }
