@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +22,18 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ItemsRecycler extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
+    ImageView secrchItem;
+    LinearLayout barsearch;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case android.R.id.home:
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +45,24 @@ public class ItemsRecycler extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        secrchItem=(ImageView)findViewById(R.id.secrchItem);
+        barsearch=(LinearLayout)findViewById(R.id.barsearch);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
+        secrchItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                barsearch.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
+
 
 
     }

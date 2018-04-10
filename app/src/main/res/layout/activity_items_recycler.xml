@@ -1,91 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.osman.grandresturant.ItemsRecycler"
-        android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.osman.grandresturant.ItemsRecycler">
 
-        <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            app:cardElevation="6dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:background="#fff"
+                android:theme="@style/Custom_Humborer">
 
-        </android.support.design.widget.AppBarLayout>
-        <View
+                <ImageButton
+                    android:id="@+id/secrchItem"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="140dp"
+                    android:background="@drawable/search_icon"
+                    android:foregroundGravity="right" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.CardView>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/home_SwipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="10dp" />
-        <android.support.v4.widget.SwipeRefreshLayout
             android:layout_height="match_parent"
-            android:id="@+id/home_SwipeRefreshLayout"
-            android:layout_width="match_parent">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:orientation="vertical"
+                android:id="@+id/barsearch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="10"
-                    android:padding="10dp"
-                    android:background="@color/colorPrimary">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:weightSum="10">
 
-                    <EditText
-                        android:layout_width="0dp"
-                        android:layout_height="40dp"
-                        android:layout_weight="8"
-                        android:background="@color/white"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:hint="What are you looking for ?"/>
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:background="@color/colorAccent"
-                        android:layout_height="40dp"
-                        android:layout_weight="2">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_magnify_white_48dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"/>
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/white"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="8"
+                    android:background="@color/white"
+                    android:hint="What are you looking for ?"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="2"
+                    android:background="@color/Default"
 
-                   >
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/item_recycler_view"
-                        android:scrollbars="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_magnify_white_48dp" />
+
                 </RelativeLayout>
 
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/item_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:scrollbars="vertical" />
+            </RelativeLayout>
 
-    </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

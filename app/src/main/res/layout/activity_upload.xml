@@ -7,20 +7,7 @@
     android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.Activity_upload">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/tow"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,19 +20,38 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/image_button"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="casual"
-                android:text="اضف اعلانك"
-                android:textAlignment="center"
-                android:textColor="#9ff26522"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                app:cardElevation="6dp"
+                >
 
-                />
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:theme="@style/Custom_Humborer"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                android:id="@+id/toolUp">
+
+                <TextView
+                    android:id="@+id/image_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="اضف اعلانك"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:layout_marginRight="28dp"
+                    android:textColor="#9ff26522"
+                    android:textSize="24sp"
+                    android:paddingTop="3dp"
+                    />
+            </android.support.v7.widget.Toolbar>
+            </android.support.v7.widget.CardView>
+
 
             <ImageButton
                 android:layout_width="130dp"
@@ -53,7 +59,10 @@
                 android:layout_gravity="center"
                 android:background="@drawable/upload_icon"
                 android:id="@+id/image_new_item"
-                android:src="@drawable/placeholder" />
+                android:src="@drawable/placeholder"
+                android:layout_marginTop="10dp"
+                android:scaleType="centerInside"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,12 +79,16 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/input">
 
+
+
                     <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
                         android:id="@+id/type_design_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="اختار قسم المنتج "
-                        android:textColorHint="#05ab9a" />
+                        android:textColorHint="#05ab9a"
+
+                        />
                 </RelativeLayout>
 
 

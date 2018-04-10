@@ -93,7 +93,7 @@ public class Login extends AppCompatActivity {
         if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPassword)) {
             Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
         } else {
-            HelperMethods.showDialog(Login.this, "Wait...", "Create new user");
+            HelperMethods.showDialog(Login.this, "Wait...", "loOoading data");
             auth.signInWithEmailAndPassword(myEmail, myPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

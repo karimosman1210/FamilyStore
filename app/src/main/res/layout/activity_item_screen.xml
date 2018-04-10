@@ -4,23 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.example.osman.grandresturant.ItemScreen">
+    tools:context="com.example.osman.grandresturant.ItemScreen"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/tow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="6dp">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/itemToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorAccent"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:background="#fff"
+            android:theme="@style/Custom_Humborer"
 
+            app:contentInsetStartWithNavigation="0dp">
+
+        </android.support.v7.widget.Toolbar>
+     </android.support.v7.widget.CardView>
     </android.support.design.widget.AppBarLayout>
 
 
@@ -36,7 +46,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
 
@@ -48,8 +58,10 @@
                     <ImageView
                         android:id="@+id/item_screen_item_img"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:scaleType="centerCrop" />
+                        android:layout_height="200dp"
+                        android:layout_margin="10dp"
+                        android:layout_marginBottom="6dp"
+                        android:scaleType="centerInside" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -70,7 +82,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="المكان" />
+                            android:text="المكان"
+                            android:textSize="17sp" />
 
                     </RelativeLayout>
 
@@ -86,7 +99,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:text="المدينة" />
+                            android:text="المدينة"
+                            android:textSize="17sp" />
 
                     </RelativeLayout>
                 </LinearLayout>
@@ -108,15 +122,33 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/item_screen_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:text="السعر"
-                            android:textColor="#001aff" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:id="@+id/item_screen_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="100dp"
+                                android:text="السعر"
+                                android:textColor="@color/Default"
+                                android:textSize="17sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:text="LE"
+                                android:textSize="17sp"
+                    />
+
+                        </LinearLayout>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -154,7 +186,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:text="الأسم" />
+                        android:text="الأسم"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
 
@@ -189,21 +222,24 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
+                    android:layout_above="@+id/btn_click"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="45dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="5dp">
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
+                        android:background="@drawable/input"
                         android:text="بيانات التاجر"
-                        android:textSize="25dp"
-
+                        android:textSize="25sp"
+                        android:layout_marginTop="22dp"
+                        android:padding="10dp"
                         />
-
                 </RelativeLayout>
 
                 <View
@@ -213,14 +249,12 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    android:layout_height="wrap_content">
 
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginTop="8dp"
                         app:cardElevation="2dp"
                         app:cardUseCompatPadding="true">
 
@@ -250,7 +284,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="الأسم"
-                                        android:textSize="20dp" />
+                                        android:textSize="20dp"
+                                        android:layout_marginRight="11dp"/>
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -265,7 +300,8 @@
                                         android:id="@+id/item_screen_company_mail"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="الأميل" />
+                                        android:text="الأميل"
+                                        android:layout_marginRight="11dp"/>
 
                                 </RelativeLayout>
 
@@ -281,7 +317,8 @@
                                         android:id="@+id/item_screen_company_number"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="الأميل" />
+                                        android:text="الرقم"
+                                        android:layout_marginRight="11dp"/>
 
                                 </RelativeLayout>
 

@@ -3,11 +3,12 @@ package com.example.osman.grandresturant;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,11 +17,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +35,7 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.util.ArrayList;
 
 public class Activity_upload extends AppCompatActivity {
-
+    Toolbar toolUp;
     EditText place, title, price, description, phone, email;
     Spinner location;
     Button upload;
@@ -49,7 +50,7 @@ public class Activity_upload extends AppCompatActivity {
     String ID, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UploadedTime, UserID, UserName, UserEmail, UserNumber, UserImage;
     ImageButton imgebtn;
     private static final int RUSLET_LOAD_IMAGE = 1;
-    static Uri image_item ;
+    static Uri image_item;
     private StorageReference mStorageReference;
     private DatabaseReference mDatabase;
 
@@ -58,6 +59,11 @@ public class Activity_upload extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolUp);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         mAuth = FirebaseAuth.getInstance();
         String id = mAuth.getCurrentUser().getUid();
@@ -208,8 +214,12 @@ public class Activity_upload extends AppCompatActivity {
         imgebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Intent open = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(open, RUSLET_LOAD_IMAGE);
+
+
             }
         });
 
@@ -219,9 +229,7 @@ public class Activity_upload extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
-
-                if (image_item == null|| TextUtils.isEmpty(price.getText()) || TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) || TextUtils.isEmpty(place.getText()) || TextUtils.isEmpty(CountryLocation) || TextUtils.isEmpty(ItemType) ) {
+                if (image_item == null || TextUtils.isEmpty(price.getText()) || TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) || TextUtils.isEmpty(place.getText()) || TextUtils.isEmpty(CountryLocation) || TextUtils.isEmpty(ItemType)) {
 
 
                     Toast.makeText(Activity_upload.this, "أكمل التفاصيل ", Toast.LENGTH_SHORT).show();
@@ -230,7 +238,7 @@ public class Activity_upload extends AppCompatActivity {
 
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                    HelperMethods.showDialog(Activity_upload.this , "Please Wait" , "Uploading...");
+                    HelperMethods.showDialog(Activity_upload.this, "Please Wait", "Uploading...");
 
                     StorageReference filepath = mStorageReference.child("Photos").child(image_item.getLastPathSegment());
                     filepath.putFile(image_item).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -260,7 +268,7 @@ public class Activity_upload extends AppCompatActivity {
                             databaseReference.child("ItemType").setValue(ItemType);
                             HelperMethods.hideDialog(Activity_upload.this);
                             Toast.makeText(Activity_upload.this, "Added", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Activity_upload.this , DrawLayout.class));
+                            startActivity(new Intent(Activity_upload.this, DrawLayout.class));
 
 
                         }
@@ -271,20 +279,30 @@ public class Activity_upload extends AppCompatActivity {
                 }
 
 
-
             }
         });
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri selectedimage = data.getData();
-        imgebtn.setImageURI(selectedimage);
-        image_item = selectedimage;
+        try {
 
-
+            Uri selectedimage = data.getData();
+            imgebtn.setImageURI(selectedimage);
+            image_item = selectedimage;
+        } catch (Exception e) {
+        }
     }
 }

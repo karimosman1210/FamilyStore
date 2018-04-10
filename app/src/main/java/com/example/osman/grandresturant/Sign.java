@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 public class Sign extends AppCompatActivity {
-    Button signUpBtnSignUp;
+    Button signUpBtnSignUp,signUpBtnCancel;
     EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile, user_country;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener listener;
@@ -39,10 +39,16 @@ public class Sign extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
-
+        signUpBtnCancel=(Button)findViewById(R.id.signUpBtnCancel);
         Country = (MaterialBetterSpinner) findViewById(R.id.sign_in_spinner);
         CountrySpinnerAdapter = new ArrayAdapter<String>(Sign.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
         Country.setAdapter(CountrySpinnerAdapter);
+        signUpBtnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,6 +65,7 @@ public class Sign extends AppCompatActivity {
         surepassSignUp = (EditText) findViewById(R.id.surepassSignUp);
         nameEt = (EditText) findViewById(R.id.nameEt);
         user_mobile = (EditText) findViewById(R.id.phone_Et);
+
 
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");

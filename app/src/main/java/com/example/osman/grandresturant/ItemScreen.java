@@ -2,8 +2,13 @@ package com.example.osman.grandresturant;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
@@ -16,11 +21,24 @@ public class ItemScreen extends AppCompatActivity {
 
     TextView Item_name, Item_country, Item_place, Item_time, Item_price, Item_desc, user_name, user_number, user_mail;
     ImageView user_image, Item_image;
+    Button item_screen_add_btn;
+    android.support.v7.widget.Toolbar itemToolbar;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home :
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_screen);
+        item_screen_add_btn=(Button)findViewById(R.id.item_screen_add_btn);
 
         Item_name = (TextView) findViewById(R.id.item_screen_name);
         Item_country = (TextView) findViewById(R.id.item_screen_country);
@@ -37,7 +55,17 @@ public class ItemScreen extends AppCompatActivity {
         Item_name.setText(HelperMethods.items_recycler_name);
         Item_country.setText(HelperMethods.items_recycler_country);
         Item_place.setText(HelperMethods.items_recycler_place);
+        itemToolbar=findViewById(R.id.itemToolbar);
 
+        setSupportActionBar(itemToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ItemScreen.this, "تم الاضافه الي السله  (Test)", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         long timestamp = Long.parseLong(String.valueOf(HelperMethods.items_recycler_Time)) * 1000L;
