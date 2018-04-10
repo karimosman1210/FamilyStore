@@ -5,32 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.osman.grandresturant.ItemScreen"
-    >
+    tools:context="com.example.osman.grandresturant.ItemScreen">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/tow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        >
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="6dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/itemToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#fff"
-            android:theme="@style/Custom_Humborer"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/itemToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#fff"
+                android:theme="@style/Custom_Humborer"
 
-            app:contentInsetStartWithNavigation="0dp">
+                app:contentInsetStartWithNavigation="0dp">
 
-        </android.support.v7.widget.Toolbar>
-     </android.support.v7.widget.CardView>
+            </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.CardView>
     </android.support.design.widget.AppBarLayout>
 
 
@@ -125,28 +123,31 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:gravity="right"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/item_screen_price"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginLeft="100dp"
-                                android:text="السعر"
-                                android:textColor="@color/Default"
-                                android:textSize="17sp"
-                                android:textStyle="bold" />
+                                android:text="   جنيه مصرى"
+                                android:textSize="17sp" />
 
-                            <TextView
-
-                                android:layout_width="match_parent"
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="8dp"
-                                android:text="LE"
-                                android:textSize="17sp"
-                    />
+                                android:paddingLeft="20pd">
+
+                                <TextView
+                                    android:id="@+id/item_screen_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="السعر"
+                                    android:textColor="@color/Default"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
 
                         </LinearLayout>
                     </RelativeLayout>
@@ -224,22 +225,19 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/btn_click"
                     android:layout_alignParentStart="true"
-                    android:layout_marginStart="45dp"
                     android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    >
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/input"
-                        android:text="بيانات التاجر"
-                        android:textSize="25sp"
                         android:layout_marginTop="22dp"
+                        android:background="@drawable/input"
                         android:padding="10dp"
-                        />
+                        android:text="بيانات التاجر"
+                        android:textSize="25sp" />
                 </RelativeLayout>
 
                 <View
@@ -269,6 +267,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="5"
                                 android:orientation="vertical"
+                                android:paddingBottom="10dp"
+                                android:paddingTop="10dp"
                                 android:weightSum="3">
 
                                 <RelativeLayout
@@ -283,9 +283,9 @@
                                         android:id="@+id/item_screen_company_name"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginRight="11dp"
                                         android:text="الأسم"
-                                        android:textSize="20dp"
-                                        android:layout_marginRight="11dp"/>
+                                        android:textSize="20dp" />
                                 </RelativeLayout>
 
                                 <RelativeLayout
@@ -300,8 +300,8 @@
                                         android:id="@+id/item_screen_company_mail"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="الأميل"
-                                        android:layout_marginRight="11dp"/>
+                                        android:layout_marginRight="11dp"
+                                        android:text="الأميل" />
 
                                 </RelativeLayout>
 
@@ -317,8 +317,8 @@
                                         android:id="@+id/item_screen_company_number"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="الرقم"
-                                        android:layout_marginRight="11dp"/>
+                                        android:layout_marginRight="11dp"
+                                        android:text="الرقم" />
 
                                 </RelativeLayout>
 
@@ -334,7 +334,7 @@
                                 <ImageView
                                     android:id="@+id/item_screen_company_image"
                                     android:layout_width="match_parent"
-                                    android:layout_height="170dp" />
+                                    android:layout_height="140dp" />
                             </RelativeLayout>
 
 
@@ -353,17 +353,17 @@
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:padding="20dp">
 
         <Button
             android:id="@+id/item_screen_add_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="أضف الى السله"
             android:background="@drawable/btninput"
             android:fontFamily="serif"
-            android:textSize="25dp"/>
+            android:text="أضف الى السله"
+            android:textSize="25dp" />
     </RelativeLayout>
 
 </RelativeLayout>
