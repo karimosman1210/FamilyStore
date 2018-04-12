@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#c9b3b3b3</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#c9e9e9e9</color>
+    <color name="colorAccent">#b8f26522</color>
     <color name="home">#304560</color>
     <color name="Default">#F37235</color>
     <color name="white">#ffffff</color>
@@ -11,5 +12,7 @@
     <color name="uploadItemEditeTextColor">#000</color>
     <color name="colorCardView">#ffffff</color>
     <color name="colorView">#d9d9d9</color>
+    <color name="colorBackGround">#d9d9d9</color>
+    <color name="orange">#b8f26522</color>
 
 </resources>

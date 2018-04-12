@@ -268,7 +268,7 @@ public class Activity_upload extends AppCompatActivity {
                             databaseReference.child("ItemType").setValue(ItemType);
                             HelperMethods.hideDialog(Activity_upload.this);
                             Toast.makeText(Activity_upload.this, "Added", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Activity_upload.this, DrawLayout.class));
+                            startActivity(new Intent(Activity_upload.this, HomeScreen.class));
 
 
                         }

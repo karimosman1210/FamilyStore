@@ -63,8 +63,19 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/shopping_icon"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/imageView" />
+                        android:layout_alignParentEnd="true"
+                        android:id="@+id/home_shopping" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textSize="20dp"
+                        android:text="تسجيل الدخول"
+                        android:textStyle="bold"
+                        android:id="@+id/home_login_btn"
+                        android:layout_alignParentEnd="true"/>
+
                 </RelativeLayout>
             </RelativeLayout>
 

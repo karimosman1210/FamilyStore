@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_company_Search"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Search" />
+        <item
+            android:id="@+id/nav_company_New_Requests"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="New Requests" />
+        <item
+            android:id="@+id/nav_company_My_Requests"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="My Requests" />
+        <item
+            android:id="@+id/nav_company_My_Ads"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="My Ads" />
+        <item
+            android:id="@+id/nav_company_favorite_Ads"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="favorite Ads" />
+
+        <item
+            android:id="@+id/nav_company_FeedBack"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="FeedBack" />
+        <item
+            android:id="@+id/nav_company_Abouts_Us"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Abouts Us" />
+        <item
+            android:id="@+id/nav_company_Edite_Profile"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Edite Profile" />
+        <item
+            android:id="@+id/nav_company_Log_Out"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Log Out" />
+    </group>
+
+
+
+</menu>
