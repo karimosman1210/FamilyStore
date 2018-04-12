@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:allowBackup="true"
@@ -12,14 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Login" />
         <activity android:name=".Sign" />
         <activity android:name=".VistorType" />
         <activity android:name=".Activity_upload" />
         <activity android:name=".ItemScreen" />
-        <activity android:name=".ItemsRecycler">
-
-        </activity>
+        <activity android:name=".ItemsRecycler"></activity>
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
@@ -30,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SallersRecycler"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,6 +28,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,6 +44,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +57,7 @@ public class HomeScreen extends AppCompatActivity
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private DatabaseReference mDatabase ;
+    private DatabaseReference mDatabase;
 
     NavigationView navigationView;
     TextView Country_choose;
@@ -60,12 +71,12 @@ public class HomeScreen extends AppCompatActivity
     ImageView image_shopping;
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
-    MaterialBetterSpinner  Country;
-    ArrayAdapter<String>  CountrySpinnerAdapter;
+    MaterialBetterSpinner Country;
+    ArrayAdapter<String> CountrySpinnerAdapter;
     SwipeRefreshLayout swipeRefreshLayout;
     public static GridLayoutManager gridLayoutManager;
     ArrayList<Item_recycle> arrayList;
-    String ItemType;
+    String ItemType , location_dinamec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +92,7 @@ public class HomeScreen extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.home_screen_card_recycler_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
-
+        arrayList = new ArrayList<>();
 
         Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
         CountrySpinnerAdapter = new ArrayAdapter<String>(HomeScreen.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
@@ -98,34 +109,12 @@ public class HomeScreen extends AppCompatActivity
         });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         login_textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(HomeScreen.this, Login.class));
             }
         });
-
-        item_list = new ArrayList<ItemClass>();
-        item_list.clear();
-
-
 
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -142,15 +131,6 @@ public class HomeScreen extends AppCompatActivity
                 }, 2000);
             }
         });
-
-
-
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(dividerItemDecoration);
 
         mAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -224,13 +204,24 @@ public class HomeScreen extends AppCompatActivity
         toggle.syncState();
 
 
-
-
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(dividerItemDecoration);
         navigationView.setNavigationItemSelectedListener(this);
 
+        loadData();
 
-        arrayList = new ArrayList<>();
 
+
+
+    }
+
+
+    public void loadData() {
+        HelperMethods.showDialog(HomeScreen.this, "Wait", "Loading data...");
         final Adapter_category adapter = new Adapter_category(this, arrayList);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Category");
@@ -250,6 +241,7 @@ public class HomeScreen extends AppCompatActivity
                     arrayList.add(new Item_recycle(name, image, id));
                     adapter.notifyDataSetChanged();
                 }
+                HelperMethods.hideDialog(HomeScreen.this);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(new GridLayoutManager(HomeScreen.this, 2));
 
@@ -261,6 +253,39 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest("http://ip-api.com/json", new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                for (int i = 0; i < response.length(); i++) {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(i);
+
+                        location_dinamec=   jsonObject.getString("city");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        HelperMethods.hideDialog(HomeScreen.this);
+
+                    }
+
+                }
+
+                Country_choose.setText(location_dinamec);
+                Toast.makeText(HomeScreen.this, "your location is "+ Country_choose , Toast.LENGTH_SHORT).show();
+                HelperMethods.hideDialog(HomeScreen.this);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("Volley", error.toString());
+                HelperMethods.hideDialog(HomeScreen.this);
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
 
     }
 
@@ -319,15 +344,17 @@ public class HomeScreen extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_Search) {
-            // Handle the camera action
+        if (id == R.id.nav_Sallers) {
+            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
         } else if (id == R.id.nav_AboutUs) {
 
         } else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
-        } else if (id == R.id.nav_company_Search) {
+        } else if (id == R.id.nav_company_sallers) {
+
+            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
 
         } else if (id == R.id.nav_company_New_Requests) {
 
@@ -348,7 +375,8 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, Login.class));
 
 
-        } else if (id == R.id.nav_User_Search) {
+        } else if (id == R.id.nav_User_Sallers) {
+            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
 
         } else if (id == R.id.nav_User_My_Requests) {
 
