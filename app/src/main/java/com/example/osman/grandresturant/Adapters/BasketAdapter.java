@@ -1,4 +1,4 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.classes.Encaps_Basket;
+import com.example.osman.grandresturant.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

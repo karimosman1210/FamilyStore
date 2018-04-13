@@ -1,4 +1,4 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.classes;
 
 /**
  * Created by Abdel Rahman on 06-Apr-18.

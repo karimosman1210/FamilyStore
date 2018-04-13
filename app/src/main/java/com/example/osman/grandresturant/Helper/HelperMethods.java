@@ -8,7 +8,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 
-import com.example.osman.grandresturant.Encaps_Basket;
+import com.example.osman.grandresturant.classes.Encaps_Basket;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,10 @@ public class HelperMethods {
 
 
 
-    public static String itemPostion;
+    public static String categoryName;
+    public static String sallerID;
     public static String User_id;
+    public static String delete_ads_id;
 
 
     public static ArrayList<Encaps_Basket>encaps_baskets=new ArrayList<>();

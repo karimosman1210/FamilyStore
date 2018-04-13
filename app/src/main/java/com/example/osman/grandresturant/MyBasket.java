@@ -1,13 +1,12 @@
 package com.example.osman.grandresturant;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.osman.grandresturant.Adapters.BasketAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
-import com.example.osman.grandresturant.classes.ItemClass;
 
 public class MyBasket extends AppCompatActivity {
 RecyclerView recycleBasket;

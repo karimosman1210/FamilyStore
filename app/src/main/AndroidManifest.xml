@@ -23,7 +23,7 @@
         <activity android:name=".ItemScreen" />
         <activity android:name=".ItemsRecycler"></activity>
         <activity
-            android:name=".HomeScreen"
+            android:name="com.example.osman.grandresturant.HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -35,7 +35,7 @@
         <activity android:name=".SallersRecycler"></activity>
         <activity android:name=".MyBasket"></activity>
         <activity android:name=".UserProfile"></activity>
-
+        <activity android:name=".MyAds"></activity>
     </application>
 
 </manifest>

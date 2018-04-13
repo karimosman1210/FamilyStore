@@ -1,4 +1,4 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.classes.Item_recycle;
+import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.SallersRecycler;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +43,9 @@ ArrayList<Item_recycle> arrayList;
                 @Override
                 public void onClick(View view) {
 
-                    context.startActivity(new Intent(context, ItemsRecycler.class));
+                    int postion = getLayoutPosition();
+                    HelperMethods.categoryName = arrayList.get(postion).getName();
+                    context.startActivity(new Intent(context, SallersRecycler.class));
                 }
             });
 
@@ -60,7 +66,6 @@ View v= LayoutInflater.from(context).inflate(R.layout.item_recycle_category,pare
 
         Item_recycle item_recycle=arrayList.get(position);
         holder.textView.setText(item_recycle.getName());
-
         Picasso.with(context).load(item_recycle.getImage()).into(holder.imageView);
     }
 

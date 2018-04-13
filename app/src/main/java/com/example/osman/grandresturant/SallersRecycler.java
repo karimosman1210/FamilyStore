@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.osman.grandresturant.classes.ItemClass;
+import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -63,7 +63,7 @@ public class SallersRecycler extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(SallersRecycler.holder viewHolder, final SallersClass model, int position) {
-
+                final String key_post = getRef(position).getKey();
                 viewHolder.setItemName(model.getUsername());
                 viewHolder.setLocation(model.getCountry());
                 viewHolder.setNumber(model.getMobile());
@@ -74,8 +74,8 @@ public class SallersRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-
-                        startActivity(new Intent(SallersRecycler.this , ItemScreen.class));
+                        HelperMethods.sallerID = key_post;
+                        startActivity(new Intent(SallersRecycler.this , ItemsRecycler.class));
 
                     }
                 });

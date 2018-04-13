@@ -18,7 +18,7 @@
         <item
             android:id="@+id/nav_company_My_Ads"
             android:icon="@drawable/ic_menu_camera"
-            android:title="My Ads" />
+            android:title="منتجاتى" />
         <item
             android:id="@+id/nav_company_favorite_Ads"
             android:icon="@drawable/ic_menu_manage"

@@ -10,10 +10,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.classes.Encaps_Basket;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +41,9 @@ public class ItemScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_screen);
+        itemToolbar=findViewById(R.id.itemToolbar);
+        setSupportActionBar(itemToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         item_screen_add_btn=(Button)findViewById(R.id.item_screen_add_btn);
         basketButn=(ImageButton)findViewById(R.id.basketButn);
         Item_name = (TextView) findViewById(R.id.item_screen_name);
@@ -59,10 +62,9 @@ public class ItemScreen extends AppCompatActivity {
         Item_name.setText(HelperMethods.items_recycler_name);
         Item_country.setText(HelperMethods.items_recycler_country);
         Item_place.setText(HelperMethods.items_recycler_place);
-        itemToolbar=findViewById(R.id.itemToolbar);
 
-        setSupportActionBar(itemToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override

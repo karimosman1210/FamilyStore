@@ -1,7 +1,5 @@
 package com.example.osman.grandresturant;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,23 +9,26 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Adapters.ItemsAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.ItemClass;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ItemsRecycler extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
     ImageView secrchItem;
+    ArrayList<ItemClass> arrayList;
     LinearLayout barsearch;
+    DatabaseReference databaseReference;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,7 +52,8 @@ public class ItemsRecycler extends AppCompatActivity {
 
         secrchItem = (ImageView) findViewById(R.id.secrchItem);
         barsearch = (LinearLayout) findViewById(R.id.barsearch);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+        arrayList = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -65,108 +67,65 @@ public class ItemsRecycler extends AppCompatActivity {
             }
         });
 
-
+        loadData();
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseRecyclerAdapter<ItemClass, holder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ItemClass, holder>(
-                ItemClass.class,
-                R.layout.item_details,
-                holder.class,
-                mDatabaseReference
-        ) {
+    public void loadData() {
+        HelperMethods.showDialog(ItemsRecycler.this, "Wait", "Loading data...");
+        final ItemsAdapter adapter = new ItemsAdapter(this, arrayList);
+
+
+        databaseReference.orderByChild("UserID").equalTo(HelperMethods.sallerID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void populateViewHolder(holder viewHolder, final ItemClass model, int position) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                viewHolder.setItemName(model.getName());
-                viewHolder.setItemImage(model.getImage());
-                viewHolder.setPlace(model.getCountryLocation());
-               /* viewHolder.setItemType(model.getItemType());*/
-                viewHolder.setPrice(model.getPrice());
-                viewHolder.setUserName(model.getUserName());
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
 
-                viewHolder.view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    final String key_post = dataSnapshot.getKey();
 
-                        HelperMethods.items_recycler_name = model.getName();
-                        HelperMethods.items_recycler_image = model.getImage();
-                        HelperMethods.items_recycler_desc = model.getDescription();
-                        HelperMethods.items_recycler_place = model.getPlaceLocation();
-                        HelperMethods.items_recycler_price = model.getPrice();
-                        HelperMethods.items_recycler_type = model.getItemType();
-                        HelperMethods.items_recycler_country = model.getCountryLocation();
-                        HelperMethods.items_recycler_Time = model.getUploadedTime();
-                        HelperMethods.items_recycler_user_Image = model.getUserImage();
-                        HelperMethods.items_recycler_user_name = model.getUserName();
-                        HelperMethods.items_recycler_user_email = model.getUserEmail();
-                        HelperMethods.items_recycler_user_number = model.getUserNumber();
 
-                        startActivity(new Intent(ItemsRecycler.this, ItemScreen.class));
+                    if (Objects.equals(data.child("ItemType").getValue().toString(), HelperMethods.categoryName)){
 
+                        String Name = data.child("Name").getValue().toString();
+                        String image = data.child("image").getValue().toString();
+                        String CountryLocation = data.child("CountryLocation").getValue().toString();
+                        String Description = data.child("Description").getValue().toString();
+                        String ItemType = data.child("ItemType").getValue().toString();
+                        String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                        String Price = data.child("Price").getValue().toString();
+                        String UserID = data.child("UserID").getValue().toString();
+                        String UserName = data.child("UserName").getValue().toString();
+                        String UserEmail = data.child("UserEmail").getValue().toString();
+                        String UserNumber = data.child("UserNumber").getValue().toString();
+                        String UserImage = data.child("UserImage").getValue().toString();
+                        long UploadedTime = (long) data.child("UploadedTime").getValue();
+
+                        arrayList.add(new ItemClass( key_post,  Name,  image,  CountryLocation,  Description,  ItemType, PlaceLocation,  Price,  UserID,  UserName,  UserEmail,  UserNumber,  UserImage,  UploadedTime));
+                        adapter.notifyDataSetChanged();
                     }
-                });
+                    else {}
+
+
+
+
+
+
+
+
+                }
+                HelperMethods.hideDialog(ItemsRecycler.this);
+                recyclerView.setAdapter(adapter);
+
 
             }
-        };
 
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-    }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-    public static class holder extends RecyclerView.ViewHolder {
+            }
+        });
 
-        View view;
-        ImageView item_image,favoritBtn;
-        TextView item_name, item_price, item_type, item_place, item_user_name;
-
-        ArrayList<Encaps_Basket> listbaskets=new ArrayList<>();
-        public holder(View itemView) {
-            super(itemView);
-            view = itemView;
-
-            item_name = (TextView) view.findViewById(R.id.item_recycler_name);
-            item_price = (TextView) view.findViewById(R.id.item_recycler_price);
-            item_place = (TextView) view.findViewById(R.id.item_recycler_place);
-//            item_type = (TextView) view.findViewById(R.id.item_recycler_type);
-            item_user_name = (TextView) view.findViewById(R.id.item_recycler_user_name);
-            item_image = (ImageView) view.findViewById(R.id.item_recycler_image);
-            favoritBtn=(ImageView)view.findViewById(R.id.favoritBtn);
-            favoritBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(view.getContext(), "", Toast.LENGTH_SHORT).show();
-                    
-                }
-            });
-        }
-
-        public void setItemName(String name) {
-
-            item_name.setText(name);
-        }
-
-        public void setPrice(String price) {
-
-            item_price.setText(price);
-        }
-
-        public void setPlace(String place) {
-
-            item_place.setText(place);
-        }
-
-        public void setUserName(String userName) {
-
-            item_user_name.setText(userName);
-        }
-
-
-        public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).fitCenter().into(item_image);
-        }
 
     }
 }
