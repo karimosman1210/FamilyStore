@@ -13,21 +13,19 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 
     </style>
+
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
-        <item name="spinBars"> true </item>
+        <item name="spinBars">true</item>
         <item name="color">#b8f26522</item>
     </style>
 
 
-
-        <!-- Base application theme. -->
-
-
-        <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-        <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- Base application theme. -->
 
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

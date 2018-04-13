@@ -24,13 +24,19 @@
                 android:background="#fff"
                 android:theme="@style/Custom_Humborer">
 
-                <ImageButton
-                    android:id="@+id/secrchItem"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="140dp"
-                    android:background="@drawable/search_icon"
-                    android:foregroundGravity="right" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:paddingRight="10dp"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:id="@+id/secrchItem"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/search_icon"
+                       />
+                </RelativeLayout>
 
             </android.support.v7.widget.Toolbar>
         </android.support.v7.widget.CardView>
