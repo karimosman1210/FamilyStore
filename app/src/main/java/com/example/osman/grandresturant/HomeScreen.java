@@ -63,7 +63,7 @@ public class HomeScreen extends AppCompatActivity
     TextView Country_choose;
     boolean doubleBackToExitPressedOnce = false;
     FloatingActionButton fab;
-    public static List<ItemClass> item_list;
+    public static List<ItemClass> item_list = new ArrayList<>();
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;

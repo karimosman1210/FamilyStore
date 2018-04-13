@@ -1,10 +1,12 @@
 package com.example.osman.grandresturant;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class ItemScreen extends AppCompatActivity {
     ImageView user_image, Item_image;
     Button item_screen_add_btn;
     android.support.v7.widget.Toolbar itemToolbar;
+    ImageButton basketButn;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -39,7 +42,7 @@ public class ItemScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_screen);
         item_screen_add_btn=(Button)findViewById(R.id.item_screen_add_btn);
-
+        basketButn=(ImageButton)findViewById(R.id.basketButn);
         Item_name = (TextView) findViewById(R.id.item_screen_name);
         Item_country = (TextView) findViewById(R.id.item_screen_country);
         Item_place = (TextView) findViewById(R.id.item_screen_place);
@@ -52,6 +55,7 @@ public class ItemScreen extends AppCompatActivity {
         Item_image= (ImageView) findViewById(R.id.item_screen_item_img);
         user_image = (ImageView) findViewById(R.id.item_screen_company_image);
 
+
         Item_name.setText(HelperMethods.items_recycler_name);
         Item_country.setText(HelperMethods.items_recycler_country);
         Item_place.setText(HelperMethods.items_recycler_place);
@@ -63,6 +67,17 @@ public class ItemScreen extends AppCompatActivity {
         item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String name=HelperMethods.items_recycler_name;
+                String price=HelperMethods.items_recycler_price;
+                String nameCompany=HelperMethods.items_recycler_user_name;
+                String place=HelperMethods.items_recycler_place;
+                String image=HelperMethods.items_recycler_image;
+
+                Encaps_Basket encaps_basket=new Encaps_Basket(name,image,price,nameCompany,place);
+                HelperMethods.encaps_baskets.add(encaps_basket);
+
+
                 Toast.makeText(ItemScreen.this, "تم الاضافه الي السله  (Test)", Toast.LENGTH_SHORT).show();
             }
         });
@@ -80,7 +95,21 @@ public class ItemScreen extends AppCompatActivity {
         Glide.with(ItemScreen.this).load(HelperMethods.items_recycler_user_Image).fitCenter().into(user_image);
         Glide.with(ItemScreen.this).load(HelperMethods.items_recycler_image).fitCenter().into(Item_image);
 
+        basketButn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Intent intent = new Intent(ItemScreen.this,MyBasket.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
+
+
 
     private String getDate(long timeStamp) {
 

@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SallersRecycler"></activity>
+        <activity android:name=".MyBasket"></activity>
+
     </application>
 
 </manifest>

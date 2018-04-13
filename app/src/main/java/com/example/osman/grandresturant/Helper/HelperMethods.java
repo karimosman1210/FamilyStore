@@ -8,14 +8,21 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.net.Uri;
 
+import com.example.osman.grandresturant.Encaps_Basket;
+
+import java.util.ArrayList;
+
 
 public class HelperMethods {
+
+
+
 
     public static String itemPostion;
     public static String User_id;
 
 
-
+    public static ArrayList<Encaps_Basket>encaps_baskets=new ArrayList<>();
     public static String items_recycler_id;
     public static String items_recycler_name;
     public static String items_recycler_type;
