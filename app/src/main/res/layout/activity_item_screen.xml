@@ -28,6 +28,13 @@
             android:theme="@style/Custom_Humborer"
 
             app:contentInsetStartWithNavigation="0dp">
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/shopping_icon"
+                android:layout_marginLeft="200dp"
+                android:id="@+id/basketButn"
+                />
 
         </android.support.v7.widget.Toolbar>
      </android.support.v7.widget.CardView>
@@ -367,6 +374,7 @@
             android:fontFamily="serif"
             android:textSize="25dp"
             android:textColor="#fff"
+
             />
     </RelativeLayout>
 

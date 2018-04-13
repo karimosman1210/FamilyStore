@@ -1,8 +1,9 @@
 package com.example.osman.grandresturant;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
@@ -18,6 +20,8 @@ import com.example.osman.grandresturant.classes.ItemClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class ItemsRecycler extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -28,9 +32,9 @@ public class ItemsRecycler extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
-            finish();
+                finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -45,8 +49,8 @@ public class ItemsRecycler extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        secrchItem=(ImageView)findViewById(R.id.secrchItem);
-        barsearch=(LinearLayout)findViewById(R.id.barsearch);
+        secrchItem = (ImageView) findViewById(R.id.secrchItem);
+        barsearch = (LinearLayout) findViewById(R.id.barsearch);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -60,9 +64,6 @@ public class ItemsRecycler extends AppCompatActivity {
 
             }
         });
-
-
-
 
 
     }
@@ -104,7 +105,7 @@ public class ItemsRecycler extends AppCompatActivity {
                         HelperMethods.items_recycler_user_email = model.getUserEmail();
                         HelperMethods.items_recycler_user_number = model.getUserNumber();
 
-                        startActivity(new Intent(ItemsRecycler.this , ItemScreen.class));
+                        startActivity(new Intent(ItemsRecycler.this, ItemScreen.class));
 
                     }
                 });
@@ -117,12 +118,11 @@ public class ItemsRecycler extends AppCompatActivity {
 
     public static class holder extends RecyclerView.ViewHolder {
 
-
         View view;
-        ImageView item_image;
+        ImageView item_image,favoritBtn;
         TextView item_name, item_price, item_type, item_place, item_user_name;
 
-
+        ArrayList<Encaps_Basket> listbaskets=new ArrayList<>();
         public holder(View itemView) {
             super(itemView);
             view = itemView;
@@ -133,7 +133,14 @@ public class ItemsRecycler extends AppCompatActivity {
 //            item_type = (TextView) view.findViewById(R.id.item_recycler_type);
             item_user_name = (TextView) view.findViewById(R.id.item_recycler_user_name);
             item_image = (ImageView) view.findViewById(R.id.item_recycler_image);
-
+            favoritBtn=(ImageView)view.findViewById(R.id.favoritBtn);
+            favoritBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(view.getContext(), "", Toast.LENGTH_SHORT).show();
+                    
+                }
+            });
         }
 
         public void setItemName(String name) {
@@ -155,7 +162,6 @@ public class ItemsRecycler extends AppCompatActivity {
 
             item_user_name.setText(userName);
         }
-
 
 
         public void setItemImage(String image) {

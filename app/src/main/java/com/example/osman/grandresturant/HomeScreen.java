@@ -370,13 +370,15 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_company_Edite_Profile) {
 
+            startActivity(new Intent(HomeScreen.this, UserProfile.class));
+
+
         } else if (id == R.id.nav_company_Log_Out) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
 
         } else if (id == R.id.nav_User_Sallers) {
-            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
 
         } else if (id == R.id.nav_User_My_Requests) {
 
