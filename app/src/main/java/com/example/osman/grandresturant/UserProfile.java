@@ -1,13 +1,23 @@
 package com.example.osman.grandresturant;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -16,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.osman.grandresturant.classes.Model_user;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +35,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class UserProfile extends AppCompatActivity {
     EditText phoneEditProfile, countryEditProfile, emailEditProfile, password_old, password_new, password_new2;
@@ -35,6 +51,10 @@ public class UserProfile extends AppCompatActivity {
     DatabaseReference database;
     ProgressBar myProgress;
     LinearLayout linear_password;
+
+    private static final int RUSLET_LOAD_IMAGE = 1;
+    static Uri image_item;
+    private StorageReference mStorageReference;
 
 
     @Override
@@ -56,6 +76,18 @@ public class UserProfile extends AppCompatActivity {
         imageButton = (ImageButton) findViewById(R.id.imagebutton_user);
         linear_password = (LinearLayout) findViewById(R.id.Linear_password);
         change_password = (TextView) findViewById(R.id.change_password);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent open = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(open, RUSLET_LOAD_IMAGE);
+
+
+            }
+        });
+
 
         change_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,8 +121,7 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View v) {
                 if (linear_password.getVisibility() == View.VISIBLE) {
                     change();
-                }
-else                 if (!password_new2.getText().toString().isEmpty()) {
+                } else if (!password_new2.getText().toString().isEmpty()) {
 
                 } else {
 
@@ -107,7 +138,7 @@ else                 if (!password_new2.getText().toString().isEmpty()) {
                             String phone = phoneEditProfile.getText().toString().trim();
                             String country = countryEditProfile.getText().toString().trim();
                             String email = emailEditProfile.getText().toString().trim();
-
+                        // database.child(id_user).child("profile_image").setValue(imageUri.toString());
                             database.child(id_user).child("country").setValue(country);
                             database.child(id_user).child("username").setValue(email);
                             database.child(id_user).child("mobile").setValue(phone);
@@ -135,6 +166,9 @@ else                 if (!password_new2.getText().toString().isEmpty()) {
             }
 
         });
+
+
+
 
 
     }
@@ -166,5 +200,26 @@ else                 if (!password_new2.getText().toString().isEmpty()) {
             Toast.makeText(this, "اعد كتابه الباسورد صحيح", Toast.LENGTH_SHORT).show();
         }
     }
+    @Override
+    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
 
+
+        if (resultCode == RESULT_OK) {
+            try {
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imageButton.setImageBitmap(selectedImage);
+                database.child(auth.getCurrentUser().getUid()).child("profile_image").setValue(imageUri.toString());
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(UserProfile.this, "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(UserProfile.this, "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+    }
 }
