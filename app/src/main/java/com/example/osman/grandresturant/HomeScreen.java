@@ -1,12 +1,19 @@
 package com.example.osman.grandresturant;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,8 +47,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class HomeScreen extends AppCompatActivity
@@ -68,8 +77,13 @@ public class HomeScreen extends AppCompatActivity
     SwipeRefreshLayout swipeRefreshLayout;
     public static GridLayoutManager gridLayoutManager;
     ArrayList<Item_recycle> arrayList;
-    String ItemType , location_dinamec;
+    String ItemType,  countryName1;
+    static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+    double latti;
+    double longi;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +100,49 @@ public class HomeScreen extends AppCompatActivity
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
 
+
+
+
+        Geocoder geocoder = new Geocoder(HomeScreen.this, Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latti, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            assert addresses != null;
+
+
+
+            countryName1    = addresses.get(0).getAdminArea();
+
+            Country_choose.setText(countryName1);
+
+
+            if(countryName1.contains(" ")){
+                countryName1= countryName1.substring(0, countryName1.indexOf(" "));
+                System.out.println(countryName1);
+            }
+
+
+        } catch (Exception e) {
+        }
+
+
+
+
+
+
+
+
+
         Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
         CountrySpinnerAdapter = new ArrayAdapter<String>(HomeScreen.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
         Country.setAdapter(CountrySpinnerAdapter);
+
 
         Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -186,6 +240,8 @@ public class HomeScreen extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
+                startActivity(new Intent(HomeScreen.this, Activity_upload.class));
+
             }
         });
 
@@ -207,8 +263,6 @@ public class HomeScreen extends AppCompatActivity
         loadData();
 
 
-
-
     }
 
 
@@ -225,16 +279,12 @@ public class HomeScreen extends AppCompatActivity
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
+                    String name = data.child("name").getValue().toString();
+                    String image = data.child("image").getValue().toString();
+                    String id = data.child("id").getValue().toString();
 
-                        String name = data.child("name").getValue().toString();
-                        String image = data.child("image").getValue().toString();
-                        String id = data.child("id").getValue().toString();
-
-                        arrayList.add(new Item_recycle(name, image, id));
-                        adapter.notifyDataSetChanged();
-
-
-
+                    arrayList.add(new Item_recycle(name, image, id));
+                    adapter.notifyDataSetChanged();
 
 
                 }
@@ -309,7 +359,7 @@ public class HomeScreen extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Sallers) {
-            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
+            startActivity(new Intent(HomeScreen.this, SallersRecycler.class));
         } else if (id == R.id.nav_AboutUs) {
 
         } else if (id == R.id.nav_Login) {
@@ -318,7 +368,7 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_company_sallers) {
 
-            startActivity(new Intent(HomeScreen.this , SallersRecycler.class));
+            startActivity(new Intent(HomeScreen.this, SallersRecycler.class));
 
         } else if (id == R.id.nav_company_New_Requests) {
 
@@ -381,4 +431,47 @@ public class HomeScreen extends AppCompatActivity
             mAuth.removeAuthStateListener(mAuthStateListener);
         }
     }
-}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case REQUEST_LOCATION:
+                getLocation();
+                break;
+        }
+    }
+
+
+    void getLocation() {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null) {
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+
+
+                String total2 = Double.toString(latti);
+                String total = Double.toString(longi);
+
+                Toast.makeText(this, total2 + total, Toast.LENGTH_SHORT).show();
+
+            }
+            else {
+
+            }
+        }
+
+    }
