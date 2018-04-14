@@ -15,14 +15,22 @@
             android:layout_height="200dp"
             android:scaleType="centerInside"
             android:src="@drawable/backdraw11" />
-
+<ImageButton
+    android:layout_width="100dp"
+    android:layout_gravity="bottom"
+    android:layout_marginBottom="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_height="100dp"
+    android:id="@+id/imagebutton_user"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center"
-            android:layout_marginBottom="13dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="20dp"
             android:fontFamily="monospace"
-            android:text="Karim Ahmed"
+            android:text="email"
+            android:layout_marginRight="10dp"
+            android:id="@+id/tv_email"
             android:textColor="#fff"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -109,7 +117,7 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="22dp"
                 android:layout_weight="100"
-                android:text="karimosman1210@gmail.com"
+               android:hint="Your Name"
                 android:textAlignment="textEnd"
                 android:textSize="18dp"
                 android:id="@+id/emailEditProfile"
@@ -123,6 +131,115 @@
 
 
         </LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="gone"
+    android:orientation="vertical"
+    android:id="@+id/Linear_password">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="22dp"
+                android:layout_weight="100"
+
+                android:hint="الرقم السري"
+
+                android:textSize="18dp"
+                android:id="@+id/password_old"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/email_logo" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="22dp"
+                android:layout_weight="100"
+                android:hint="الرقم السري الجديد"
+                android:textSize="18dp"
+                android:id="@+id/password_new"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/email_logo" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="22dp"
+                android:layout_weight="100"
+                android:hint="الرقم السري الجديد"
+
+                android:textSize="18dp"
+                android:id="@+id/password_new2"
+                />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/email_logo" />
+
+
+        </LinearLayout>
+
+
+</LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Password"
+            android:textSize="15dp"
+            android:id="@+id/change_password"
+            />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
