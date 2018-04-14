@@ -1,271 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.example.osman.grandresturant.UserProfile">
+    tools:context="com.example.osman.grandresturant.UserProfile"
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/backdraw11" />
-<ImageButton
-    android:layout_width="100dp"
-    android:layout_gravity="bottom"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="5dp"
-    android:layout_height="100dp"
-    android:id="@+id/imagebutton_user"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="monospace"
-            android:text="email"
-            android:layout_marginRight="10dp"
-            android:id="@+id/tv_email"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </FrameLayout>
-
+    >
 
     <LinearLayout
+        android:id="@+id/allLiniar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-                android:text="01025431387"
-                android:textAlignment="textEnd"
-                android:textSize="18dp"
-                android:id="@+id/phoneEditProfile"
-
-                />
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/call" />
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="100"
-
-            >
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-                android:text="الجيزه"
-                android:textAlignment="textStart"
-                android:textSize="18dp"
-                android:id="@+id/countryEditProfile"
-
-                />
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/backdraw11" />
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/home_logo" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-               android:hint="Your Name"
-                android:textAlignment="textEnd"
-                android:textSize="18dp"
-                android:id="@+id/emailEditProfile"
+                android:id="@+id/imagebutton_user"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:scaleType="centerCrop"
                 />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/email_logo" />
-
-
-        </LinearLayout>
-
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    android:orientation="vertical"
-    android:id="@+id/Linear_password">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-
-                android:hint="الرقم السري"
-
-                android:textSize="18dp"
-                android:id="@+id/password_old"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/email_logo" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-                android:hint="الرقم السري الجديد"
-                android:textSize="18dp"
-                android:id="@+id/password_new"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/email_logo" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="6dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_marginRight="22dp"
-                android:layout_weight="100"
-                android:hint="الرقم السري الجديد"
-
-                android:textSize="18dp"
-                android:id="@+id/password_new2"
-                />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/email_logo" />
-
-
-        </LinearLayout>
-
-
-</LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Change Password"
-            android:textSize="15dp"
-            android:id="@+id/change_password"
-            />
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="60dp"
-            android:textSize="22dp"
-            android:text="تعديل"
-            android:background="@drawable/btninput"
-            android:id="@+id/editBtnProfile"
-            />
-
-            <ProgressBar
+            <TextView
+                android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="70dp"
-                android:id="@+id/myProgress"
-                android:visibility="invisible"
-                />
-        </LinearLayout>
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="monospace"
+                android:text="email"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:layout_margin="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <EditText
+                        android:id="@+id/phoneEditProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_weight="100"
+                        android:hint="رقمي"
+                        android:textAlignment="textEnd"
+                        android:textSize="18dp"
+
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/call" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/countryEditProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_weight="100"
+                        android:hint="محافظتك"
+                        android:textAlignment="textStart"
+                        android:textSize="18dp"
+
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/home_logo" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+
+                    <EditText
+                        android:id="@+id/emailEditProfile"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="22dp"
+                        android:layout_weight="100"
+                        android:hint="اسمك"
+                        android:textAlignment="textEnd"
+                        android:textSize="18dp"
+
+
+                        />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/email_logo" />
+
+
+                </LinearLayout>
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="9dp"
+                        app:cardCornerRadius="5dp"
+                        android:layout_marginTop="50dp"
+
+                        >
+
+                <LinearLayout
+                    android:id="@+id/Linear_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:padding="8dp"
+
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <EditText
+                            android:id="@+id/password_old"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="22dp"
+
+                            android:layout_weight="100"
+
+                            android:hint="الرقم السري الحالي"
+                            android:textSize="18dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/lastpass" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <EditText
+                            android:id="@+id/password_new"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="22dp"
+                            android:layout_weight="100"
+                            android:hint="الرقم السري الجديد"
+                            android:textSize="18dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/newpass" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="6dp"
+                        android:orientation="horizontal"
+                        android:weightSum="100">
+
+
+                        <EditText
+                            android:id="@+id/password_new2"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="22dp"
+                            android:layout_weight="100"
+
+                            android:hint="اعد كتابه الرقم السري"
+                            android:textSize="18dp" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="4dp"
+                            android:src="@drawable/newpass" />
+
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
+
+                    <TextView
+                        android:id="@+id/change_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="تغيير الباسورد"
+                        android:textSize="15dp"
+                        android:visibility="visible"
+                        android:textStyle="bold"
+
+
+                        />
+
+                    <TextView
+                        android:id="@+id/backTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginRight="22dp"
+                        android:layout_marginTop="8dp"
+                        android:text="تراجع"
+                        android:textSize="15dp"
+                        android:visibility="invisible"
+                        android:textStyle="bold"
+                        />
+
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/editBtnProfile"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/btninput"
+                    android:text="تعديل"
+                    android:textSize="22dp"
+                    />
+
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 
-
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/progressall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:visibility="visible" />
+</FrameLayout>
