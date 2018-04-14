@@ -117,6 +117,7 @@ public class UserProfile extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Model_user model_user = dataSnapshot.getValue(Model_user.class);
                 tv_email.setText(model_user.getEmail());
+
                 phoneEditProfile.setText(model_user.getMobile());
                 emailEditProfile.setText(model_user.getUsername());
                 countryEditProfile.setText(model_user.getCountry());
