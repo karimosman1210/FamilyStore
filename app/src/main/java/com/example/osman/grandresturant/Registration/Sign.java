@@ -1,23 +1,15 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Registration;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.osman.grandresturant.Dialogs.LocationDialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,13 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Locale;
 
 public class Sign extends AppCompatActivity {
     Button signUpBtnSignUp, signUpBtnCancel;
@@ -53,14 +42,8 @@ public class Sign extends AppCompatActivity {
     FirebaseAuth.AuthStateListener listener;
     String User_Type, myEmail, CountryLocation;
     private DatabaseReference mDatabaseUsers;
-
-    private static final int RUSLET_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
-    ImageView myImgeSign;
-    Uri imageUri;
     DatabaseReference currentuser_db;
-    boolean check=false;
-    ProgressBar progressSignUp;
     TextView sign_location ;
 
 
@@ -71,8 +54,8 @@ public class Sign extends AppCompatActivity {
         setContentView(R.layout.activity_sign);
         signUpBtnCancel = (Button) findViewById(R.id.signUpBtnCancel);
 
-        myImgeSign = (ImageView) findViewById(R.id.myImgeSign);
-        progressSignUp=(ProgressBar)findViewById(R.id.progressSignUp);
+
+
         sign_location = (TextView) findViewById(R.id.sign_location_textview) ;
         signUpBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,15 +78,6 @@ public class Sign extends AppCompatActivity {
 
 
 
-        myImgeSign.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent open = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(open, RUSLET_LOAD_IMAGE);
-
-            }
-        });
 
 
 
@@ -114,6 +88,8 @@ public class Sign extends AppCompatActivity {
         surepassSignUp = (EditText) findViewById(R.id.surepassSignUp);
         nameEt = (EditText) findViewById(R.id.nameEt);
         user_mobile = (EditText) findViewById(R.id.phone_Et);
+        auth = FirebaseAuth.getInstance();
+
 
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -121,25 +97,14 @@ public class Sign extends AppCompatActivity {
         signUpBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (check==true) {
+
                     signUp();
-                }
+
 
 
             }
         });
-        auth = FirebaseAuth.getInstance();
-        listener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    finish();
 
-                }
-
-            }
-        };
 
 
     }
@@ -150,16 +115,19 @@ public class Sign extends AppCompatActivity {
         String myPass = passwordEtSignUp.getText().toString().trim();
         String passSure = surepassSignUp.getText().toString().trim();
 
-        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass)  || TextUtils.isEmpty(HelperMethods.sign_location) || TextUtils.isEmpty(passSure)) {
+        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass)  || TextUtils.isEmpty(passSure)) {
 
-            Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "أكمل البيانات", Toast.LENGTH_SHORT).show();
 
 
         } else if (!myPass.equals(passSure)) {
-            Toast.makeText(this, "password not equle ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "كلمة السر غير متطابقة", Toast.LENGTH_SHORT).show();
         } else if (User_Type == null) {
             Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if (TextUtils.isEmpty(HelperMethods.sign_location)) {
+            Toast.makeText(this, "أختار مكان المستخدم ", Toast.LENGTH_SHORT).show();
+        }else {
 
             HelperMethods.showDialog(Sign.this, "Wait...", "Create new user");
 
@@ -182,31 +150,17 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
                             currentuser_db.child("country").setValue( HelperMethods.sign_location);
-                            HelperMethods.hideDialog(Sign.this);
+                            currentuser_db.child("profile_image,").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
 
+
+                            HelperMethods.hideDialog(Sign.this);
+                            startActivity(new Intent(Sign.this , User_Profile_image.class));
+                            HelperMethods.sign_location = null;
 
                         } catch (Exception e) {
 
 
                         }
-                     if (check==true) {
-
-                         progressSignUp.setVisibility(View.VISIBLE);
-                         mStorageRef.child("UserImage").child(auth.getCurrentUser().getUid()).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                             @Override
-                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                                 if (task.isSuccessful()) {
-
-                                     currentuser_db.child("profile_image").setValue(task.getResult().getDownloadUrl().toString());
-                                     progressSignUp.setVisibility(View.INVISIBLE);
-                                     Toast.makeText(Sign.this, "Signed Up Successfully", Toast.LENGTH_SHORT).show();
-                                     finish();
-                                 }
-
-                             }
-                         });
-                     }
 
 
                     }
@@ -219,29 +173,6 @@ public class Sign extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
-        super.onActivityResult(reqCode, resultCode, data);
-
-
-        if (resultCode == RESULT_OK) {
-            try {
-                imageUri = data.getData();
-                check=true;
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                myImgeSign.setImageBitmap(selectedImage);
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(Sign.this, "Something went wrong", Toast.LENGTH_LONG).show();
-            }
-
-        } else {
-            Toast.makeText(Sign.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
-        }
-    }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?

@@ -35,8 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.Adapter_category;
-import com.example.osman.grandresturant.Dialogs.LocationDialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.Registration.Login;
+import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
 import com.google.firebase.auth.FirebaseAuth;

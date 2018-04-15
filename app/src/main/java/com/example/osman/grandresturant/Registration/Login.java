@@ -1,11 +1,8 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Registration;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.HomeScreen;
+import com.example.osman.grandresturant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

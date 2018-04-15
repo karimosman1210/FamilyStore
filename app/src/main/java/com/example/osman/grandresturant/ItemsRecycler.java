@@ -82,7 +82,7 @@ public class ItemsRecycler extends AppCompatActivity {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
-                    final String key_post = dataSnapshot.getKey();
+                    final String key_post = data.getKey();
 
 
                     if (Objects.equals(data.child("ItemType").getValue().toString(), HelperMethods.categoryName)){

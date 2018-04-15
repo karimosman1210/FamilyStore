@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 
@@ -58,6 +59,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             }
         }).into(holder.item_image);
 
+        holder.item_name.setText(my_data.get(position).getName());
+        holder.item_price.setText(my_data.get(position).getPrice());
+        holder.item_place.setText(my_data.get(position).getCountryLocation());
+        holder.item_user_name.setText(my_data.get(position).getUserName());
+
+
+
+
+
     }
 
     @Override
@@ -68,7 +78,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public  class ViewHolder extends  RecyclerView.ViewHolder{
 
         ImageView item_image,favoritBtn;
-        TextView item_name, item_price, item_type, item_place, item_user_name;
+        TextView item_name, item_price , item_place, item_user_name;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -79,6 +90,23 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             item_user_name = (TextView) view.findViewById(R.id.item_recycler_user_name);
             item_image = (ImageView) view.findViewById(R.id.item_recycler_image);
             favoritBtn=(ImageView)view.findViewById(R.id.favoritBtn);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int postion = getLayoutPosition();
+
+                    String ID = my_data.get(postion).getID();
+
+                    Intent intent = new Intent(context, ItemScreen.class);
+
+                    intent.putExtra("Item_ID", ID);
+
+                    context.startActivity(intent);
+
+                }
+            });
 
         }
     }

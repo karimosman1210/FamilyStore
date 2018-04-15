@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.osman.grandresturant.Registration.Login;
+
 public class VistorType extends AppCompatActivity {
 Button visitorBtn,sallerBtn;
     @Override

@@ -7,7 +7,7 @@
     android:background="#f7ffffff"
 
     android:orientation="vertical"
-    tools:context="com.example.osman.grandresturant.Login">
+    tools:context="com.example.osman.grandresturant.Registration.Login">
 
     <TextView
         android:layout_width="match_parent"

@@ -16,8 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login" />
-        <activity android:name=".Sign" />
+        <activity android:name=".Registration.Login" />
+        <activity android:name=".Registration.Sign" />
         <activity android:name=".VistorType" />
         <activity android:name=".Activity_upload" />
         <activity android:name=".ItemScreen" />
@@ -36,12 +36,13 @@
             android:name=".SallersRecycler"
             android:label="التجار" />
         <activity android:name=".MyBasket" />
-        <activity android:name=".UserProfile" />
+        <activity android:name=".Registration.UserProfile" />
         <activity android:name=".MyAds" />
         <activity android:name=".ItemUpdate" />
         <activity android:name=".Edit_Ads" />
         <activity android:name=".Dialogs.LocationDialog" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Registration.User_Profile_image"></activity>
     </application>
 
 </manifest>
