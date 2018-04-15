@@ -32,12 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SallersRecycler"
-            android:label="التجار"/>
+        <activity
+            android:name=".SallersRecycler"
+            android:label="التجار" />
         <activity android:name=".MyBasket" />
         <activity android:name=".UserProfile" />
         <activity android:name=".MyAds" />
-        <activity android:name=".ItemUpdate"></activity>
+        <activity android:name=".ItemUpdate" />
+        <activity android:name=".Edit_Ads"></activity>
     </application>
 
 </manifest>

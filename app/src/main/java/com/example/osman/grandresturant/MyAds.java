@@ -145,6 +145,9 @@ public class MyAds extends AppCompatActivity {
                 viewHolder.myAds_edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent=new Intent(MyAds.this,Edit_Ads.class);
+                        intent.putExtra("id",key_post);
+                        startActivity(intent);
 
                     }
                 });
