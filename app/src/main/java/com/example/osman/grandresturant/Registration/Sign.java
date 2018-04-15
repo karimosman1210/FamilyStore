@@ -1,15 +1,25 @@
 package com.example.osman.grandresturant.Registration;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,20 +41,34 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
 
 public class Sign extends AppCompatActivity {
     Button signUpBtnSignUp, signUpBtnCancel;
-    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile, user_country;
+    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener listener;
     String User_Type, myEmail, CountryLocation;
     private DatabaseReference mDatabaseUsers;
     private StorageReference mStorageRef;
     DatabaseReference currentuser_db;
-    TextView sign_location ;
+    String  user_country ;
+    MaterialBetterSpinner spinner;
+    Button auto, manual;
+    TextView location;
+    ArrayAdapter<String> arrayAdapter;
+    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+    double latti;
+    double longi;
+
 
 
 
@@ -56,7 +80,6 @@ public class Sign extends AppCompatActivity {
 
 
 
-        sign_location = (TextView) findViewById(R.id.sign_location_textview) ;
         signUpBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,15 +88,69 @@ public class Sign extends AppCompatActivity {
         });
         mStorageRef=mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        spinner = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
+        auto = (Button) findViewById(R.id.location_dialog_btn_auto);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
+        spinner.setAdapter(arrayAdapter);
 
-        sign_location.setOnClickListener(new View.OnClickListener() {
+
+
+
+        auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                LocationDialog cdd=new LocationDialog(Sign.this);
-                cdd.show();
+                getLocation();
+                Locale mLocale = new Locale("ar");
+
+                Geocoder geocoder = new Geocoder(Sign.this, mLocale);
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latti, longi, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    assert addresses != null;
+
+                    int maxAddressLine = addresses.get(0).getMaxAddressLineIndex();
+
+                    String countryName = addresses.get(0).getAddressLine(maxAddressLine);
+                    String countryName1 = addresses.get(0).getAdminArea();
+                    String countryName2 = addresses.get(0).getSubAdminArea();
+                    String countryName3 = addresses.get(0).getSubLocality();
+
+
+                    String countr = "محافظة";
+
+                    String regex = "\\s*\\bمحافظة\\b\\s*";
+                    countryName1 = countryName1.replaceAll(regex, "");
+
+                    user_country = countryName1;
+
+                    auto.setText(countryName1);
+
+
+                } catch (Exception e) {
+                }
+
             }
         });
+
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                user_country =  adapterView.getItemAtPosition(i).toString();
+
+                auto.setText(user_country);
+            }
+        });
+
+
 
 
 
@@ -149,13 +226,13 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("user_tpe").setValue(User_Type);
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
-                            currentuser_db.child("country").setValue( HelperMethods.sign_location);
+                            currentuser_db.child("country").setValue(user_country);
                             currentuser_db.child("profile_image,").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
 
 
                             HelperMethods.hideDialog(Sign.this);
                             startActivity(new Intent(Sign.this , User_Profile_image.class));
-                            HelperMethods.sign_location = null;
+
 
                         } catch (Exception e) {
 
@@ -191,6 +268,35 @@ public class Sign extends AppCompatActivity {
                 break;
         }
 
+
+    }
+
+    void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null) {
+
+
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+
+
+                String total2 = Double.toString(latti);
+                String total = Double.toString(longi);
+
+                Toast.makeText(this, total2 + total, Toast.LENGTH_SHORT).show();
+
+            } else {
+
+            }
+        }
 
     }
 

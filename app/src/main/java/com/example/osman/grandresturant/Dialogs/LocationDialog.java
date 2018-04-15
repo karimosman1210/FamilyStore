@@ -71,7 +71,7 @@ public class LocationDialog extends Dialog {
         auto = (Button) findViewById(R.id.location_dialog_btn_auto);
         manual = (Button) findViewById(R.id.location_dialog_btn_manual);
         spinner = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
-        location = (TextView) findViewById(R.id.location_dialog_textview);
+
         locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, spinnerList);
         spinner.setAdapter(arrayAdapter);
@@ -102,41 +102,7 @@ public class LocationDialog extends Dialog {
             public void onClick(View view) {
 
 
-                getLocation();
-                Locale mLocale = new Locale("ar");
 
-                Geocoder geocoder = new Geocoder(getContext(), mLocale);
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoder.getFromLocation(latti, longi, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    assert addresses != null;
-
-                    int maxAddressLine = addresses.get(0).getMaxAddressLineIndex();
-
-                    String countryName = addresses.get(0).getAddressLine(maxAddressLine);
-                    String countryName1 = addresses.get(0).getAdminArea();
-                    String countryName2 = addresses.get(0).getSubAdminArea();
-                    String countryName3 = addresses.get(0).getSubLocality();
-
-
-                    String countr = "محافظة";
-
-                    String regex = "\\s*\\bمحافظة\\b\\s*";
-                    countryName1 = countryName1.replaceAll(regex, "");
-
-                    HelperMethods.sign_location = countryName1;
-
-                    auto.setText(countryName1);
-                    manual.setText("اختار المدينة");
-
-                } catch (Exception e) {
-                }
             }
         });
 
