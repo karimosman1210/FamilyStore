@@ -203,7 +203,7 @@ public class Sign extends AppCompatActivity {
             Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
         }
         else if (TextUtils.isEmpty(user_country)) {
-            Toast.makeText(this, "أختار مكان المستخدم ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "أختار مكان المستخدم  ", Toast.LENGTH_SHORT).show();
         }else {
 
             HelperMethods.showDialog(Sign.this, "Wait...", "Create new user");
