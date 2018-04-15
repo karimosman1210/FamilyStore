@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -26,16 +28,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp" />
 
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/addimage_icon"
+                    android:id="@+id/myImgeSign"
+                    android:scaleType="centerInside"
+                    />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="20dp">
+
+
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -87,9 +97,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingRight="20dp"
                     android:paddingLeft="20dp"
-                    >
+                    android:paddingRight="20dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -99,18 +108,20 @@
                         android:orientation="horizontal">
 
                         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                            android:id="@+id/sign_in_spinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
-                            android:id="@+id/sign_in_spinner"
-                            android:paddingLeft="20dp"
-                            android:hint="اختار محافظتك"/>
+                            android:hint="اختار محافظتك"
+                            android:paddingLeft="20dp" />
 
 
                     </RelativeLayout>
                 </RelativeLayout>
 
-
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/nameEt"
                     android:layout_width="match_parent"
@@ -126,6 +137,15 @@
                     android:textColorHint="#A6B9CA"
                     android:textSize="18sp" />
 
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/progressSignUp"
+                        android:visibility="invisible"
+                        />
+
+                </FrameLayout>
+
                 <EditText
                     android:id="@+id/phone_Et"
                     android:layout_width="match_parent"
@@ -140,8 +160,6 @@
                     android:textColor="@color/home"
                     android:textColorHint="#A6B9CA"
                     android:textSize="18sp" />
-
-
 
 
                 <EditText
@@ -227,14 +245,14 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#000"
-                android:textSize="22sp" />
+                android:textSize="18dp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingLeft="5dp">
 
             <Button
                 android:id="@+id/signUpBtnSignUp"
@@ -246,7 +264,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="#fff"
-                android:textSize="22sp" />
+                android:textSize="18sp" />
         </RelativeLayout>
 
     </LinearLayout>
