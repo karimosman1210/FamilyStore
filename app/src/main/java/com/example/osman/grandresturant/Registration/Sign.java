@@ -202,7 +202,7 @@ public class Sign extends AppCompatActivity {
         } else if (User_Type == null) {
             Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
         }
-        else if (TextUtils.isEmpty(HelperMethods.sign_location)) {
+        else if (TextUtils.isEmpty(user_country)) {
             Toast.makeText(this, "أختار مكان المستخدم ", Toast.LENGTH_SHORT).show();
         }else {
 
