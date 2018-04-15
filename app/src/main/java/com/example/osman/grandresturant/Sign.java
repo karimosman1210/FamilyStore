@@ -1,12 +1,18 @@
 package com.example.osman.grandresturant;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,8 +23,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.Dialogs.LocationDialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +41,10 @@ import com.google.firebase.storage.UploadTask;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
 
 public class Sign extends AppCompatActivity {
     Button signUpBtnSignUp, signUpBtnCancel;
@@ -42,16 +53,16 @@ public class Sign extends AppCompatActivity {
     FirebaseAuth.AuthStateListener listener;
     String User_Type, myEmail, CountryLocation;
     private DatabaseReference mDatabaseUsers;
-    MaterialBetterSpinner Country;
+
     private static final int RUSLET_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
-    ArrayAdapter<String> CountrySpinnerAdapter;
-    String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     ImageView myImgeSign;
     Uri imageUri;
     DatabaseReference currentuser_db;
     boolean check=false;
     ProgressBar progressSignUp;
+    TextView sign_location ;
+
 
 
     @Override
@@ -59,11 +70,10 @@ public class Sign extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         signUpBtnCancel = (Button) findViewById(R.id.signUpBtnCancel);
-        Country = (MaterialBetterSpinner) findViewById(R.id.sign_in_spinner);
+
         myImgeSign = (ImageView) findViewById(R.id.myImgeSign);
         progressSignUp=(ProgressBar)findViewById(R.id.progressSignUp);
-        CountrySpinnerAdapter = new ArrayAdapter<String>(Sign.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
-        Country.setAdapter(CountrySpinnerAdapter);
+        sign_location = (TextView) findViewById(R.id.sign_location_textview) ;
         signUpBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +81,19 @@ public class Sign extends AppCompatActivity {
             }
         });
         mStorageRef=mStorageRef = FirebaseStorage.getInstance().getReference();
+
+
+        sign_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LocationDialog cdd=new LocationDialog(Sign.this);
+                cdd.show();
+            }
+        });
+
+
+
 
         myImgeSign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,14 +106,7 @@ public class Sign extends AppCompatActivity {
         });
 
 
-        Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                CountryLocation = adapterView.getItemAtPosition(i).toString();
-
-            }
-        });
 
         signUpBtnSignUp = (Button) findViewById(R.id.signUpBtnSignUp);
         emailEtSignUp = (EditText) findViewById(R.id.emailEtSignUp);
@@ -108,6 +124,8 @@ public class Sign extends AppCompatActivity {
                 if (check==true) {
                     signUp();
                 }
+
+
             }
         });
         auth = FirebaseAuth.getInstance();
@@ -132,7 +150,7 @@ public class Sign extends AppCompatActivity {
         String myPass = passwordEtSignUp.getText().toString().trim();
         String passSure = surepassSignUp.getText().toString().trim();
 
-        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass) || TextUtils.isEmpty(passSure)) {
+        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass)  || TextUtils.isEmpty(HelperMethods.sign_location) || TextUtils.isEmpty(passSure)) {
 
             Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
 
@@ -163,7 +181,7 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("user_tpe").setValue(User_Type);
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
-                            currentuser_db.child("country").setValue(CountryLocation);
+                            currentuser_db.child("country").setValue( HelperMethods.sign_location);
                             HelperMethods.hideDialog(Sign.this);
 
 
@@ -244,4 +262,7 @@ public class Sign extends AppCompatActivity {
 
 
     }
+
+
+
 }

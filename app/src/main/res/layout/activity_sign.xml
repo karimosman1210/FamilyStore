@@ -100,23 +100,27 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/input"
                         android:gravity="right"
+                        android:padding="10dp"
                         android:orientation="horizontal">
 
-                        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                            android:id="@+id/sign_in_spinner"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@android:color/transparent"
-                            android:hint="اختار محافظتك"
-                            android:paddingLeft="20dp" />
+                            android:id="@+id/sign_location_textview"
+                            android:text="المدينة"/>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_map_marker_grey600_18dp"/>
 
 
-                    </RelativeLayout>
+                    </LinearLayout>
                 </RelativeLayout>
 
                 <FrameLayout
@@ -126,8 +130,8 @@
                     android:id="@+id/nameEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/input"
                     android:drawableStart="@drawable/name"
@@ -150,8 +154,8 @@
                     android:id="@+id/phone_Et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/input"
                     android:drawableStart="@drawable/name"
@@ -166,8 +170,8 @@
                     android:id="@+id/emailEtSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/input"
                     android:drawableStart="@drawable/ic_email"
@@ -185,8 +189,8 @@
                     android:id="@+id/passwordEtSignUp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/input"
                     android:drawableStart="@drawable/ic_lock_outline"

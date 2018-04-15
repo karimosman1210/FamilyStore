@@ -22,6 +22,7 @@ public class HelperMethods {
     public static String sallerID;
     public static String User_id;
     public static String delete_ads_id;
+    public static String sign_location;
 
 
     public static ArrayList<Encaps_Basket>encaps_baskets=new ArrayList<>();

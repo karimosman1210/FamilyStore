@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.Adapter_category;
+import com.example.osman.grandresturant.Dialogs.LocationDialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -239,6 +240,8 @@ public class HomeScreen extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
 
                 startActivity(new Intent(HomeScreen.this, Activity_upload.class));
 

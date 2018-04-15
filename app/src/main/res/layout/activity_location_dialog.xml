@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#3E80B4"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    tools:context="com.example.osman.grandresturant.Dialogs.LocationDialog">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+
+        android:weightSum="2">
+
+
+
+
+
+<RelativeLayout
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
+
+    <Button
+        android:id="@+id/location_dialog_btn_manual"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:text="أختار المدينة"
+        android:textColor="#5DBCD2"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/location_dialog_btn_auto"
+                android:layout_height="50dp"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:layout_centerHorizontal="true"
+                android:text="إختيار المكان الحالى"
+                android:textColor="#5DBCD2"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+            android:id="@+id/location_dialog_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:hint="اختار المدينة"
+            android:textColorHint="#05ab9a"
+
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        >
+
+
+
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="تأكيد"
+               android:textColor="@color/white"
+               android:id="@+id/location_dialog_textview"
+               android:background="@color/colorAccent"
+               android:textSize="25dp"
+               android:layout_centerHorizontal="true"
+               android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
