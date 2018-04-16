@@ -79,7 +79,9 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
         holder.unfavoritBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(context, "تم الحزف من المفضله", Toast.LENGTH_SHORT).show();
+
             }
         });
 
