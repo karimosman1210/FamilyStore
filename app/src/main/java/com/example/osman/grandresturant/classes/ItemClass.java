@@ -12,11 +12,11 @@ public class ItemClass {
 
 
 
-   private String ID, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber , UserImage  ;
+   private String idItem, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber , UserImage  ;
     private long UploadedTime;
 
-    public ItemClass(String ID, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String userID, String userName, String userEmail, String userNumber, String userImage, long uploadedTime) {
-        this.ID = ID;
+    public ItemClass(String idItem, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String userID, String userName, String userEmail, String userNumber, String userImage, long uploadedTime) {
+        this.idItem = idItem;
         Name = name;
         this.image = image;
         CountryLocation = countryLocation;
@@ -32,12 +32,12 @@ public class ItemClass {
         UploadedTime = uploadedTime;
     }
 
-    public String getID() {
-        return ID;
+    public String getIdItem() {
+        return idItem;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public void setIdItem(String idItem) {
+        this.idItem = idItem;
     }
 
     public String getName() {

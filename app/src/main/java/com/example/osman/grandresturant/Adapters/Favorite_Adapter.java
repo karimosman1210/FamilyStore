@@ -38,24 +38,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView item_image, unfavoritBtn;
-        TextView item_name, item_price, item_type, item_place, item_category;
-
-        public ViewHolder(View view) {
-            super(view);
-
-            item_name = (TextView) view.findViewById(R.id.favorite_item_name);
-            item_price = (TextView) view.findViewById(R.id.favorite_item_price);
-            item_place = (TextView) view.findViewById(R.id.favorite_item_place);
-            item_category = (TextView) view.findViewById(R.id.favorite_item_category);
-            item_image = (ImageView) view.findViewById(R.id.favorite_item_image);
-
-            unfavoritBtn = (ImageView) view.findViewById(R.id.unfavoritBtn);
-
-        }
-    }
 
     @Override
     public Favorite_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -81,6 +64,25 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     @Override
     public int getItemCount() {
         return my_data.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView item_image, unfavoritBtn;
+        TextView item_name, item_price, item_type, item_place, item_category;
+
+        public ViewHolder(View view) {
+            super(view);
+
+            item_name = (TextView) view.findViewById(R.id.favorite_item_name);
+            item_price = (TextView) view.findViewById(R.id.favorite_item_price);
+            item_place = (TextView) view.findViewById(R.id.favorite_item_place);
+            item_category = (TextView) view.findViewById(R.id.favorite_item_category);
+            item_image = (ImageView) view.findViewById(R.id.favorite_item_image);
+
+            unfavoritBtn = (ImageView) view.findViewById(R.id.unfavoritBtn);
+
+        }
     }
 
 }
