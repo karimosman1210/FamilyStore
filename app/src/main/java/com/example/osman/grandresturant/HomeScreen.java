@@ -382,6 +382,9 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_company_favorite_Ads) {
 
+
+            Intent intent=new Intent(HomeScreen.this,Favorite_item.class);
+            startActivity(intent);
         } else if (id == R.id.nav_company_FeedBack) {
 
         } else if (id == R.id.nav_company_Abouts_Us) {
