@@ -76,7 +76,7 @@ public class ItemsRecycler extends AppCompatActivity {
         final ItemsAdapter adapter = new ItemsAdapter(this, arrayList);
 
 
-        databaseReference.orderByChild("UserID").equalTo(HelperMethods.sallerID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByChild("UserID").equalTo(HelperMethods.Home_Filtter_sallerID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -84,7 +84,7 @@ public class ItemsRecycler extends AppCompatActivity {
 
 
 
-                    if (Objects.equals(data.child("ItemType").getValue().toString(), HelperMethods.categoryName)){
+                    if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)  ){
 
                         String Itemid=data.child("idItem").getValue().toString();
                         String Name = data.child("Name").getValue().toString();

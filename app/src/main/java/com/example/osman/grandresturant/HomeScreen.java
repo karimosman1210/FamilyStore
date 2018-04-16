@@ -1,6 +1,7 @@
 package com.example.osman.grandresturant;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import com.example.osman.grandresturant.Adapters.Adapter_category;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.Registration.Login;
+import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -54,6 +56,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class HomeScreen extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,11 +83,12 @@ public class HomeScreen extends AppCompatActivity
     SwipeRefreshLayout swipeRefreshLayout;
     public static GridLayoutManager gridLayoutManager;
     ArrayList<Item_recycle> arrayList;
-    String ItemType,  countryName1;
+    String Country_name;
     static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
     double latti;
     double longi;
+    Timer timer;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -101,44 +106,50 @@ public class HomeScreen extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        recyclerView.setNestedScrollingEnabled(false);
 
 
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
 
-        Geocoder geocoder = new Geocoder(HomeScreen.this, Locale.getDefault());
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocation(latti, longi, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                        getLocation();
+                        Locale mLocale = new Locale("ar");
+
+                        Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
+                        List<Address> addresses = null;
+                        try {
+                            addresses = geocoder.getFromLocation(latti, longi, 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
 
-        try {
-            assert addresses != null;
+                        try {
+                            assert addresses != null;
+                            String countryName = addresses.get(0).getAdminArea();
+
+                            String regex = "\\s*\\bمحافظة\\b\\s*";
+                            String  country_Name = countryName.replaceAll(regex, "");
+                            Country_choose.setText(country_Name);
+                            HelperMethods.Home_Filtter_Country_name = null;
+
+                        } catch (Exception e) {
+                        }
+
+                    }
+                });
 
 
-
-            countryName1    = addresses.get(0).getAdminArea();
-
-            Country_choose.setText(countryName1);
-
-
-            if(countryName1.contains(" ")){
-                countryName1= countryName1.substring(0, countryName1.indexOf(" "));
-                System.out.println(countryName1);
             }
-
-
-        } catch (Exception e) {
-        }
-
-
-
-
-
-
-
+        }, 0, 1 * (1000 * 1));
 
 
         Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
@@ -149,9 +160,11 @@ public class HomeScreen extends AppCompatActivity
         Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                timer.cancel();
+                Country_name = adapterView.getItemAtPosition(i).toString();
+                Country_choose.setText(Country_name);
+                HelperMethods.Home_Filtter_Country_name = Country_name;
 
-                ItemType = adapterView.getItemAtPosition(i).toString();
-                Country_choose.setText(ItemType);
 
             }
         });
@@ -241,7 +254,6 @@ public class HomeScreen extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 startActivity(new Intent(HomeScreen.this, Activity_upload.class));
@@ -474,20 +486,13 @@ public class HomeScreen extends AppCompatActivity
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-            if (location != null) {
-                latti = location.getLatitude();
-                longi = location.getLongitude();
+        if (location != null) {
+            latti = location.getLatitude();
+            longi = location.getLongitude();
 
+        } else {
 
-                String total2 = Double.toString(latti);
-                String total = Double.toString(longi);
-
-                Toast.makeText(this, total2 + total, Toast.LENGTH_SHORT).show();
-
-            }
-            else {
-
-            }
         }
-
     }
+
+}

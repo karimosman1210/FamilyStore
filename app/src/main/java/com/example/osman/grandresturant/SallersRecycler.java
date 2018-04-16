@@ -44,6 +44,9 @@ public class SallersRecycler extends AppCompatActivity {
         layoutManagerAdmin.setReverseLayout(true);
         layoutManagerAdmin.setStackFromEnd(true);
 
+        recyclerView.setNestedScrollingEnabled(false);
+        adminRecyclerView.setNestedScrollingEnabled(false);
+
         recyclerView.setLayoutManager(layoutManager);
         adminRecyclerView.setLayoutManager(layoutManagerAdmin);
 
@@ -77,7 +80,7 @@ public class SallersRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        HelperMethods.sallerID = key_post;
+                        HelperMethods.Home_Filtter_sallerID = key_post;
                         startActivity(new Intent(SallersRecycler.this, ItemsRecycler.class));
 
                     }
@@ -109,7 +112,7 @@ public class SallersRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        HelperMethods.sallerID = key_post;
+                        HelperMethods.Home_Filtter_sallerID = key_post;
                         startActivity(new Intent(SallersRecycler.this, ItemsRecycler.class));
 
                     }
