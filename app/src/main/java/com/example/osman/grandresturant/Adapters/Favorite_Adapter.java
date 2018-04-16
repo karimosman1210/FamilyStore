@@ -1,10 +1,17 @@
 package com.example.osman.grandresturant.Adapters;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.osman.grandresturant.Favorite_item;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,15 +57,47 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
 
-        ItemClass itemClass = my_data.get(position);
+        final ItemClass itemClass = my_data.get(position);
 
         holder.item_name.setText(itemClass.getName());
         holder.item_price.setText(itemClass.getPrice());
         holder.item_place.setText(itemClass.getPlaceLocation());
         holder.item_category.setText(itemClass.getItemType());
-        Picasso.with(context).load(itemClass.getItemType()).into(holder.item_image);
+        Picasso.with(context).load(itemClass.getImage()).into(holder.item_image);
+        holder.unfavoritBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
+                dialog.setCancelable(false);
+                dialog.setTitle("تنبيه");
+                dialog.setMessage("هل متاكد من حذف هذا الاعلان " );
+                dialog.setPositiveButton("نعم", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        String firebaseAuth=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Favorite");
+                        database.child(firebaseAuth).child(itemClass.getIdItem()).removeValue();
+
+//                        NavUtils.navigateUpFromSameTask((Activity) context);
+
+                        Toast.makeText(context, itemClass.getName()+"  تم حزف ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .setNegativeButton("لا ", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                final AlertDialog alert = dialog.create();
+                alert.show();
+
+            }
+        });
     }
 
 
@@ -79,8 +119,9 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
             item_place = (TextView) view.findViewById(R.id.favorite_item_place);
             item_category = (TextView) view.findViewById(R.id.favorite_item_category);
             item_image = (ImageView) view.findViewById(R.id.favorite_item_image);
-
             unfavoritBtn = (ImageView) view.findViewById(R.id.unfavoritBtn);
+
+
 
         }
     }

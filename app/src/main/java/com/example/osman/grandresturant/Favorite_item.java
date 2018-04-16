@@ -33,7 +33,9 @@ public class Favorite_item extends AppCompatActivity {
     database=FirebaseDatabase.getInstance().getReference().child("Favorite").child(auth);
     itemfav=FirebaseDatabase.getInstance().getReference().child("Items");
     final com.example.osman.grandresturant.Adapters.Favorite_Adapter favorite_adapter=new Favorite_Adapter(this,list);
+
     recyclerView.setAdapter(favorite_adapter);
+    favorite_adapter.notifyDataSetChanged();
     database.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -45,7 +47,8 @@ public class Favorite_item extends AppCompatActivity {
                         ItemClass itemClass= dataSnapshot.getValue(ItemClass.class);
                         System.out.println(itemClass.getIdItem());
                         list.add(itemClass);
-                        favorite_adapter.notifyDataSetChanged();
+                         favorite_adapter.notifyDataSetChanged();
+
                     }
 
 
