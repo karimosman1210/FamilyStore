@@ -126,7 +126,7 @@ public class ItemScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String name=HelperMethods.items_recycler_name;
+               /* String name=HelperMethods.items_recycler_name;
                 String price=HelperMethods.items_recycler_price;
                 String nameCompany=HelperMethods.items_recycler_user_name;
                 String place=HelperMethods.items_recycler_place;
@@ -134,7 +134,7 @@ public class ItemScreen extends AppCompatActivity {
 
                 Encaps_Basket encaps_basket=new Encaps_Basket(name,image,price,nameCompany,place);
                 HelperMethods.encaps_baskets.add(encaps_basket);
-
+*/
 
                 Toast.makeText(ItemScreen.this, "تم الاضافه الي السله  (Test)", Toast.LENGTH_SHORT).show();
             }

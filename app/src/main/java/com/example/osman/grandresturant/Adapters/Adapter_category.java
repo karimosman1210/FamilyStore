@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -43,9 +44,18 @@ ArrayList<Item_recycle> arrayList;
                 @Override
                 public void onClick(View view) {
 
-                    int postion = getLayoutPosition();
-                    HelperMethods.categoryName = arrayList.get(postion).getName();
-                    context.startActivity(new Intent(context, SallersRecycler.class));
+
+                    if(HelperMethods.Home_Filtter_Country_name == null)
+                    {
+                        Toast.makeText(context, "من فضلك اختار المدينة", Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        int postion = getLayoutPosition();
+                        HelperMethods.Home_Filtter_categoryName = arrayList.get(postion).getName();
+                        context.startActivity(new Intent(context, SallersRecycler.class));
+                    }
+
                 }
             });
 

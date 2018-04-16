@@ -157,21 +157,12 @@ public class MyAds extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
+                        Intent intent = new Intent(MyAds.this, ItemScreen.class);
 
-                        HelperMethods.items_recycler_name = model.getName();
-                        HelperMethods.items_recycler_image = model.getImage();
-                        HelperMethods.items_recycler_desc = model.getDescription();
-                        HelperMethods.items_recycler_place = model.getPlaceLocation();
-                        HelperMethods.items_recycler_price = model.getPrice();
-                        HelperMethods.items_recycler_type = model.getItemType();
-                        HelperMethods.items_recycler_country = model.getCountryLocation();
-                        HelperMethods.items_recycler_Time = model.getUploadedTime();
-                        HelperMethods.items_recycler_user_Image = model.getUserImage();
-                        HelperMethods.items_recycler_user_name = model.getUserName();
-                        HelperMethods.items_recycler_user_email = model.getUserEmail();
-                        HelperMethods.items_recycler_user_number = model.getUserNumber();
+                        intent.putExtra("Item_ID", key_post);
 
-                        startActivity(new Intent(MyAds.this, ItemScreen.class));
+
+                        startActivity(intent);
 
                     }
                 });

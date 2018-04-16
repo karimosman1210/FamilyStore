@@ -18,31 +18,20 @@ public class HelperMethods {
 
 
 
-    public static String categoryName;
-    public static String sallerID;
-    public static String User_id;
+    public static String Home_Filtter_categoryName;
+    public static String Home_Filtter_sallerID;
+    public static String Home_Filtter_Country_name;
+
+
+
     public static String delete_ads_id;
-    public static String sign_location;
-
-
-    public static ArrayList<Encaps_Basket>encaps_baskets=new ArrayList<>();
-    public static String items_recycler_id;
-    public static String items_recycler_name;
-    public static String items_recycler_type;
-    public static String items_recycler_price;
-    public static String items_recycler_country;
-    public static String items_recycler_place;
-    public static String items_recycler_image;
-    public static String items_recycler_user_name;
-    public static String items_recycler_user_email;
-    public static String items_recycler_user_number;
-    public static String items_recycler_user_Image;
-    public static long items_recycler_Time;
-    public static String items_recycler_desc;
 
 
 
-    public static Uri uri_usre_profile_image;
+
+
+
+
     public static ProgressDialog blg , blg2;
 
     public static void showDialog(Activity currentActivity, String title, String msg) {

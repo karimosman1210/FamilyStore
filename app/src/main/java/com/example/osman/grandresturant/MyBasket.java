@@ -15,10 +15,10 @@ RecyclerView recycleBasket;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_basket);
 
-        recycleBasket=(RecyclerView)findViewById(R.id.recycleBasket);
+      /*  recycleBasket=(RecyclerView)findViewById(R.id.recycleBasket);
         recycleBasket.setLayoutManager(new LinearLayoutManager(this));
         BasketAdapter basketAdapter=new BasketAdapter(this,HelperMethods.encaps_baskets);
-        recycleBasket.setAdapter(basketAdapter);
+        recycleBasket.setAdapter(basketAdapter);*/
 
 
 
