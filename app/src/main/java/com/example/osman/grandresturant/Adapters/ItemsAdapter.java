@@ -70,7 +70,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        ItemClass itemClass = my_data.get(position);
+        final ItemClass itemClass = my_data.get(position);
 
 
         holder.item_name.setText(itemClass.getName());
@@ -83,13 +83,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid());
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getID());
                 //.child("id").child(id).push();
                 //.child(id).push();
+                databaseReference.setValue(true);
 
-//                databaseReference.child("id").setValue(id);
-                databaseReference.setValue(id);
-                Toast.makeText(context, "Added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
             }
         });
 

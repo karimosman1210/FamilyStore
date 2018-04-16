@@ -82,11 +82,11 @@ public class ItemsRecycler extends AppCompatActivity {
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
-                    final String key_post = data.getKey();
 
 
                     if (Objects.equals(data.child("ItemType").getValue().toString(), HelperMethods.categoryName)){
 
+                        String Itemid=data.child("idItem").getValue().toString();
                         String Name = data.child("Name").getValue().toString();
                         String image = data.child("image").getValue().toString();
                         String CountryLocation = data.child("CountryLocation").getValue().toString();
@@ -101,7 +101,7 @@ public class ItemsRecycler extends AppCompatActivity {
                         String UserImage = data.child("UserImage").getValue().toString();
                         long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                        arrayList.add(new ItemClass( key_post,  Name,  image,  CountryLocation,  Description,  ItemType, PlaceLocation,  Price,  UserID,  UserName,  UserEmail,  UserNumber,  UserImage,  UploadedTime));
+                        arrayList.add(new ItemClass( Itemid,  Name,  image,  CountryLocation,  Description,  ItemType, PlaceLocation,  Price,  UserID,  UserName,  UserEmail,  UserNumber,  UserImage,  UploadedTime));
                         adapter.notifyDataSetChanged();
                     }
                     else {}

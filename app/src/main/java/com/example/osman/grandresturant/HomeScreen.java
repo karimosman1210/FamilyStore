@@ -362,11 +362,20 @@ public class HomeScreen extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         if (id == R.id.nav_Sallers) {
             startActivity(new Intent(HomeScreen.this, SallersRecycler.class));
         } else if (id == R.id.nav_AboutUs) {
 
-        } else if (id == R.id.nav_Login) {
+        }
+
+       else if (id == R.id.nav_company_favorite_Ads) {
+
+            startActivity(new Intent(HomeScreen.this,Favorite_item.class));
+
+        }
+
+        else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 

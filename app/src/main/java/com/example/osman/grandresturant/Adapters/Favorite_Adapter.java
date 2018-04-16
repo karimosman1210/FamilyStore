@@ -18,6 +18,7 @@ import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,34 +70,11 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
 
         ItemClass itemClass = my_data.get(position);
 
-
         holder.item_name.setText(itemClass.getName());
         holder.item_price.setText(itemClass.getPrice());
         holder.item_place.setText(itemClass.getPlaceLocation());
         holder.item_category.setText(itemClass.getItemType());
-
-        final String id = itemClass.getID();
-        holder.unfavoritBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(context, "تم الحزف من المفضله", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        Glide.with(context).load(my_data.get(position).getImage()).listener(new RequestListener<String, GlideDrawable>() {
-            @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                return false;
-            }
-
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                return false;
-            }
-        }).into(holder.item_image);
-
+        Picasso.with(context).load(itemClass.getItemType()).into(holder.item_image);
     }
 
 

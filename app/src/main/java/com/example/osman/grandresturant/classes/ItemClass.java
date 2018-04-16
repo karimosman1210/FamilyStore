@@ -10,7 +10,7 @@ public class ItemClass {
     public ItemClass() {
     }
 
-    ;
+
 
    private String ID, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber , UserImage  ;
     private long UploadedTime;

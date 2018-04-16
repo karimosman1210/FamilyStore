@@ -253,14 +253,12 @@ public class Activity_upload extends AppCompatActivity {
                             databaseReference.child("Description").setValue(description.getText().toString());
                             databaseReference.child("image").setValue(uri_load.toString());
                             databaseReference.child("UploadedTime").setValue(System.currentTimeMillis() / 1000);
-
-
                             databaseReference.child("UserImage").setValue(UserImage);
                             databaseReference.child("UserName").setValue(UserName);
                             databaseReference.child("UserNumber").setValue(UserNumber);
                             databaseReference.child("UserEmail").setValue(UserEmail);
                             databaseReference.child("UserID").setValue(mAuth.getCurrentUser().getUid());
-
+                            databaseReference.child("idItem").setValue(databaseReference.getKey());
                             databaseReference.child("PlaceLocation").setValue(place.getText().toString());
 
 

@@ -9,6 +9,8 @@
         <item
             android:icon="@drawable/category_icon"
             android:title="All Category" />
+
+
         <item
             android:icon="@drawable/ads"
             android:title="Add Ads" />
@@ -18,6 +20,8 @@
         <item
             android:icon="@drawable/profile"
             android:title="Profile" />
+
+
     </group>
     <item android:title="Communicate">
         <menu>
