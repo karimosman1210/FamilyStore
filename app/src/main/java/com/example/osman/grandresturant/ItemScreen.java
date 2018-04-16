@@ -1,6 +1,9 @@
 package com.example.osman.grandresturant;
 
 import android.content.Intent;
+import android.net.sip.SipSession;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,10 +17,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.Encaps_Basket;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class ItemScreen extends AppCompatActivity {
 
@@ -26,6 +35,8 @@ public class ItemScreen extends AppCompatActivity {
     Button item_screen_add_btn;
     android.support.v7.widget.Toolbar itemToolbar;
     ImageButton basketButn;
+    DatabaseReference databaseReference;
+    String newString ;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -59,9 +70,54 @@ public class ItemScreen extends AppCompatActivity {
         user_image = (ImageView) findViewById(R.id.item_screen_company_image);
 
 
-        Item_name.setText(HelperMethods.items_recycler_name);
-        Item_country.setText(HelperMethods.items_recycler_country);
-        Item_place.setText(HelperMethods.items_recycler_place);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newString= null;
+            } else {
+                newString= extras.getString("Item_ID");
+            }
+        } else {
+            newString = (String) savedInstanceState.getSerializable("Item_ID");
+        }
+
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Items").child(newString);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+
+
+                Item_name.setText(snapshot.child("Name").getValue().toString());
+                Item_country.setText(snapshot.child("CountryLocation").getValue().toString());
+                Item_place.setText(snapshot.child("PlaceLocation").getValue().toString());
+                Item_time.setText(snapshot.child("CountryLocation").getValue().toString());
+                Item_price.setText(snapshot.child("Price").getValue().toString());
+                Item_desc.setText(snapshot.child("Description").getValue().toString());
+                user_name.setText(snapshot.child("UserName").getValue().toString());
+                user_number.setText(snapshot.child("UserNumber").getValue().toString());
+                user_mail.setText(snapshot.child("UserEmail").getValue().toString());
+
+                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).fitCenter().into(user_image);
+                Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).fitCenter().into(Item_image);
+
+
+                long timestamp = Long.parseLong(String.valueOf(snapshot.child("UploadedTime").getValue().toString())) * 1000L;
+                Item_time.setText(getDate(timestamp));
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
 
 
 
@@ -85,17 +141,7 @@ public class ItemScreen extends AppCompatActivity {
         });
 
 
-        long timestamp = Long.parseLong(String.valueOf(HelperMethods.items_recycler_Time)) * 1000L;
-        Item_time.setText(getDate(timestamp));
 
-        Item_price.setText(HelperMethods.items_recycler_price);
-        Item_desc.setText(HelperMethods.items_recycler_desc);
-        user_name.setText(HelperMethods.items_recycler_user_name);
-        user_number.setText(HelperMethods.items_recycler_user_number);
-        user_mail.setText(HelperMethods.items_recycler_user_email);
-
-        Glide.with(ItemScreen.this).load(HelperMethods.items_recycler_user_Image).fitCenter().into(user_image);
-        Glide.with(ItemScreen.this).load(HelperMethods.items_recycler_image).fitCenter().into(Item_image);
 
         basketButn.setOnClickListener(new View.OnClickListener() {
             @Override

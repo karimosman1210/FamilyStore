@@ -1,5 +1,7 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.Registration;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.osman.grandresturant.Dialogs.LocationDialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -48,20 +51,24 @@ import java.util.Locale;
 
 public class Sign extends AppCompatActivity {
     Button signUpBtnSignUp, signUpBtnCancel;
-    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile, user_country;
+    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener listener;
     String User_Type, myEmail, CountryLocation;
     private DatabaseReference mDatabaseUsers;
-
-    private static final int RUSLET_LOAD_IMAGE = 1;
     private StorageReference mStorageRef;
-    ImageView myImgeSign;
-    Uri imageUri;
     DatabaseReference currentuser_db;
-    boolean check=false;
-    ProgressBar progressSignUp;
-    TextView sign_location ;
+    String  user_country ;
+    MaterialBetterSpinner spinner;
+    Button auto, manual;
+    TextView location;
+    ArrayAdapter<String> arrayAdapter;
+    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+    double latti;
+    double longi;
+
 
 
 
@@ -71,9 +78,8 @@ public class Sign extends AppCompatActivity {
         setContentView(R.layout.activity_sign);
         signUpBtnCancel = (Button) findViewById(R.id.signUpBtnCancel);
 
-        myImgeSign = (ImageView) findViewById(R.id.myImgeSign);
-        progressSignUp=(ProgressBar)findViewById(R.id.progressSignUp);
-        sign_location = (TextView) findViewById(R.id.sign_location_textview) ;
+
+
         signUpBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,28 +88,73 @@ public class Sign extends AppCompatActivity {
         });
         mStorageRef=mStorageRef = FirebaseStorage.getInstance().getReference();
 
+        spinner = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
+        auto = (Button) findViewById(R.id.location_dialog_btn_auto);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
+        spinner.setAdapter(arrayAdapter);
 
-        sign_location.setOnClickListener(new View.OnClickListener() {
+
+
+
+        auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                LocationDialog cdd=new LocationDialog(Sign.this);
-                cdd.show();
+                getLocation();
+                Locale mLocale = new Locale("ar");
+
+                Geocoder geocoder = new Geocoder(Sign.this, mLocale);
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latti, longi, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    assert addresses != null;
+
+                    int maxAddressLine = addresses.get(0).getMaxAddressLineIndex();
+
+                    String countryName = addresses.get(0).getAddressLine(maxAddressLine);
+                    String countryName1 = addresses.get(0).getAdminArea();
+                    String countryName2 = addresses.get(0).getSubAdminArea();
+                    String countryName3 = addresses.get(0).getSubLocality();
+
+
+                    String countr = "محافظة";
+
+                    String regex = "\\s*\\bمحافظة\\b\\s*";
+                    countryName1 = countryName1.replaceAll(regex, "");
+
+                    user_country = countryName1;
+
+                    auto.setText(countryName1);
+
+
+                } catch (Exception e) {
+                }
+
             }
         });
 
-
-
-
-        myImgeSign.setOnClickListener(new View.OnClickListener() {
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent open = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(open, RUSLET_LOAD_IMAGE);
+                user_country =  adapterView.getItemAtPosition(i).toString();
 
+                auto.setText(user_country);
             }
         });
+
+
+
+
+
+
 
 
 
@@ -114,6 +165,8 @@ public class Sign extends AppCompatActivity {
         surepassSignUp = (EditText) findViewById(R.id.surepassSignUp);
         nameEt = (EditText) findViewById(R.id.nameEt);
         user_mobile = (EditText) findViewById(R.id.phone_Et);
+        auth = FirebaseAuth.getInstance();
+
 
 
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -121,25 +174,14 @@ public class Sign extends AppCompatActivity {
         signUpBtnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (check==true) {
+
                     signUp();
-                }
+
 
 
             }
         });
-        auth = FirebaseAuth.getInstance();
-        listener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    finish();
 
-                }
-
-            }
-        };
 
 
     }
@@ -150,16 +192,19 @@ public class Sign extends AppCompatActivity {
         String myPass = passwordEtSignUp.getText().toString().trim();
         String passSure = surepassSignUp.getText().toString().trim();
 
-        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass)  || TextUtils.isEmpty(HelperMethods.sign_location) || TextUtils.isEmpty(passSure)) {
+        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass)  || TextUtils.isEmpty(passSure)) {
 
-            Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "أكمل البيانات", Toast.LENGTH_SHORT).show();
 
 
         } else if (!myPass.equals(passSure)) {
-            Toast.makeText(this, "password not equle ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "كلمة السر غير متطابقة", Toast.LENGTH_SHORT).show();
         } else if (User_Type == null) {
             Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if (TextUtils.isEmpty(user_country)) {
+            Toast.makeText(this, "أختار مكان المستخدم  ", Toast.LENGTH_SHORT).show();
+        }else {
 
             HelperMethods.showDialog(Sign.this, "Wait...", "Create new user");
 
@@ -181,32 +226,18 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("user_tpe").setValue(User_Type);
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
-                            currentuser_db.child("country").setValue( HelperMethods.sign_location);
+                            currentuser_db.child("country").setValue(user_country);
+                            currentuser_db.child("profile_image,").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
+
+
                             HelperMethods.hideDialog(Sign.this);
+                            startActivity(new Intent(Sign.this , User_Profile_image.class));
 
 
                         } catch (Exception e) {
 
 
                         }
-                     if (check==true) {
-
-                         progressSignUp.setVisibility(View.VISIBLE);
-                         mStorageRef.child("UserImage").child(auth.getCurrentUser().getUid()).putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                             @Override
-                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
-                                 if (task.isSuccessful()) {
-
-                                     currentuser_db.child("profile_image").setValue(task.getResult().getDownloadUrl().toString());
-                                     progressSignUp.setVisibility(View.INVISIBLE);
-                                     Toast.makeText(Sign.this, "Signed Up Successfully", Toast.LENGTH_SHORT).show();
-                                     finish();
-                                 }
-
-                             }
-                         });
-                     }
 
 
                     }
@@ -219,29 +250,6 @@ public class Sign extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int reqCode, int resultCode, Intent data) {
-        super.onActivityResult(reqCode, resultCode, data);
-
-
-        if (resultCode == RESULT_OK) {
-            try {
-                imageUri = data.getData();
-                check=true;
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                myImgeSign.setImageBitmap(selectedImage);
-
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                Toast.makeText(Sign.this, "Something went wrong", Toast.LENGTH_LONG).show();
-            }
-
-        } else {
-            Toast.makeText(Sign.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
-        }
-    }
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
@@ -260,6 +268,35 @@ public class Sign extends AppCompatActivity {
                 break;
         }
 
+
+    }
+
+    void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null) {
+
+
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+
+
+                String total2 = Double.toString(latti);
+                String total = Double.toString(longi);
+
+                Toast.makeText(this, total2 + total, Toast.LENGTH_SHORT).show();
+
+            } else {
+
+            }
+        }
 
     }
 

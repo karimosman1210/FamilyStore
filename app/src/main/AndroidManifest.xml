@@ -40,7 +40,8 @@
         <activity android:name=".MyAds" />
         <activity android:name=".ItemUpdate" />
         <activity android:name=".Edit_Ads" />
-        <activity android:name=".Favorite_item"></activity>
+        <activity android:name=".Dialogs.LocationDialog" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
