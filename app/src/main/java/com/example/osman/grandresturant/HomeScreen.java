@@ -37,8 +37,10 @@ import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.Adapter_category;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.NavigationActivities.FeedBack;
+import com.example.osman.grandresturant.NavigationActivities.NavigationCategoriesRecycler;
+import com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler;
 import com.example.osman.grandresturant.Registration.Login;
-import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -137,7 +139,7 @@ public class HomeScreen extends AppCompatActivity
                             String countryName = addresses.get(0).getAdminArea();
 
                             String regex = "\\s*\\bمحافظة\\b\\s*";
-                            String  country_Name = countryName.replaceAll(regex, "");
+                            String country_Name = countryName.replaceAll(regex, "");
                             Country_choose.setText(country_Name);
                             HelperMethods.Home_Filtter_Country_name = null;
 
@@ -376,24 +378,28 @@ public class HomeScreen extends AppCompatActivity
 
 
         if (id == R.id.nav_Sallers) {
-            startActivity(new Intent(HomeScreen.this, SallersRecycler.class));
+            startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
+        } else if (id == R.id.nav_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+
         } else if (id == R.id.nav_AboutUs) {
 
-        }
+        } else if (id == R.id.nav_company_favorite_Ads) {
 
-       else if (id == R.id.nav_company_favorite_Ads) {
+            startActivity(new Intent(HomeScreen.this, Favorite_item.class));
 
-            startActivity(new Intent(HomeScreen.this,Favorite_item.class));
-
-        }
-
-        else if (id == R.id.nav_Login) {
+        } else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
         } else if (id == R.id.nav_company_sallers) {
 
-            startActivity(new Intent(HomeScreen.this, SallersRecycler.class));
+            startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
+
+        } else if (id == R.id.nav_company_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_company_New_Requests) {
 
@@ -405,9 +411,10 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_company_favorite_Ads) {
 
 
-            Intent intent=new Intent(HomeScreen.this,Favorite_item.class);
+            Intent intent = new Intent(HomeScreen.this, Favorite_item.class);
             startActivity(intent);
         } else if (id == R.id.nav_company_FeedBack) {
+            startActivity(new Intent(HomeScreen.this, FeedBack.class));
 
         } else if (id == R.id.nav_company_Abouts_Us) {
 
@@ -415,19 +422,24 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, UserProfile.class));
 
-
         } else if (id == R.id.nav_company_Log_Out) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
-
         } else if (id == R.id.nav_User_Sallers) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
+
+        } else if (id == R.id.nav_Use_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_User_My_Requests) {
 
         } else if (id == R.id.nav_User_favorite_Ads) {
 
         } else if (id == R.id.nav_User_FeedBack) {
+            startActivity(new Intent(HomeScreen.this, FeedBack.class));
 
         } else if (id == R.id.nav_User_Abouts_Us) {
 
@@ -437,7 +449,6 @@ public class HomeScreen extends AppCompatActivity
 
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
-
 
         }
 

@@ -21,18 +21,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-
 import java.util.List;
 
 /**
- * Created by a.taher on 7/3/2016.
+ * Created by A.taher on 4/17/2018.
  */
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
+
+
+public class nav_item_saller_adapter extends RecyclerView.Adapter<nav_item_saller_adapter.ViewHolder> {
 
     private Context context;
     private List<ItemClass> my_data;
 
-    public ItemsAdapter(Context context, List<ItemClass> my_data) {
+    public nav_item_saller_adapter(Context context, List<ItemClass> my_data) {
         this.context = context;
         this.my_data = my_data;
     }
@@ -40,7 +41,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView item_image, favoritBtn;
+        ImageView item_image ;
         TextView item_name, item_price, item_type, item_place, item_category;
 
         public ViewHolder(View view) {
@@ -52,20 +53,23 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             item_category = (TextView) view.findViewById(R.id.item_recycler_category);
             item_image = (ImageView) view.findViewById(R.id.item_recycler_image);
 
-            favoritBtn = (ImageView) view.findViewById(R.id.favoritBtn);
-
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    int postion = getLayoutPosition();
-                    String id = my_data.get(postion).getId();
 
-                    Intent intent = new Intent(context, ItemScreen.class);
 
-                    intent.putExtra("Item_ID", id);
+                            int postion = getLayoutPosition();
+                            String id = my_data.get(postion).getId();
+
+                            Intent intent = new Intent(context, ItemScreen.class);
+
+                            intent.putExtra("STRING_I_NEED", id);
+
                 }
             });
+
+
 
         }
     }
@@ -90,18 +94,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.item_category.setText(itemClass.getItemType());
 
         final String id = itemClass.getIdItem();
-        holder.favoritBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
-                //.child("id").child(id).push();
-                //.child(id).push();
-                databaseReference.setValue(true);
 
-                Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         Glide.with(context).load(my_data.get(position).getImage()).listener(new RequestListener<String, GlideDrawable>() {
             @Override

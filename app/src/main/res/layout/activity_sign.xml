@@ -21,12 +21,6 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/Custom_Humborer">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingRight="10dp">
-
-            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 

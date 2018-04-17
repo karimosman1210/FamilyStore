@@ -1,4 +1,4 @@
-package com.example.osman.grandresturant;
+package com.example.osman.grandresturant.NavigationActivities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,32 +12,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.SallersRecycler;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class SallersRecycler extends AppCompatActivity {
+public class NavigationSallerRecycler extends AppCompatActivity {
 
     RecyclerView recyclerView, adminRecyclerView;
     DatabaseReference mDatabaseReference;
     ImageView secrchItem;
     LinearLayout barsearch;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sallers_recycler);
+        setContentView(R.layout.activity_n_navigation_saller_recycler);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(ToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        secrchItem = (ImageView) findViewById(R.id.secrchItem);
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
-        adminRecyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler_amin);
+        recyclerView = (RecyclerView) findViewById(R.id.nav_saller_recycler);
+        adminRecyclerView = (RecyclerView) findViewById(R.id.nav_saller_recycler_admin);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -61,14 +63,14 @@ public class SallersRecycler extends AppCompatActivity {
         super.onStart();
 
 
-        FirebaseRecyclerAdapter<SallersClass, SallersRecycler.holder> firebaseRecyclerAdapterAdmin = new FirebaseRecyclerAdapter<SallersClass, holder>(
+        FirebaseRecyclerAdapter<SallersClass, SallersRecycler.holder> firebaseRecyclerAdapterAdmin = new FirebaseRecyclerAdapter<SallersClass, SallersRecycler.holder>(
                 SallersClass.class,
                 R.layout.saller_admin_item,
-                holder.class,
+                SallersRecycler.holder.class,
                 mDatabaseReference.orderByChild("user_tpe").equalTo("admin")
         ) {
             @Override
-            protected void populateViewHolder(holder viewHolder, SallersClass model, int position) {
+            protected void populateViewHolder(SallersRecycler.holder viewHolder, final SallersClass model, int position) {
 
                 final String key_post = getRef(position).getKey();
                 viewHolder.setItemName(model.getUsername());
@@ -81,8 +83,13 @@ public class SallersRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        HelperMethods.Home_Filtter_sallerID = key_post;
-                        startActivity(new Intent(SallersRecycler.this, ItemsRecycler.class));
+
+
+                        Intent intent = new Intent(NavigationSallerRecycler.this, NavItemRecycler.class);
+                        intent.putExtra("Item_type", "Saller");
+                        intent.putExtra("Filter", key_post);
+                        startActivity(intent);
+
 
                     }
                 });
@@ -113,8 +120,13 @@ public class SallersRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        HelperMethods.Home_Filtter_sallerID = key_post;
-                        startActivity(new Intent(SallersRecycler.this, ItemsRecycler.class));
+
+
+                        Intent intent = new Intent(NavigationSallerRecycler.this, NavItemRecycler.class);
+                        intent.putExtra("Item_type", "Saller");
+                        intent.putExtra("Filter", key_post);
+                        startActivity(intent);
+
 
                     }
                 });
@@ -128,7 +140,7 @@ public class SallersRecycler extends AppCompatActivity {
     public static class holder extends RecyclerView.ViewHolder {
 
 
-        public View view;
+        View view;
         ImageView saller_img;
         TextView saller_name, saller_location, saller_number;
 
@@ -170,7 +182,7 @@ public class SallersRecycler extends AppCompatActivity {
     public static class AdminHolder extends RecyclerView.ViewHolder {
 
 
-        public View view;
+        View view;
         ImageView saller_img;
         TextView saller_name, saller_location, saller_number;
 
@@ -208,6 +220,5 @@ public class SallersRecycler extends AppCompatActivity {
         }
 
     }
-
 
 }

@@ -36,14 +36,17 @@
             android:name=".SallersRecycler"
             android:label="التجار" />
         <activity android:name=".MyBasket" />
-        <activity android:name=".UserProfile" />
+        <activity android:name="com.example.osman.grandresturant.Registration.UserProfile" />
         <activity android:name=".MyAds" />
         <activity android:name=".ItemUpdate" />
         <activity android:name=".Edit_Ads" />
         <activity android:name=".Dialogs.LocationDialog" />
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".Favorite_item"></activity>
-
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Favorite_item" />
+        <activity android:name=".NavigationActivities.FeedBack" />
+        <activity android:name=".NavigationActivities.NavigationSallerRecycler" />
+        <activity android:name=".NavigationActivities.NavigationCategoriesRecycler" />
+        <activity android:name=".NavigationActivities.NavItemRecycler"></activity>
     </application>
 
 </manifest>

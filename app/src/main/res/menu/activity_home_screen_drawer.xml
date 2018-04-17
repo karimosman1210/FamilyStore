@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_menu_share"
             android:title="التجار" />
         <item
+            android:id="@+id/nav_Categories"
+            android:icon="@drawable/ic_menu_share"
+            android:title="الأقسام" />
+        <item
             android:id="@+id/nav_AboutUs"
             android:icon="@drawable/ic_menu_gallery"
             android:title="About Us" />

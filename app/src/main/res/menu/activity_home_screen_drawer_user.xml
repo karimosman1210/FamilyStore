@@ -9,7 +9,10 @@
             android:id="@+id/nav_User_Sallers"
             android:icon="@drawable/ic_menu_camera"
             android:title="التجار" />
-
+        <item
+            android:id="@+id/nav_Use_Categories"
+            android:icon="@drawable/ic_menu_share"
+            android:title="الأقسام" />
         <item
             android:id="@+id/nav_User_My_Requests"
             android:icon="@drawable/ic_menu_slideshow"
@@ -23,7 +26,7 @@
         <item
             android:id="@+id/nav_User_FeedBack"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="FeedBack" />
+            android:title="رأيك" />
         <item
             android:id="@+id/nav_User_Abouts_Us"
             android:icon="@drawable/ic_menu_slideshow"

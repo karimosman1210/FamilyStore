@@ -84,9 +84,10 @@ public class ItemsRecycler extends AppCompatActivity {
 
 
 
-                    if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)  ){
+                    if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
-                        String Itemid=data.child("idItem").getValue().toString();
+                        String id = data.getRef().getKey();
+                        String Itemid = data.child("idItem").getValue().toString();
                         String Name = data.child("Name").getValue().toString();
                         String image = data.child("image").getValue().toString();
                         String CountryLocation = data.child("CountryLocation").getValue().toString();
@@ -101,16 +102,10 @@ public class ItemsRecycler extends AppCompatActivity {
                         String UserImage = data.child("UserImage").getValue().toString();
                         long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                        arrayList.add(new ItemClass( Itemid,  Name,  image,  CountryLocation,  Description,  ItemType, PlaceLocation,  Price,  UserID,  UserName,  UserEmail,  UserNumber,  UserImage,  UploadedTime));
+                        arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UserImage, UploadedTime));
                         adapter.notifyDataSetChanged();
+                    } else {
                     }
-                    else {}
-
-
-
-
-
-
 
 
                 }
