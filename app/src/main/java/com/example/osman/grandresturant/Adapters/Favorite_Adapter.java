@@ -57,7 +57,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         final ItemClass itemClass = my_data.get(position);
 
@@ -80,8 +80,9 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
                         String firebaseAuth=FirebaseAuth.getInstance().getCurrentUser().getUid();
                         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Favorite");
                         database.child(firebaseAuth).child(itemClass.getIdItem()).removeValue();
-
-//                        NavUtils.navigateUpFromSameTask((Activity) context);
+                        my_data.remove(position);
+                        notifyDataSetChanged();
+                            
 
                         Toast.makeText(context, itemClass.getName()+"  تم حزف ", Toast.LENGTH_SHORT).show();
                     }
