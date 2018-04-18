@@ -41,6 +41,7 @@ import com.example.osman.grandresturant.NavigationActivities.FeedBack;
 import com.example.osman.grandresturant.NavigationActivities.NavigationCategoriesRecycler;
 import com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler;
 import com.example.osman.grandresturant.Registration.Login;
+import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -51,6 +52,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.IOException;
@@ -76,8 +78,8 @@ public class HomeScreen extends AppCompatActivity
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    TextView login_textview;
-    ImageView image_shopping;
+    TextView login_textview, tv_nav_name, tv_nav_email,tv_nav_well;
+    ImageView image_shopping, imageView_nav_user;
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
     MaterialBetterSpinner Country;
@@ -139,7 +141,7 @@ public class HomeScreen extends AppCompatActivity
                             String countryName = addresses.get(0).getAdminArea();
 
                             String regex = "\\s*\\bمحافظة\\b\\s*";
-                            String country_Name = countryName.replaceAll(regex, "");
+                            String  country_Name = countryName.replaceAll(regex, "");
                             Country_choose.setText(country_Name);
                             HelperMethods.Home_Filtter_Country_name = null;
 
@@ -195,6 +197,51 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
+
+        NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
+        navigation.setNavigationItemSelectedListener(this);
+        final View header = navigation.getHeaderView(0);
+
+        tv_nav_email = (TextView) header.findViewById(R.id.tv_nav_email);
+        tv_nav_name = (TextView) header.findViewById(R.id.tv_nav_name);
+        tv_nav_well=(TextView)header.findViewById(R.id.tv_nav_well);
+        imageView_nav_user = (ImageView) header.findViewById(R.id.imageView_nav_user);
+
+
+            try {
+
+
+
+
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    String name_user = dataSnapshot.child("username").getValue().toString();
+                    String email_user = dataSnapshot.child("email").getValue().toString();
+
+                    tv_nav_name.setText(name_user);
+                    tv_nav_email.setText(email_user);
+
+                    Picasso.with(HomeScreen.this).load(dataSnapshot.child("profile_image").getValue().toString()).into(imageView_nav_user);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        } catch (Exception e) {
+
+
+        }
+
+
         mAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -219,7 +266,8 @@ public class HomeScreen extends AppCompatActivity
                                 fab.setVisibility(View.GONE);
                                 login_textview.setVisibility(View.GONE);
                                 image_shopping.setVisibility(View.VISIBLE);
-                                //   HelperMethods.hideDialog2(HomeScreen.this);
+
+
                             } else {
                                 navigationView.getMenu().clear();
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_company);
@@ -239,7 +287,10 @@ public class HomeScreen extends AppCompatActivity
 
 
                 } else {
-
+                    tv_nav_email.setVisibility(View.INVISIBLE);
+                    tv_nav_name.setVisibility(View.INVISIBLE);
+                    imageView_nav_user.setVisibility(View.INVISIBLE);
+                    tv_nav_well.setVisibility(View.VISIBLE);
                     navigationView.getMenu().clear();
                     navigationView.inflateMenu(R.menu.activity_home_screen_drawer);
                     fab.setVisibility(View.GONE);
@@ -385,11 +436,15 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_AboutUs) {
 
-        } else if (id == R.id.nav_company_favorite_Ads) {
+        }
 
-            startActivity(new Intent(HomeScreen.this, Favorite_item.class));
+       else if (id == R.id.nav_company_favorite_Ads) {
 
-        } else if (id == R.id.nav_Login) {
+            startActivity(new Intent(HomeScreen.this,Favorite_item.class));
+
+        }
+
+        else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
@@ -411,7 +466,7 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_company_favorite_Ads) {
 
 
-            Intent intent = new Intent(HomeScreen.this, Favorite_item.class);
+            Intent intent=new Intent(HomeScreen.this,Favorite_item.class);
             startActivity(intent);
         } else if (id == R.id.nav_company_FeedBack) {
             startActivity(new Intent(HomeScreen.this, FeedBack.class));
@@ -422,9 +477,11 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, UserProfile.class));
 
+
         } else if (id == R.id.nav_company_Log_Out) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
+
 
         } else if (id == R.id.nav_User_Sallers) {
 
@@ -449,6 +506,7 @@ public class HomeScreen extends AppCompatActivity
 
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
+
 
         }
 

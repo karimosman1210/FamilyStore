@@ -11,15 +11,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="Wellcome"
+    android:gravity="center"
+    android:textSize="40dp"
+    android:id="@+id/tv_nav_well"
+android:visibility="gone"
+    />
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_nav_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        app:srcCompat="@mipmap/ic_launcher_round"
+        android:visibility="visible"/>
 
     <TextView
+android:visibility="visible"
+        android:id="@+id/tv_nav_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -27,7 +38,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:visibility="visible"
+        android:id="@+id/tv_nav_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com" />
