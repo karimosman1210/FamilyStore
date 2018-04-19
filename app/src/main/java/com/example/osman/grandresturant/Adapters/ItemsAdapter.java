@@ -122,7 +122,7 @@ FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-
+//
                         if (dataSnapshot.exists()){
                            databaseReference.removeValue();
                             Toast.makeText(context, "تم الحذف من المفضل ", Toast.LENGTH_SHORT).show();
