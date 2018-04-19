@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.osman.grandresturant.Adapters.Favorite_Adapter;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -45,7 +46,7 @@ public class Favorite_item extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
-                            System.out.println(itemClass.getIdItem());
+                            Log.v("kk",itemClass.toString());
                             list.add(itemClass);
                             favorite_adapter.notifyDataSetChanged();
 

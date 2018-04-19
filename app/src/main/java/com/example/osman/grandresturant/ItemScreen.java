@@ -64,6 +64,7 @@ public class ItemScreen extends AppCompatActivity {
         CollapsingToolbarLayout  collapsingToolbar  = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         item_screen_add_btn = (Button) findViewById(R.id.item_screen_add_btn);
 
@@ -109,7 +110,7 @@ public class ItemScreen extends AppCompatActivity {
                 user_number.setText(snapshot.child("UserNumber").getValue().toString());
                 user_mail.setText(snapshot.child("UserEmail").getValue().toString());
 
-                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).fitCenter().into(user_image);
+//                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).fitCenter().into(user_image);
                 Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).fitCenter().into(Item_image);
 
 
