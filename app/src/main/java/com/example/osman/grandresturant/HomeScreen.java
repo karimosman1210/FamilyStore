@@ -47,6 +47,12 @@ import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -96,6 +102,10 @@ public class HomeScreen extends AppCompatActivity
     double longi;
     Timer timer;
 
+    private FusedLocationProviderClient mLocationManager;
+    private LocationCallback locationCallback;
+    private LocationRequest mLocationRequest;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,28 +122,28 @@ public class HomeScreen extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        mLocationManager = LocationServices.getFusedLocationProviderClient(this);
 
         recyclerView.setNestedScrollingEnabled(false);
 
+        checkForLocationPermissions();
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        checkForLocationPermissions();
-
-                    }
-                });
-
-
-            }
-        }, 0, 1 * (1000 * 1));
+//        timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            public void run() {
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                    }
+//                });
+//
+//
+//            }
+//        }, 0, 1 * (1000 * 1));
 
 
         Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
@@ -144,7 +154,7 @@ public class HomeScreen extends AppCompatActivity
         Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                timer.cancel();
+                //timer.cancel();
                 Country_name = adapterView.getItemAtPosition(i).toString();
                 Country_choose.setText(Country_name);
                 HelperMethods.Home_Filtter_Country_name = Country_name;
@@ -577,12 +587,34 @@ public class HomeScreen extends AppCompatActivity
     void getLocation() {
 
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        //Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-        if (location != null) {
-            latti = location.getLatitude();
-            longi = location.getLongitude();
-            filterLocation();
-        }
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) return;
+
+                Location location = locationResult.getLastLocation();
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+                filterLocation();
+                stopLocationUpdates();
+            }
+        };
+
+        createLocationRequest();
+        mLocationManager.requestLocationUpdates(mLocationRequest, locationCallback, null);
+
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void stopLocationUpdates() {
+        mLocationManager.removeLocationUpdates(locationCallback);
     }
 }
