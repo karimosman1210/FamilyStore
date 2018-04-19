@@ -122,10 +122,9 @@ public class NavItemRecycler extends AppCompatActivity {
                     String UserName = data.child("UserName").getValue().toString();
                     String UserEmail = data.child("UserEmail").getValue().toString();
                     String UserNumber = data.child("UserNumber").getValue().toString();
-                    String UserImage = data.child("UserImage").getValue().toString();
                     long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UserImage, UploadedTime));
+                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                     adapter.notifyDataSetChanged();
 
 
@@ -172,10 +171,9 @@ public class NavItemRecycler extends AppCompatActivity {
                     String UserName = data.child("UserName").getValue().toString();
                     String UserEmail = data.child("UserEmail").getValue().toString();
                     String UserNumber = data.child("UserNumber").getValue().toString();
-                    String UserImage = data.child("UserImage").getValue().toString();
                     long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UserImage, UploadedTime));
+                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                     adapter.notifyDataSetChanged();
 
 

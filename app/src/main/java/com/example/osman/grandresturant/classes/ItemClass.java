@@ -12,10 +12,10 @@ public class ItemClass {
 
 
 
-   private String id , idItem, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber , UserImage  ;
+   private String id , idItem, Name,image, CountryLocation, Description, ItemType, PlaceLocation, Price , UserID , UserName , UserEmail , UserNumber   ;
     private long UploadedTime;
 
-    public ItemClass(String id, String idItem, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String userID, String userName, String userEmail, String userNumber, String userImage, long uploadedTime) {
+    public ItemClass(String id, String idItem, String name, String image, String countryLocation, String description, String itemType, String placeLocation, String price, String userID, String userName, String userEmail, String userNumber, long uploadedTime) {
         this.id = id;
         this.idItem = idItem;
         Name = name;
@@ -29,7 +29,7 @@ public class ItemClass {
         UserName = userName;
         UserEmail = userEmail;
         UserNumber = userNumber;
-        UserImage = userImage;
+        //UserImage = userImage;
         UploadedTime = uploadedTime;
     }
 
@@ -137,13 +137,13 @@ public class ItemClass {
         UserNumber = userNumber;
     }
 
-    public String getUserImage() {
-        return UserImage;
-    }
+//    public String getUserImage() {
+//        return UserImage;
+//    }
 
-    public void setUserImage(String userImage) {
-        UserImage = userImage;
-    }
+//    public void setUserImage(String userImage) {
+//        UserImage = userImage;
+//    }
 
     public long getUploadedTime() {
         return UploadedTime;
