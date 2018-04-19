@@ -128,7 +128,6 @@ public class HomeScreen extends AppCompatActivity
         recyclerView.setNestedScrollingEnabled(false);
 
         checkForLocationPermissions();
-
 //        timer = new Timer();
 //        timer.schedule(new TimerTask() {
 //            public void run() {
