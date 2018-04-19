@@ -138,12 +138,11 @@
                                 android:hint="  رقمي"
                                 android:gravity="right"
                                 android:textSize="18dp"
-                                android:drawableEnd="@drawable/name"
+                                android:drawableEnd="@drawable/mycall"
                                 android:paddingBottom="7dp"
                                 android:paddingLeft="7dp"
                                 android:paddingRight="7dp"
-                                android:paddingTop="7dp"
-                                />
+                                android:paddingTop="7dp" />
 
 
 
@@ -173,7 +172,7 @@
 
                             android:gravity="right"
 
-                            android:drawableEnd="@drawable/name"
+                            android:drawableEnd="@drawable/location"
                             android:paddingBottom="7dp"
                             android:paddingLeft="7dp"
                             android:paddingRight="7dp"
@@ -230,8 +229,10 @@
         android:layout_marginTop="8dp"
         android:text="تغيير كلمة السر"
         android:textSize="15dp"
+
         android:visibility="visible"
-        android:textStyle="bold"/>
+
+        />
 
 
 
@@ -384,17 +385,23 @@
         android:layout_alignParentBottom="true"
        >
 
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/Default"
+            android:elevation="8dp">
         <Button
             android:id="@+id/editBtnProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#1cef00"
+            android:background="@drawable/btn"
             android:fontFamily="serif"
             android:text="تعديل"
             android:textColor="#fff"
             android:textSize="25dp"
 
-            />
+                        />
+        </android.support.v7.widget.CardView>
     </RelativeLayout>
 
 </RelativeLayout>

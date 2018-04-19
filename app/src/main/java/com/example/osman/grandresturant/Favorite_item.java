@@ -46,7 +46,6 @@ public class Favorite_item extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
-                            Log.v("kk",itemClass.toString());
                             list.add(itemClass);
                             favorite_adapter.notifyDataSetChanged();
 

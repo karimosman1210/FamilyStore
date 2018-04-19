@@ -197,7 +197,7 @@ public class HomeScreen extends AppCompatActivity
                     tv_nav_name.setText(name_user);
                     tv_nav_email.setText(email_user);
 
-                    Picasso.with(header.getContext()).load(dataSnapshot.child("profile_image,").getValue().toString()).into(imageView_nav_user);
+//                 Picasso.with(header.getContext()).load(dataSnapshot.child("profile_image,").getValue().toString()).into(imageView_nav_user);
                 }
 
                 @Override
