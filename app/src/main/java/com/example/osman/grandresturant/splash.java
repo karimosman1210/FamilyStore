@@ -3,10 +3,13 @@ package com.example.osman.grandresturant;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,10 +22,29 @@ Button retry;
 
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (Build.VERSION.SDK_INT < 16)
+        {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        else
+        {
+            View decorView = getWindow().getDecorView();
+            // Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-retry=(Button)findViewById(R.id.retry);
+
+        retry=(Button)findViewById(R.id.retry);
 
         progress = (ProgressBar)  findViewById(R.id.progress_splash);
 

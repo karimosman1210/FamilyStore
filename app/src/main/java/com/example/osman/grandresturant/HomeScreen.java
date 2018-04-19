@@ -182,11 +182,9 @@ public class HomeScreen extends AppCompatActivity
         tv_nav_well = (TextView) header.findViewById(R.id.tv_nav_well);
         imageView_nav_user = (ImageView) header.findViewById(R.id.imageView_nav_user);
 
-
         try {
 
-
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
             mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
 
 
@@ -199,7 +197,7 @@ public class HomeScreen extends AppCompatActivity
                     tv_nav_name.setText(name_user);
                     tv_nav_email.setText(email_user);
 
-                    Picasso.with(HomeScreen.this).load(dataSnapshot.child("profile_image").getValue().toString()).into(imageView_nav_user);
+                    Picasso.with(header.getContext()).load(dataSnapshot.child("profile_image,").getValue().toString()).into(imageView_nav_user);
                 }
 
                 @Override
@@ -382,10 +380,6 @@ public class HomeScreen extends AppCompatActivity
 
         if (id == R.id.nav_Sallers) {
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
-        } else if (id == R.id.nav_Categories) {
-
-            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
-
         } else if (id == R.id.nav_AboutUs) {
 
         } else if (id == R.id.nav_company_favorite_Ads) {
@@ -399,21 +393,6 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_company_sallers) {
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
-
-        } else if (id == R.id.nav_company_Categories) {
-
-            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
-
-        } else if (id == R.id.nav_company_New_Requests) {
-            FirebaseUser user = mAuth.getCurrentUser();
-
-            if(user != null)
-            {
-              startActivity(new Intent(HomeScreen.this , RequstsRecycler.class));
-            }
-            else
-            {}
-
 
         } else if (id == R.id.nav_company_My_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();
@@ -450,10 +429,6 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_User_Sallers) {
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
-
-        } else if (id == R.id.nav_Use_Categories) {
-
-            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_User_My_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();

@@ -39,6 +39,7 @@
                         android:textStyle="bold" />
                 </RelativeLayout>
 
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -62,8 +63,30 @@
                         android:layout_centerVertical="true"
                         android:text="تسجيل الدخول"
                         android:textSize="20dp"
-                        android:visibility="gone"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/location_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/home_screen_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="5dp"
+                        android:hint="المدينة"
+                        android:padding="7dp"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="18dp"
+                        />
 
                 </RelativeLayout>
             </RelativeLayout>
@@ -81,7 +104,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="gone"
-        android:background="@color/colorAccent"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>
