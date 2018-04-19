@@ -143,7 +143,7 @@ public class HomeScreen extends AppCompatActivity
                             String regex = "\\s*\\bمحافظة\\b\\s*";
                             String  country_Name = countryName.replaceAll(regex, "");
                             Country_choose.setText(country_Name);
-                            HelperMethods.Home_Filtter_Country_name = null;
+                            HelperMethods.Home_Filtter_Country_name = country_Name;
 
                         } catch (Exception e) {
                         }
