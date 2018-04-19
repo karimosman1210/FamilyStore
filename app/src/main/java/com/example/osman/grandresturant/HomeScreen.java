@@ -116,7 +116,7 @@ public class HomeScreen extends AppCompatActivity
 
 
         login_textview = (TextView) findViewById(R.id.home_login_btn);
-      //  image_shopping = (ImageView) findViewById(R.id.home_shopping);
+        image_shopping = (ImageView) findViewById(R.id.home_shopping);
 
         recyclerView = (RecyclerView) findViewById(R.id.home_screen_card_recycler_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -145,22 +145,22 @@ public class HomeScreen extends AppCompatActivity
 //        }, 0, 1 * (1000 * 1));
 
 
-//        Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
-//        CountrySpinnerAdapter = new ArrayAdapter<String>(HomeScreen.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
-//        Country.setAdapter(CountrySpinnerAdapter);
-//
-//
-//        Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                //timer.cancel();
-//                Country_name = adapterView.getItemAtPosition(i).toString();
-//                Country_choose.setText(Country_name);
-//                HelperMethods.Home_Filtter_Country_name = Country_name;
-//
-//
-//            }
-//        });
+        Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
+        CountrySpinnerAdapter = new ArrayAdapter<String>(HomeScreen.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
+        Country.setAdapter(CountrySpinnerAdapter);
+
+
+        Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //timer.cancel();
+                Country_name = adapterView.getItemAtPosition(i).toString();
+                Country_choose.setText(Country_name);
+                HelperMethods.Home_Filtter_Country_name = Country_name;
+
+
+            }
+        });
 
 
         login_textview.setOnClickListener(new View.OnClickListener() {
@@ -238,7 +238,7 @@ public class HomeScreen extends AppCompatActivity
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_user);
                                 fab.setVisibility(View.GONE);
                                 login_textview.setVisibility(View.GONE);
-                                //image_shopping.setVisibility(View.VISIBLE);
+                                image_shopping.setVisibility(View.VISIBLE);
 
 
                             } else {
@@ -246,7 +246,7 @@ public class HomeScreen extends AppCompatActivity
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_company);
                                 fab.setVisibility(View.VISIBLE);
                                 login_textview.setVisibility(View.GONE);
-//                                image_shopping.setVisibility(View.VISIBLE);
+                                image_shopping.setVisibility(View.VISIBLE);
                                 //    HelperMethods.hideDialog2(HomeScreen.this);
                             }
                         }
@@ -268,7 +268,7 @@ public class HomeScreen extends AppCompatActivity
                     navigationView.inflateMenu(R.menu.activity_home_screen_drawer);
                     fab.setVisibility(View.GONE);
                     login_textview.setVisibility(View.VISIBLE);
-                    //image_shopping.setVisibility(View.GONE);
+                    image_shopping.setVisibility(View.GONE);
                     //    HelperMethods.hideDialog2(HomeScreen.this);
 //karimmmm;
 

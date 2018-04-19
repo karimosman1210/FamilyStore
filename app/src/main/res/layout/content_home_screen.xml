@@ -8,63 +8,65 @@
     tools:context="com.example.osman.grandresturant.HomeScreen"
     tools:showIn="@layout/app_bar_home_screen">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/home_SwipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:orientation="horizontal"-->
-                <!---->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
 
-                <!---->
-                <!--android:weightSum="2">-->
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--&gt;-->
-
-
-
-
-                    <!--<com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner-->
-                        <!--android:id="@+id/home_screen_spinner"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:hint="أختار المكان... "-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:textColorHint="#ffffff"-->
-                        <!--android:textColor="#ffffff"-->
-                        <!--android:paddingLeft="5dp"-->
-                        <!--android:paddingRight="5dp"-->
-
-                        <!--/>-->
-                <!--</RelativeLayout>-->
-
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:paddingRight="10dp"-->
-                    <!--android:layout_weight="1"-->
-                   <!--&gt;-->
-
-
-                <!--</RelativeLayout>-->
+                android:background="@color/colorPrimary"
+                android:weightSum="2">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    >
 
 
 
 
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/home_screen_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="أختار المكان... "
+                        android:layout_centerVertical="true"
+                        android:textColorHint="#ffffff"
+                        android:textColor="#ffffff"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
+                    android:layout_weight="1"
+                   >
+
+                    <TextView
+                        android:id="@+id/home_screen_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:hint="المدينة"
+                        android:padding="7dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:textSize="25sp" />
+                </RelativeLayout>
 
 
-            <!--</LinearLayout>-->
+            </LinearLayout>
 
 
             <android.support.design.widget.CoordinatorLayout
@@ -209,7 +211,6 @@
         </LinearLayout>
 
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </android.support.constraint.ConstraintLayout>
