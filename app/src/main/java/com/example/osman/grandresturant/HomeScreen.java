@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -47,6 +49,12 @@ import com.example.osman.grandresturant.Registration.Login;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -80,7 +88,7 @@ public class HomeScreen extends AppCompatActivity
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    TextView login_textview, tv_nav_name, tv_nav_email,tv_nav_well;
+    TextView login_textview, tv_nav_name, tv_nav_email, tv_nav_well;
     ImageView image_shopping, imageView_nav_user;
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
@@ -93,6 +101,10 @@ public class HomeScreen extends AppCompatActivity
     double latti;
     double longi;
     Timer timer;
+
+    private FusedLocationProviderClient mLocationManager;
+    private LocationCallback locationCallback;
+    private LocationRequest mLocationRequest;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -110,50 +122,28 @@ public class HomeScreen extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        mLocationManager = LocationServices.getFusedLocationProviderClient(this);
 
         recyclerView.setNestedScrollingEnabled(false);
 
+        checkForLocationPermissions();
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            public void run() {
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        getLocation();
-                        Locale mLocale = new Locale("ar");
-
-                        Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
-                        List<Address> addresses = null;
-                        try {
-                            addresses = geocoder.getFromLocation(latti, longi, 1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        try {
-                            assert addresses != null;
-                            String countryName = addresses.get(0).getAdminArea();
-
-                            String regex = "\\s*\\bمحافظة\\b\\s*";
-                            String  country_Name = countryName.replaceAll(regex, "");
-                            Country_choose.setText(country_Name);
-                            HelperMethods.Home_Filtter_Country_name = null;
-
-                        } catch (Exception e) {
-                        }
-
-                    }
-                });
-
-
-            }
-        }, 0, 1 * (1000 * 1));
+//        timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            public void run() {
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//
+//                    }
+//                });
+//
+//
+//            }
+//        }, 0, 1 * (1000 * 1));
 
 
         Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
@@ -164,7 +154,7 @@ public class HomeScreen extends AppCompatActivity
         Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                timer.cancel();
+                //timer.cancel();
                 Country_name = adapterView.getItemAtPosition(i).toString();
                 Country_choose.setText(Country_name);
                 HelperMethods.Home_Filtter_Country_name = Country_name;
@@ -190,13 +180,11 @@ public class HomeScreen extends AppCompatActivity
 
         tv_nav_email = (TextView) header.findViewById(R.id.tv_nav_email);
         tv_nav_name = (TextView) header.findViewById(R.id.tv_nav_name);
-        tv_nav_well=(TextView)header.findViewById(R.id.tv_nav_well);
+        tv_nav_well = (TextView) header.findViewById(R.id.tv_nav_well);
         imageView_nav_user = (ImageView) header.findViewById(R.id.imageView_nav_user);
 
 
-            try {
-
-
+        try {
 
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
@@ -401,15 +389,11 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_AboutUs) {
 
-        }
+        } else if (id == R.id.nav_company_favorite_Ads) {
 
-       else if (id == R.id.nav_company_favorite_Ads) {
+            startActivity(new Intent(HomeScreen.this, Favorite_item.class));
 
-            startActivity(new Intent(HomeScreen.this,Favorite_item.class));
-
-        }
-
-        else if (id == R.id.nav_Login) {
+        } else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
@@ -447,7 +431,7 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_company_favorite_Ads) {
 
 
-            Intent intent=new Intent(HomeScreen.this,Favorite_item.class);
+            Intent intent = new Intent(HomeScreen.this, Favorite_item.class);
             startActivity(intent);
         } else if (id == R.id.nav_company_FeedBack) {
             startActivity(new Intent(HomeScreen.this, FeedBack.class));
@@ -523,15 +507,57 @@ public class HomeScreen extends AppCompatActivity
 
         switch (requestCode) {
             case REQUEST_LOCATION:
-                getLocation();
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                        Intent GPSIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(GPSIntent, REQUEST_LOCATION);
+                    } else {
+                        getLocation();
+                    }
+                }
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_LOCATION) {
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                getLocation();
+            }
+        }
+    }
 
-    void getLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void filterLocation() {
+        Locale mLocale = new Locale("ar");
+
+        Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latti, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            assert addresses != null;
+            String countryName = addresses.get(0).getAdminArea();
+
+            String regex = "\\s*\\bمحافظة\\b\\s*";
+            String country_Name = countryName.replaceAll(regex, "");
+            Country_choose.setText(country_Name);
+            HelperMethods.Home_Filtter_Country_name = country_Name;
+
+        } catch (Exception e) {
+        }
+    }
+
+    private void checkForLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -539,17 +565,44 @@ public class HomeScreen extends AppCompatActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION);
+
             return;
         }
-        Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-        if (location != null) {
-            latti = location.getLatitude();
-            longi = location.getLongitude();
-
-        } else {
-
-        }
+        getLocation();
     }
 
+    void getLocation() {
+
+
+        //Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) return;
+
+                Location location = locationResult.getLastLocation();
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+                filterLocation();
+                stopLocationUpdates();
+            }
+        };
+
+        createLocationRequest();
+        mLocationManager.requestLocationUpdates(mLocationRequest, locationCallback, null);
+
+    }
+
+    protected void createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void stopLocationUpdates() {
+        mLocationManager.removeLocationUpdates(locationCallback);
+    }
 }

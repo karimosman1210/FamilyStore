@@ -75,37 +75,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 blg.show();
                 getLocation();
-                Locale mLocale = new Locale("ar");
 
-                Geocoder geocoder = new Geocoder(MainActivity.this, mLocale);
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoder.getFromLocation(latti, longi, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                try {
-                    assert addresses != null;
-
-                    int maxAddressLine = addresses.get(0).getMaxAddressLineIndex();
-
-                    String countryName = addresses.get(0).getAddressLine(maxAddressLine);
-                    String countryName1 = addresses.get(0).getAdminArea();
-                    String countryName2 = addresses.get(0).getSubAdminArea();
-                    String countryName3 = addresses.get(0).getSubLocality();
-
-
-                    String countr = "محافظة";
-
-                    String regex = "\\s*\\bمحافظة\\b\\s*";
-                    countryName1 = countryName1.replaceAll(regex, "");
-
-                    Toast.makeText(MainActivity.this, countryName1, Toast.LENGTH_SHORT).show();
-                    blg.cancel();
-                } catch (Exception e) {
-                }
             }
         });
 
@@ -132,11 +102,51 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(this, total2 + total, Toast.LENGTH_SHORT).show();
 
+                filterLocation();
+
             } else {
 
             }
         }
 
+    }
+
+    private void filterLocation() {
+        Locale mLocale = new Locale("ar");
+
+        Geocoder geocoder = new Geocoder(MainActivity.this, mLocale);
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latti, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            assert addresses != null;
+
+            int maxAddressLine = addresses.get(0).getMaxAddressLineIndex();
+
+            String countryName = addresses.get(0).getAddressLine(maxAddressLine);
+            String countryName1 = addresses.get(0).getAdminArea();
+            String countryName2 = addresses.get(0).getSubAdminArea();
+            String countryName3 = addresses.get(0).getSubLocality();
+
+
+            String countr = "محافظة";
+
+            String regex = "\\s*\\bمحافظة\\b\\s*";
+            countryName1 = countryName1.replaceAll(regex, "");
+
+            aaa.setText(":" + countryName1 + ":");
+
+            Toast.makeText(MainActivity.this, countryName1, Toast.LENGTH_SHORT).show();
+            blg.cancel();
+        } catch (Exception e) {
+
+            Toast.makeText(MainActivity.this, "error", Toast.LENGTH_LONG).show();
+        }
     }
 }
 
