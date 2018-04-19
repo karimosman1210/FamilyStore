@@ -57,16 +57,15 @@
                             android:layout_height="wrap_content">
 
                             <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="150dp"
                                 android:id="@+id/imagebutton_user"
-                                android:layout_centerVertical="true"
-                                android:layout_centerHorizontal="true"
+                                android:layout_width="150dp"
                                 android:layout_height="150dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
                                 android:src="@drawable/default_user_icon_profile"
                                 app:civ_border_color="#FF000000"
                                 app:civ_border_width="2dp" />
                         </RelativeLayout>
-
 
 
                         <View
@@ -76,16 +75,16 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <TextView
                                 android:id="@+id/tv_email"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Email"
-                                android:textColor="#fff"
-                                android:textSize="18sp"
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
-                            />
+                                android:text="Email"
+                                android:textColor="#fff"
+                                android:textSize="18sp" />
 
                         </RelativeLayout>
 
@@ -129,26 +128,22 @@
                         android:padding="10dp">
 
 
-
-                            <EditText
-                                android:id="@+id/phoneEditProfile"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/input"
-                                android:hint="  رقمي"
-                                android:gravity="right"
-                                android:textSize="18dp"
-                                android:drawableEnd="@drawable/mycall"
-                                android:paddingBottom="7dp"
-                                android:paddingLeft="7dp"
-                                android:paddingRight="7dp"
-                                android:paddingTop="7dp" />
-
-
+                        <EditText
+                            android:id="@+id/phoneEditProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/input"
+                            android:drawableEnd="@drawable/mycall"
+                            android:gravity="right"
+                            android:hint="  رقمي"
+                            android:paddingBottom="7dp"
+                            android:paddingLeft="7dp"
+                            android:paddingRight="7dp"
+                            android:paddingTop="7dp"
+                            android:textSize="18dp" />
 
 
                     </RelativeLayout>
-
 
 
                     <RelativeLayout
@@ -156,7 +151,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:padding="10dp">
-
 
 
                         <EditText
@@ -166,20 +160,17 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/input"
 
-                            android:hint="محافظتك"
-
-                            android:textSize="18dp"
+                            android:drawableEnd="@drawable/location"
 
                             android:gravity="right"
 
-                            android:drawableEnd="@drawable/location"
+                            android:hint="محافظتك"
+
                             android:paddingBottom="7dp"
                             android:paddingLeft="7dp"
                             android:paddingRight="7dp"
                             android:paddingTop="7dp"
-                            />
-
-
+                            android:textSize="18dp" />
 
 
                     </RelativeLayout>
@@ -191,7 +182,6 @@
                         android:padding="10dp">
 
 
-
                         <EditText
 
                             android:id="@+id/emailEditProfile"
@@ -199,172 +189,151 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/input"
 
-                            android:hint="أسمك"
-
-                            android:textSize="18dp"
+                            android:drawableEnd="@drawable/name"
 
                             android:gravity="right"
 
-                            android:drawableEnd="@drawable/name"
+                            android:hint="أسمك"
+
                             android:paddingBottom="7dp"
                             android:paddingLeft="7dp"
                             android:paddingRight="7dp"
                             android:paddingTop="7dp"
-                            />
-
-
+                            android:textSize="18dp" />
 
 
                     </RelativeLayout>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/change_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:text="تغيير كلمة السر"
-        android:textSize="15dp"
+                        <Button
+                            android:id="@+id/change_password"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="8dp"
+                            android:text="تغيير كلمة السر"
+                            android:textSize="15dp"
 
-        android:visibility="visible"
+                            android:visibility="visible"
 
-        />
-
-
+                            />
 
 
+                    </RelativeLayout>
 
 
-</RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/allLiniar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="9dp"
+                            app:cardCornerRadius="5dp"
+
+                            >
+
+                            <LinearLayout
+                                android:id="@+id/Linear_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="8dp"
+                                android:visibility="visible"
 
 
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:id="@+id/allLiniar"
-    android:visibility="gone"
-    android:layout_height="wrap_content">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="9dp"
-        app:cardCornerRadius="5dp"
-
-        >
-
-        <LinearLayout
-            android:id="@+id/Linear_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:padding="8dp"
+                                >
 
 
-            >
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:padding="10dp">
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="10dp">
+                                    <EditText
+
+                                        android:id="@+id/password_old"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/input"
+                                        android:drawableEnd="@drawable/name"
+                                        android:gravity="right"
+                                        android:hint="الرقم السري الحالي"
+                                        android:paddingBottom="7dp"
+                                        android:paddingLeft="7dp"
+                                        android:paddingRight="7dp"
+                                        android:paddingTop="7dp"
+                                        android:textSize="18dp" />
 
 
+                                </RelativeLayout>
 
-                <EditText
-
-                    android:id="@+id/password_old"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/input"
-                    android:hint="الرقم السري الحالي"
-                    android:textSize="18dp"
-                    android:gravity="right"
-                    android:drawableEnd="@drawable/name"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingTop="7dp"
-                    />
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:padding="10dp">
 
 
+                                    <EditText
+
+                                        android:id="@+id/password_new"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/input"
+                                        android:drawableEnd="@drawable/name"
+                                        android:gravity="right"
+                                        android:hint="الرقم السري الجديد"
+                                        android:paddingBottom="7dp"
+                                        android:paddingLeft="7dp"
+                                        android:paddingRight="7dp"
+                                        android:paddingTop="7dp"
+                                        android:textSize="18dp" />
 
 
-            </RelativeLayout>
+                                </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="10dp">
-
-
-
-                <EditText
-
-                    android:id="@+id/password_new"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/input"
-                    android:hint="الرقم السري الجديد"
-                    android:textSize="18dp"
-                    android:gravity="right"
-                    android:drawableEnd="@drawable/name"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingTop="7dp"
-                    />
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="right"
+                                    android:padding="10dp">
 
 
+                                    <EditText
+
+                                        android:id="@+id/password_new2"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/input"
+
+                                        android:drawableEnd="@drawable/name"
+
+                                        android:gravity="right"
+
+                                        android:hint="اعد كتابه الرقم السري"
+
+                                        android:paddingBottom="7dp"
+                                        android:paddingLeft="7dp"
+                                        android:paddingRight="7dp"
+                                        android:paddingTop="7dp"
+                                        android:textSize="18dp" />
 
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="10dp">
+                                </RelativeLayout>
 
 
-
-                <EditText
-
-                    android:id="@+id/password_new2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/input"
-
-                    android:hint="اعد كتابه الرقم السري"
-
-                    android:textSize="18dp"
-
-                    android:gravity="right"
-
-                    android:drawableEnd="@drawable/name"
-                    android:paddingBottom="7dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
-                    android:paddingTop="7dp"
-                    />
-
-
-
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
-
-
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -382,24 +351,23 @@
         android:id="@+id/btn_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-       >
+        android:layout_alignParentBottom="true">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/Default"
             android:elevation="8dp">
-        <Button
-            android:id="@+id/editBtnProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn"
-            android:fontFamily="serif"
-            android:text="تعديل"
-            android:textColor="#fff"
-            android:textSize="25d"
-                        />
+
+            <Button
+                android:id="@+id/editBtnProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn"
+                android:fontFamily="serif"
+                android:text="تعديل"
+                android:textColor="#fff"
+                android:textSize="25sp" />
         </android.support.v7.widget.CardView>
     </RelativeLayout>
 
