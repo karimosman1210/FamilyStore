@@ -18,8 +18,11 @@ import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.List;
@@ -81,8 +84,27 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
+FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
         final ItemClass itemClass = my_data.get(position);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(firebaseAuth.getCurrentUser().getUid()).child(itemClass.getIdItem());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    holder.favoritBtn.setImageResource(R.drawable.favorit_icon);
+
+                }else {
+
+                holder.favoritBtn.setImageResource(R.drawable.favorit);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         holder.item_name.setText(itemClass.getName());
@@ -95,12 +117,34 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 FirebaseAuth auth = FirebaseAuth.getInstance();
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
-                //.child("id").child(id).push();
-                //.child(id).push();
-                databaseReference.setValue(true);
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
 
-                Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (dataSnapshot.exists()){
+                           databaseReference.removeValue();
+                            Toast.makeText(context, "تم الحذف من المفضل ", Toast.LENGTH_SHORT).show();
+
+                            notifyDataSetChanged();
+                        }else {
+                            FirebaseAuth auth = FirebaseAuth.getInstance();
+
+                            databaseReference.setValue(true);
+                            Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
+
+                        }
+                        databaseReference.removeEventListener(this);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
