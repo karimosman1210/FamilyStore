@@ -550,7 +550,7 @@ public class HomeScreen extends AppCompatActivity
                 Country_choose.setText(country_Name);
                 HelperMethods.Home_Filtter_Country_name = country_Name;
                 System.out.println("1 : " + address.getLocale().getDisplayLanguage());
-                System.out.println("2 : " + address.getAdminArea());
+                System.out.println("2 : " + address.getFeatureName());
                 //if (address.getLocale().getDisplayName().equals(mLocale.getDisplayName())) break;
             }
 
