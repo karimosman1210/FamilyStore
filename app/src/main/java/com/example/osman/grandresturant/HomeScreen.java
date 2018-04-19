@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +79,7 @@ public class HomeScreen extends AppCompatActivity
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    TextView login_textview, tv_nav_name, tv_nav_email,tv_nav_well;
+    TextView login_textview, tv_nav_name, tv_nav_email, tv_nav_well;
     ImageView image_shopping, imageView_nav_user;
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
@@ -125,28 +126,6 @@ public class HomeScreen extends AppCompatActivity
 
 
                         getLocation();
-                        Locale mLocale = new Locale("ar");
-
-                        Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
-                        List<Address> addresses = null;
-                        try {
-                            addresses = geocoder.getFromLocation(latti, longi, 1);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        try {
-                            assert addresses != null;
-                            String countryName = addresses.get(0).getAdminArea();
-
-                            String regex = "\\s*\\bمحافظة\\b\\s*";
-                            String  country_Name = countryName.replaceAll(regex, "");
-                            Country_choose.setText(country_Name);
-                            HelperMethods.Home_Filtter_Country_name = country_Name;
-
-                        } catch (Exception e) {
-                        }
 
                     }
                 });
@@ -204,13 +183,11 @@ public class HomeScreen extends AppCompatActivity
 
         tv_nav_email = (TextView) header.findViewById(R.id.tv_nav_email);
         tv_nav_name = (TextView) header.findViewById(R.id.tv_nav_name);
-        tv_nav_well=(TextView)header.findViewById(R.id.tv_nav_well);
+        tv_nav_well = (TextView) header.findViewById(R.id.tv_nav_well);
         imageView_nav_user = (ImageView) header.findViewById(R.id.imageView_nav_user);
 
 
-            try {
-
-
+        try {
 
 
             mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
@@ -436,15 +413,11 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_AboutUs) {
 
-        }
+        } else if (id == R.id.nav_company_favorite_Ads) {
 
-       else if (id == R.id.nav_company_favorite_Ads) {
+            startActivity(new Intent(HomeScreen.this, Favorite_item.class));
 
-            startActivity(new Intent(HomeScreen.this,Favorite_item.class));
-
-        }
-
-        else if (id == R.id.nav_Login) {
+        } else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
@@ -466,7 +439,7 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_company_favorite_Ads) {
 
 
-            Intent intent=new Intent(HomeScreen.this,Favorite_item.class);
+            Intent intent = new Intent(HomeScreen.this, Favorite_item.class);
             startActivity(intent);
         } else if (id == R.id.nav_company_FeedBack) {
             startActivity(new Intent(HomeScreen.this, FeedBack.class));
@@ -551,6 +524,8 @@ public class HomeScreen extends AppCompatActivity
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
             return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -558,9 +533,34 @@ public class HomeScreen extends AppCompatActivity
         if (location != null) {
             latti = location.getLatitude();
             longi = location.getLongitude();
-
+            filterLocation();
         } else {
 
+        }
+    }
+
+    private void filterLocation() {
+        Locale mLocale = new Locale("ar");
+
+        Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latti, longi, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+            assert addresses != null;
+            String countryName = addresses.get(0).getAdminArea();
+
+            String regex = "\\s*\\bمحافظة\\b\\s*";
+            String country_Name = countryName.replaceAll(regex, "");
+            Country_choose.setText(country_Name);
+            HelperMethods.Home_Filtter_Country_name = country_Name;
+
+        } catch (Exception e) {
         }
     }
 
