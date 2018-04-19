@@ -21,7 +21,7 @@
         <activity android:name=".VistorType" />
         <activity android:name=".Activity_upload" />
         <activity android:name=".ItemScreen" />
-        <activity android:name=".ItemsRecycler" />
+        <activity android:name=".ItemsRecycler" />[
         <activity
             android:name=".splash"
             android:label="@string/title_activity_home_screen"

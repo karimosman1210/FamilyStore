@@ -297,7 +297,7 @@ public class HomeScreen extends AppCompatActivity
                     login_textview.setVisibility(View.VISIBLE);
                     image_shopping.setVisibility(View.GONE);
                     //    HelperMethods.hideDialog2(HomeScreen.this);
-
+//karimmmm;
 
                 }
             }
