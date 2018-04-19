@@ -24,7 +24,7 @@ Button retry;
         setContentView(R.layout.activity_splash);
 retry=(Button)findViewById(R.id.retry);
 
-        progress = (ProgressBar) findViewById(R.id.progress_splash);
+        progress = (ProgressBar)  findViewById(R.id.progress_splash);
 
         progress.setProgress(10);
 
