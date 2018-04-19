@@ -64,6 +64,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     Intent intent = new Intent(context, ItemScreen.class);
 
                     intent.putExtra("Item_ID", id);
+                    context.startActivity(intent);
                 }
             });
 

@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -17,15 +15,9 @@ import com.bumptech.glide.request.target.Target;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-/**
- * Created by A.taher on 4/17/2018.
- */
 
 
 public class nav_item_saller_adapter extends RecyclerView.Adapter<nav_item_saller_adapter.ViewHolder> {
@@ -57,15 +49,16 @@ public class nav_item_saller_adapter extends RecyclerView.Adapter<nav_item_salle
                 @Override
                 public void onClick(View view) {
 
-
-
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
                             int postion = getLayoutPosition();
                             String id = my_data.get(postion).getId();
-
                             Intent intent = new Intent(context, ItemScreen.class);
-
-                            intent.putExtra("STRING_I_NEED", id);
-
+                            intent.putExtra("Item_ID", id);
+                            
+                        }
+                    });
                 }
             });
 

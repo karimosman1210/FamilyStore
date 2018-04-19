@@ -12,19 +12,18 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/iconapp"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.osman.grandresturant.Registration.Login" />
+        <activity android:name=".Registration.Login" />
         <activity android:name=".Sign" />
         <activity android:name=".VistorType" />
         <activity android:name=".Activity_upload" />
-        <activity android:name=".ItemScreen" />
+        <activity android:name=".ItemScreen"
+            android:label=""/>
         <activity android:name=".ItemsRecycler" />
         <activity
             android:name=".splash"
-            android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,15 +31,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeScreen">
-        </activity>
+        <activity android:name=".HomeScreen"></activity>
         <activity
             android:name=".SallersRecycler"
             android:label="التجار" />
-        <activity android:name=".MyBasket" />
-        <activity android:name="com.example.osman.grandresturant.Registration.UserProfile" />
-        <activity android:name=".MyAds" />
+        <activity android:name=".NavigationActivities.MyBasket" />
+        <activity android:name=".Registration.UserProfile"
+            android:label=""/>
+        <activity android:name=".NavigationActivities.MyAds" />
         <activity android:name=".ItemUpdate" />
         <activity android:name=".Edit_Ads" />
         <activity android:name=".Dialogs.LocationDialog" />
@@ -49,7 +47,10 @@
         <activity android:name=".NavigationActivities.FeedBack" />
         <activity android:name=".NavigationActivities.NavigationSallerRecycler" />
         <activity android:name=".NavigationActivities.NavigationCategoriesRecycler" />
-        <activity android:name=".NavigationActivities.NavItemRecycler"></activity>
+        <activity android:name=".NavigationActivities.NavItemRecycler" />
+        <activity android:name=".Dialogs.Registration_Dialog" />
+        <activity android:name=".NavigationActivities.RequstsRecycler" />
+        <activity android:name=".Dialogs.MyBasket_delete_dialog"></activity>
     </application>
 
 </manifest>

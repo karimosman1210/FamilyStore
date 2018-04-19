@@ -16,12 +16,12 @@
         <item
             android:id="@+id/nav_User_My_Requests"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Requests" />
+            android:title="السلة" />
 
         <item
             android:id="@+id/nav_User_favorite_Ads"
             android:icon="@drawable/ic_menu_manage"
-            android:title="favorite Ads" />
+            android:title="المفضل" />
 
         <item
             android:id="@+id/nav_User_FeedBack"

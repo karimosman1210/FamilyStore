@@ -38,10 +38,12 @@ import android.widget.Toast;
 import com.example.osman.grandresturant.Adapters.Adapter_category;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.NavigationActivities.FeedBack;
+import com.example.osman.grandresturant.NavigationActivities.MyAds;
+import com.example.osman.grandresturant.NavigationActivities.MyBasket;
 import com.example.osman.grandresturant.NavigationActivities.NavigationCategoriesRecycler;
 import com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler;
+import com.example.osman.grandresturant.NavigationActivities.RequstsRecycler;
 import com.example.osman.grandresturant.Registration.Login;
-import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Item_recycle;
@@ -84,8 +86,6 @@ public class HomeScreen extends AppCompatActivity
     DatabaseReference databaseReference;
     MaterialBetterSpinner Country;
     ArrayAdapter<String> CountrySpinnerAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
-    public static GridLayoutManager gridLayoutManager;
     ArrayList<Item_recycle> arrayList;
     String Country_name;
     static final int REQUEST_LOCATION = 1;
@@ -105,7 +105,7 @@ public class HomeScreen extends AppCompatActivity
 
         login_textview = (TextView) findViewById(R.id.home_login_btn);
         image_shopping = (ImageView) findViewById(R.id.home_shopping);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.home_SwipeRefreshLayout);
+
         recyclerView = (RecyclerView) findViewById(R.id.home_screen_card_recycler_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
@@ -181,21 +181,7 @@ public class HomeScreen extends AppCompatActivity
             }
         });
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary, R.color.colorPrimary);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
-                item_list.clear();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 2000);
-            }
-        });
 
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
@@ -399,27 +385,6 @@ public class HomeScreen extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -457,8 +422,24 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_company_New_Requests) {
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            if(user != null)
+            {
+              startActivity(new Intent(HomeScreen.this , RequstsRecycler.class));
+            }
+            else
+            {}
+
 
         } else if (id == R.id.nav_company_My_Requests) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if(user != null)
+            {
+                startActivity(new Intent(HomeScreen.this , MyBasket.class));
+            }
+            else
+            {}
 
         } else if (id == R.id.nav_company_My_Ads) {
             startActivity(new Intent(HomeScreen.this, MyAds.class));
@@ -492,6 +473,13 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_User_My_Requests) {
+            FirebaseUser user = mAuth.getCurrentUser();
+            if(user != null)
+            {
+                startActivity(new Intent(HomeScreen.this , MyBasket.class));
+            }
+            else
+            {}
 
         } else if (id == R.id.nav_User_favorite_Ads) {
 

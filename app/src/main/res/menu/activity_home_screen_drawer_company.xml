@@ -14,11 +14,11 @@
         <item
             android:id="@+id/nav_company_New_Requests"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="New Requests" />
+            android:title="الطلبات الجديدة" />
         <item
             android:id="@+id/nav_company_My_Requests"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="My Requests" />
+            android:title="السلة" />
 
         <item
             android:id="@+id/nav_company_My_Ads"

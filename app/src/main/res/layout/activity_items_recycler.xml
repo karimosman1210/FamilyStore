@@ -30,7 +30,7 @@
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/search_icon"
+                        android:background="@drawable/ic_magnify_black_48dp"
                        />
                 </RelativeLayout>
 

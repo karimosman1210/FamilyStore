@@ -120,13 +120,10 @@ public class NavigationSallerRecycler extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-
-
                         Intent intent = new Intent(NavigationSallerRecycler.this, NavItemRecycler.class);
                         intent.putExtra("Item_type", "Saller");
                         intent.putExtra("Filter", key_post);
                         startActivity(intent);
-
 
                     }
                 });
