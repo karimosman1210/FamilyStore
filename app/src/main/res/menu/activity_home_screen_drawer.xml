@@ -4,22 +4,19 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_Sallers"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_account_group_black_48dp"
             android:title="التجار" />
         <item
-            android:id="@+id/nav_Categories"
-            android:icon="@drawable/ic_menu_share"
-            android:title="الأقسام" />
-        <item
             android:id="@+id/nav_AboutUs"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="About Us" />
+            android:icon="@drawable/ic_alert_circle_black_48dp"
+            android:title="عنا" />
         <item
             android:id="@+id/nav_Login"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Login" />
+            android:icon="@drawable/ic_guitar_pick_black_48dp"
+            android:title="تسجيل الدخول" />
 
     </group>
 
