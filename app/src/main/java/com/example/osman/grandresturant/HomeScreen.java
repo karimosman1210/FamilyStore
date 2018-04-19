@@ -238,7 +238,7 @@ public class HomeScreen extends AppCompatActivity
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_user);
                                 fab.setVisibility(View.GONE);
                                 login_textview.setVisibility(View.GONE);
-                                image_shopping.setVisibility(View.VISIBLE);
+                                //image_shopping.setVisibility(View.VISIBLE);
 
 
                             } else {
@@ -268,7 +268,7 @@ public class HomeScreen extends AppCompatActivity
                     navigationView.inflateMenu(R.menu.activity_home_screen_drawer);
                     fab.setVisibility(View.GONE);
                     login_textview.setVisibility(View.VISIBLE);
-                    image_shopping.setVisibility(View.GONE);
+                    //image_shopping.setVisibility(View.GONE);
                     //    HelperMethods.hideDialog2(HomeScreen.this);
 //karimmmm;
 
