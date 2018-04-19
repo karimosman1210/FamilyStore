@@ -536,20 +536,24 @@ public class HomeScreen extends AppCompatActivity
         Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocation(latti, longi, 1);
+            addresses = geocoder.getFromLocation(latti, longi, 5);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
         try {
-            assert addresses != null;
-            String countryName = addresses.get(0).getAdminArea();
-
-            String regex = "\\s*\\bمحافظة\\b\\s*";
-            String country_Name = countryName.replaceAll(regex, "");
-            Country_choose.setText(country_Name);
-            HelperMethods.Home_Filtter_Country_name = country_Name;
+            //assert addresses != null;
+            for (Address address : addresses) {
+                String countryName = address.getAdminArea();
+                String regex = "\\s*\\bمحافظة\\b\\s*";
+                String country_Name = countryName.replaceAll(regex, "");
+                Country_choose.setText(country_Name);
+                HelperMethods.Home_Filtter_Country_name = country_Name;
+                System.out.println("1 : " + address.getLocale().getDisplayLanguage());
+                System.out.println("2 : " + address.getAdminArea());
+                //if (address.getLocale().getDisplayName().equals(mLocale.getDisplayName())) break;
+            }
 
         } catch (Exception e) {
         }
@@ -599,7 +603,7 @@ public class HomeScreen extends AppCompatActivity
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(10000);
         mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
     }
 
     private void stopLocationUpdates() {
