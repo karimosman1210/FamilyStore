@@ -1,11 +1,12 @@
 package com.example.osman.grandresturant;
 
 import android.content.Intent;
-import android.net.sip.SipSession;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Dialogs.Registration_Dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
-import com.example.osman.grandresturant.classes.Encaps_Basket;
+import com.example.osman.grandresturant.NavigationActivities.MyBasket;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 public class ItemScreen extends AppCompatActivity {
 
@@ -34,14 +38,15 @@ public class ItemScreen extends AppCompatActivity {
     ImageView user_image, Item_image;
     Button item_screen_add_btn;
     android.support.v7.widget.Toolbar itemToolbar;
-    ImageButton basketButn;
-    DatabaseReference databaseReference;
-    String newString ;
+
+    DatabaseReference databaseReference, databaseReferenceUser, databaseReferenceRequests, databaseReferenceAddRequests ,databaseReferenceCheckRequests ;
+    String ItemID, ItemName, ItemPrice, ItemImage, UserID, UserImage, Username, UserEmail, UserMobile ,SallerID;
+    FirebaseAuth auth;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home :
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 finish();
         }
 
@@ -52,11 +57,16 @@ public class ItemScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_screen);
-        itemToolbar=findViewById(R.id.itemToolbar);
-        setSupportActionBar(itemToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        item_screen_add_btn=(Button)findViewById(R.id.item_screen_add_btn);
-        basketButn=(ImageButton)findViewById(R.id.basketButn);
+
+        CollapsingToolbarLayout  collapsingToolbar  = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        item_screen_add_btn = (Button) findViewById(R.id.item_screen_add_btn);
+
         Item_name = (TextView) findViewById(R.id.item_screen_name);
         Item_country = (TextView) findViewById(R.id.item_screen_country);
         Item_place = (TextView) findViewById(R.id.item_screen_place);
@@ -66,29 +76,27 @@ public class ItemScreen extends AppCompatActivity {
         user_name = (TextView) findViewById(R.id.item_screen_company_name);
         user_number = (TextView) findViewById(R.id.item_screen_company_number);
         user_mail = (TextView) findViewById(R.id.item_screen_company_mail);
-        Item_image= (ImageView) findViewById(R.id.item_screen_item_img);
+        Item_image = (ImageView) findViewById(R.id.item_screen_item_img);
         user_image = (ImageView) findViewById(R.id.item_screen_company_image);
-
-
+        auth = FirebaseAuth.getInstance();
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
-                newString= null;
+            if (extras == null) {
+                ItemID = null;
             } else {
-                newString= extras.getString("Item_ID");
+                ItemID = extras.getString("Item_ID");
             }
         } else {
-            newString = (String) savedInstanceState.getSerializable("Item_ID");
+            ItemID = (String) savedInstanceState.getSerializable("Item_ID");
         }
 
 
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Items").child(newString);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Items").child(ItemID);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-
 
 
                 Item_name.setText(snapshot.child("Name").getValue().toString());
@@ -109,6 +117,11 @@ public class ItemScreen extends AppCompatActivity {
                 Item_time.setText(getDate(timestamp));
 
 
+                ItemName = snapshot.child("Name").getValue().toString();
+                ItemPrice = snapshot.child("Price").getValue().toString();
+                ItemImage = snapshot.child("image").getValue().toString();
+                SallerID = snapshot.child("UserID").getValue().toString();
+
 
             }
 
@@ -120,43 +133,73 @@ public class ItemScreen extends AppCompatActivity {
         });
 
 
+        UserID = auth.getCurrentUser().getUid();
+
+        databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID);
+        databaseReferenceUser.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+
+                Username = snapshot.child("username").getValue().toString();
+                UserImage = snapshot.child("profile_image").getValue().toString();
+                UserEmail = snapshot.child("email").getValue().toString();
+                UserMobile = snapshot.child("mobile").getValue().toString();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+        databaseReferenceRequests = FirebaseDatabase.getInstance().getReference().child("Requests");
 
 
         item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-               /* String name=HelperMethods.items_recycler_name;
-                String price=HelperMethods.items_recycler_price;
-                String nameCompany=HelperMethods.items_recycler_user_name;
-                String place=HelperMethods.items_recycler_place;
-                String image=HelperMethods.items_recycler_image;
 
-                Encaps_Basket encaps_basket=new Encaps_Basket(name,image,price,nameCompany,place);
-                HelperMethods.encaps_baskets.add(encaps_basket);
-*/
+                databaseReferenceRequests.child(ItemID+UserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
 
-                Toast.makeText(ItemScreen.this, "تم الاضافه الي السله  (Test)", Toast.LENGTH_SHORT).show();
+                        if (snapshot.hasChildren()) {
+
+                                Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else
+                        {
+                       sendRequest();
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+                });
+
+
             }
         });
 
 
 
-
-        basketButn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                Intent intent = new Intent(ItemScreen.this,MyBasket.class);
-                startActivity(intent);
-            }
-        });
 
 
     }
-
 
 
     private String getDate(long timeStamp) {
@@ -168,6 +211,42 @@ public class ItemScreen extends AppCompatActivity {
         } catch (Exception ex) {
             return "xx";
         }
+    }
+
+
+    public void sendRequest(){
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+
+
+            HelperMethods.showDialog(ItemScreen.this, "Wait", "sending Request...");
+
+            databaseReferenceAddRequests = databaseReferenceRequests.child(ItemID+UserID);
+            databaseReferenceAddRequests.child("RequestUserName").setValue(Username);
+            databaseReferenceAddRequests.child("RequestUserID").setValue(UserID);
+            databaseReferenceAddRequests.child("RequestUserEmail").setValue(UserEmail);
+            databaseReferenceAddRequests.child("RequestUserNumber").setValue(UserMobile);
+            databaseReferenceAddRequests.child("RequestUserImage").setValue(UserImage);
+            databaseReferenceAddRequests.child("RequestItemID").setValue(ItemID);
+            databaseReferenceAddRequests.child("RequestItemName").setValue(ItemName);
+            databaseReferenceAddRequests.child("RequestItemPrice").setValue(ItemPrice);
+            databaseReferenceAddRequests.child("RequestItemImage").setValue(ItemImage);
+            databaseReferenceAddRequests.child("RequestSallerID").setValue(SallerID);
+            databaseReferenceAddRequests.child("RequestTime").setValue(System.currentTimeMillis() / 1000).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    HelperMethods.hideDialog(ItemScreen.this);
+                }
+            });
+
+
+            Toast.makeText(ItemScreen.this, "تم إرسال الطلب والإضافة الى السلة", Toast.LENGTH_SHORT).show();
+        } else {
+
+            Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
+            cdd.show();
+        }
+
     }
 
 }

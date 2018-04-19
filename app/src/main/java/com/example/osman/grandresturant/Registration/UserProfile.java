@@ -8,8 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.Model_user;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,17 +44,19 @@ import java.io.InputStream;
 
 public class UserProfile extends AppCompatActivity {
     EditText phoneEditProfile, countryEditProfile, emailEditProfile, password_old, password_new, password_new2;
-    TextView tv_email, change_password, backTv;
-    ImageView imageButton;
+    TextView tv_email;
+    Button change_password;
+    de.hdodenhof.circleimageview.CircleImageView imageButton;
     Button editBtnProfile;
     FirebaseAuth auth;
     DatabaseReference database;
-    ProgressBar progressall;
-    LinearLayout linear_password, allLiniar;
+
+    LinearLayout allLiniar;
     Uri imageUri;
     private static final int RUSLET_LOAD_IMAGE = 1;
     private StorageReference mStorageReference;
     boolean checkClick = false;
+    boolean checkPass = false;
 
 
     @Override
@@ -62,6 +68,16 @@ public class UserProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         phoneEditProfile = (EditText) findViewById(R.id.phoneEditProfile);
         countryEditProfile = (EditText) findViewById(R.id.countryEditProfile);
         emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
@@ -69,15 +85,13 @@ public class UserProfile extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference().child("Users");
         final String id_user = auth.getCurrentUser().getUid();
-        progressall = (ProgressBar) findViewById(R.id.progressall);
         tv_email = (TextView) findViewById(R.id.tv_email);
         password_old = (EditText) findViewById(R.id.password_old);
         password_new = (EditText) findViewById(R.id.password_new);
         password_new2 = (EditText) findViewById(R.id.password_new2);
-        imageButton = (ImageView) findViewById(R.id.imagebutton_user);
-        linear_password = (LinearLayout) findViewById(R.id.Linear_password);
-        change_password = (TextView) findViewById(R.id.change_password);
-        backTv = (TextView) findViewById(R.id.backTv);
+        imageButton = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.imagebutton_user);
+
+        change_password = (Button) findViewById(R.id.change_password);
         mStorageReference = FirebaseStorage.getInstance().getReference();
         allLiniar = (LinearLayout) findViewById(R.id.allLiniar);
 
@@ -96,18 +110,16 @@ public class UserProfile extends AppCompatActivity {
         change_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                linear_password.setVisibility(View.VISIBLE);
-                change_password.setVisibility(View.INVISIBLE);
-                backTv.setVisibility(View.VISIBLE);
-                backTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        linear_password.setVisibility(View.GONE);
-                        backTv.setVisibility(View.INVISIBLE);
-                        change_password.setVisibility(View.VISIBLE);
 
-                    }
-                });
+                if (!checkPass) {
+                    allLiniar.setVisibility(View.VISIBLE);
+                    checkPass = true;
+                } else {
+                    allLiniar.setVisibility(View.GONE);
+                    checkPass = false;
+                }
+
+
             }
         });
 
@@ -121,9 +133,9 @@ public class UserProfile extends AppCompatActivity {
                 phoneEditProfile.setText(model_user.getMobile());
                 emailEditProfile.setText(model_user.getUsername());
                 countryEditProfile.setText(model_user.getCountry());
-                Picasso.with(UserProfile.this).load(model_user.getProfile_image()).into(imageButton);
-                progressall.setVisibility(View.INVISIBLE);
-                allLiniar.setVisibility(View.VISIBLE);
+
+                Glide.with(UserProfile.this).load(model_user.getProfile_image()).placeholder(imageButton.getDrawable()).into(imageButton);
+
 
             }
 
@@ -142,7 +154,7 @@ public class UserProfile extends AppCompatActivity {
                 try {
 
 
-                    if (linear_password.getVisibility() == View.VISIBLE) {
+                    if (allLiniar.getVisibility() == View.VISIBLE) {
                         change();
                     } else if (!password_new2.getText().toString().isEmpty()) {
 
@@ -156,7 +168,7 @@ public class UserProfile extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-
+                                HelperMethods.showDialog(UserProfile.this, "Wait", "Editing your data...");
                                 String phone = phoneEditProfile.getText().toString().trim();
                                 String country = countryEditProfile.getText().toString().trim();
                                 String email = emailEditProfile.getText().toString().trim();
@@ -167,7 +179,8 @@ public class UserProfile extends AppCompatActivity {
                                 database.child(id_user).child("mobile").setValue(phone);
                                 try {
                                     if (checkClick == true) {
-                                        progressall.setVisibility(View.VISIBLE);
+
+
                                         mStorageReference.child(id_user).child("profile.jpg").putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
@@ -175,10 +188,9 @@ public class UserProfile extends AppCompatActivity {
                                                 if (task.isSuccessful()) {
 
                                                     database.child(id_user).child("profile_image").setValue(task.getResult().getDownloadUrl().toString());
-                                                    progressall.setVisibility(View.INVISIBLE);
+
                                                     Toast.makeText(UserProfile.this, "تم التعديل", Toast.LENGTH_SHORT).show();
-                                                    progressall.setVisibility(View.INVISIBLE);
-                                                    finish();
+                                                    HelperMethods.hideDialog(UserProfile.this);
 
                                                 }
                                             }
@@ -187,6 +199,8 @@ public class UserProfile extends AppCompatActivity {
 
 
                                 } catch (Exception e) {
+
+                                    HelperMethods.hideDialog(UserProfile.this);
 
                                 }
 
@@ -238,12 +252,12 @@ public class UserProfile extends AppCompatActivity {
                         finish();
                     } else {
 
-                        Toast.makeText(UserProfile.this, "الباسورد غير صحيح", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserProfile.this, "كلمة السر غير صحيحة", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         } else {
-            Toast.makeText(this, "اعد كتابه الباسورد صحيح", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "اعد كتابه كلمة السر صحيحة", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -16,7 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.osman.grandresturant.Registration.Login" />
+        <activity android:name=".Registration.Login" />
         <activity android:name="com.example.osman.grandresturant.Registration.Sign" />
         <activity android:name=".VistorType" />
         <activity android:name=".Activity_upload" />
