@@ -77,7 +77,6 @@ public class UserProfile extends AppCompatActivity {
         collapsingToolbar.setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         phoneEditProfile = (EditText) findViewById(R.id.phoneEditProfile);
         countryEditProfile = (EditText) findViewById(R.id.countryEditProfile);
         emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
