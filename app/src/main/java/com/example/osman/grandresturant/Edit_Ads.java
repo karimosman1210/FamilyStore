@@ -68,7 +68,7 @@ public class Edit_Ads extends AppCompatActivity {
 
         Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(ToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         name = (EditText) findViewById(R.id.edit_ads_name);
         desc = (EditText) findViewById(R.id.edit_ads_desc);
@@ -209,7 +209,7 @@ public class Edit_Ads extends AppCompatActivity {
 
                                                 databaseReference.child("image").setValue(task.getResult().getDownloadUrl().toString());
 
-                                                // Toast.makeText(UserProfile.this, "تم التعديل", Toast.LENGTH_SHORT).show();
+//                                                 Toast.makeText(Edit_Ads.this, "تم التعديل", Toast.LENGTH_SHORT).show();
 
                                                 finish();
 

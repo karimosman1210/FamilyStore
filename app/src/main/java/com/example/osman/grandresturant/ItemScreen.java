@@ -112,7 +112,7 @@ public class ItemScreen extends AppCompatActivity {
                 user_number.setText(snapshot.child("UserNumber").getValue().toString());
                 user_mail.setText(snapshot.child("UserEmail").getValue().toString());
 
-                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).placeholder(user_image.getDrawable()).fitCenter().into(user_image);
+         //       Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).placeholder(user_image.getDrawable()).fitCenter().into(user_image);
                 Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).placeholder(Item_image.getDrawable()).fitCenter().into(Item_image);
 
 
@@ -148,7 +148,7 @@ public class ItemScreen extends AppCompatActivity {
 
 
                     Username = snapshot.child("username").getValue().toString();
-                    UserImage = snapshot.child("profile_image").getValue().toString();
+//                    UserImage = snapshot.child("profile_image").getValue().toString();
                     UserEmail = snapshot.child("email").getValue().toString();
                     UserMobile = snapshot.child("mobile").getValue().toString();
 

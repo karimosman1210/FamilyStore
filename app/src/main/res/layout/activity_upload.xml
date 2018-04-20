@@ -64,7 +64,7 @@
         android:id="@+id/image_new_item"
         android:src="@drawable/item_defualt_image"
         android:layout_marginTop="10dp"
-        android:scaleType="centerInside"
+        android:scaleType="fitXY"
         />
 
 </RelativeLayout>
@@ -144,9 +144,11 @@
                     android:hint="العنوان"
                     android:padding="7dp"
                     android:paddingRight="5dp"
-                    android:textColor="@color/home"
+                    android:textColor="#b0000000"
                     android:textColorHint="#A6B9CA"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -166,9 +168,11 @@
                     android:hint="أسم المنتج"
                     android:padding="7dp"
                     android:paddingRight="5dp"
-                    android:textColor="@color/home"
+                    android:textColor="#b0000000"
                     android:textColorHint="#A6B9CA"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+
+                    />
             </RelativeLayout>
 
             <RelativeLayout
@@ -188,7 +192,7 @@
                     android:hint="التفاصيل"
                     android:padding="7dp"
                     android:paddingRight="5dp"
-                    android:textColor="@color/home"
+                    android:textColor="#b0000000"
                     android:textColorHint="#A6B9CA"
                     android:textSize="18sp" />
 
@@ -210,7 +214,7 @@
                     android:hint="  السعر "
                     android:inputType="number"
                     android:padding="10dp"
-                    android:textColor="@color/home"
+                    android:textColor="#b0000000"
                     android:textColorHint="#A6B9CA"
                     android:textSize="18sp"
 

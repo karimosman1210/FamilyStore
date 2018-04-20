@@ -263,7 +263,7 @@ public class HomeScreen extends AppCompatActivity
                     login_textview.setVisibility(View.VISIBLE);
                     image_shopping.setVisibility(View.GONE);
                     //    HelperMethods.hideDialog2(HomeScreen.this);
-//karimmmm;
+
 
                 }
             }
@@ -394,11 +394,11 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
 
-        } else if (id == R.id.nav_company_Categories) {
-
-            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
-
-        } else if (id == R.id.nav_company_New_Requests) {
+//        } else if (id == R.id.nav_company_Categories) {
+//
+//            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+//
+//        } else if (id == R.id.nav_company_New_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();
 
             if (user != null) {
