@@ -10,7 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -64,6 +66,9 @@ public class Edit_Ads extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__ads);
 
+        Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(ToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         name = (EditText) findViewById(R.id.edit_ads_name);
         desc = (EditText) findViewById(R.id.edit_ads_desc);
@@ -265,6 +270,16 @@ public class Edit_Ads extends AppCompatActivity {
         } else {
             Toast.makeText(Edit_Ads.this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
 

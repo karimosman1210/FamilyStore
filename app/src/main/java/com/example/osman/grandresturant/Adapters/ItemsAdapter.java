@@ -14,10 +14,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.osman.grandresturant.Dialogs.Registration_Dialog;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,27 +86,38 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final ItemClass itemClass = my_data.get(position);
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(firebaseAuth.getCurrentUser().getUid()).child(itemClass.getIdItem());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    holder.favoritBtn.setImageResource(R.drawable.favorit_icon);
 
-                }else {
+        if(user != null)
+        {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(firebaseAuth.getCurrentUser().getUid()).child(itemClass.getIdItem());
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        holder.favoritBtn.setImageResource(R.drawable.favorit_icon);
 
-                holder.favoritBtn.setImageResource(R.drawable.favorit);
+                    } else {
+
+                        holder.favoritBtn.setImageResource(R.drawable.favorit);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+        else
+        {
+
+        }
+
+
 
 
         holder.item_name.setText(itemClass.getName());
@@ -116,39 +129,51 @@ FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
         holder.favoritBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(user != null)
+                {
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 //
-                        if (dataSnapshot.exists()){
-                           databaseReference.removeValue();
-                            Toast.makeText(context, "تم الحذف من المفضل ", Toast.LENGTH_SHORT).show();
+                            if (dataSnapshot.exists()) {
+                                databaseReference.removeValue();
+                                Toast.makeText(context, "تم الحذف من المفضل ", Toast.LENGTH_SHORT).show();
 
-                            notifyDataSetChanged();
-                        }else {
-                            FirebaseAuth auth = FirebaseAuth.getInstance();
+                                notifyDataSetChanged();
+                            } else {
+                                FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                            databaseReference.setValue(true);
-                            Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
+                                databaseReference.setValue(true);
+                                Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
+
+                            }
+                            databaseReference.removeEventListener(this);
 
                         }
-                        databaseReference.removeEventListener(this);
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+                }
+                else
+                {
 
-                    }
-                });
+                    Registration_Dialog cdd=new Registration_Dialog(context);
+                    cdd.show();
+                }
+
 
             }
         });
 
-        Glide.with(context).load(my_data.get(position).getImage()).listener(new RequestListener<String, GlideDrawable>() {
+        Glide.with(context).load(my_data.get(position).getImage()).placeholder(holder.item_image.getDrawable()).listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 return false;

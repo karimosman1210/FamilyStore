@@ -3,36 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/registration_background"
     android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.Registration.Sign">
 
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Custom_Humborer">
-
-
-        </android.support.v7.widget.Toolbar>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <RelativeLayout
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btns_layout"
         android:layout_below="@+id/toolbar_layout"
+            android:background="#C3000000"
         android:paddingTop="50dp">
 
         <ScrollView
@@ -91,6 +71,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
+                                android:textColor="#fff"
                                 android:layout_weight="1"
                                 android:layoutDirection="rtl"
                                 android:onClick="onRadioButtonClicked"
@@ -104,6 +85,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_weight="1"
+                                android:textColor="#fff"
                                 android:layoutDirection="rtl"
                                 android:onClick="onRadioButtonClicked"
                                 android:text="تاجر"
@@ -140,7 +122,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="المدينة"
-                                android:textColor="#A6B9CA"
+                                android:textColor="#ffffff"
                                 android:textSize="18sp" />
 
                             <ImageView
@@ -174,7 +156,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:hint="اختار المدينة"
-                                    android:textColorHint="#05ab9a"></com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+                                    android:textColorHint="#ffffff"></com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
                             </RelativeLayout>
 
@@ -229,7 +211,7 @@
                     android:paddingRight="7dp"
                     android:paddingTop="7dp"
                     android:textColor="@color/home"
-                    android:textColorHint="#A6B9CA"
+                    android:textColorHint="#ffffff"
                     android:textSize="18sp" />
 
 
@@ -246,7 +228,7 @@
                     android:hint="رقم الموبايل"
                     android:padding="7dp"
                     android:textColor="@color/home"
-                    android:textColorHint="#A6B9CA"
+                    android:textColorHint="#ffffff"
                     android:textSize="18sp" />
 
 
@@ -264,7 +246,7 @@
                     android:inputType="textEmailAddress"
                     android:padding="7dp"
                     android:textColor="@color/home"
-                    android:textColorHint="#A6B9CA"
+                    android:textColorHint="#ffffff"
                     android:textSize="18sp"
 
 
@@ -285,7 +267,7 @@
                     android:inputType="textPassword"
                     android:padding="7dp"
                     android:textColor="@color/home"
-                    android:textColorHint="#A6B9CA"
+                    android:textColorHint="#ffffff"
                     android:textSize="18sp" />
 
                 <EditText
@@ -302,7 +284,7 @@
                     android:inputType="textPassword"
                     android:padding="7dp"
                     android:textColor="@color/home"
-                    android:textColorHint="#A6B9CA"
+                    android:textColorHint="#ffffff"
                     android:textSize="18sp" />
 
             </LinearLayout>

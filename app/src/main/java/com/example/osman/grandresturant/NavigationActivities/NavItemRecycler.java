@@ -33,15 +33,7 @@ public class NavItemRecycler extends AppCompatActivity {
     DatabaseReference databaseReference;
     String Item_type , Filter;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +72,6 @@ public class NavItemRecycler extends AppCompatActivity {
         if(Objects.equals(Item_type, "Saller"))
         {
 
-            Toast.makeText(this, Filter, Toast.LENGTH_SHORT).show();
             loadDataSaller();
         }
         else {
@@ -192,5 +183,15 @@ public class NavItemRecycler extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

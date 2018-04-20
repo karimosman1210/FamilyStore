@@ -10,8 +10,12 @@
 
         <item
             android:id="@+id/nav_company_My_Ads"
-            android:icon="@drawable/ic_calendar_clock_black_36dp"
+            android:icon="@drawable/item_defualt_image"
             android:title="منتجاتى" />
+        <item
+            android:id="@+id/nav_company_New_Requests"
+            android:icon="@drawable/ic_calendar_clock_black_36dp"
+            android:title="طلبات المستخدمين" />
         <item
             android:id="@+id/nav_company_favorite_Ads"
             android:icon="@drawable/favorit_icon"
@@ -27,6 +31,10 @@
             android:icon="@drawable/ic_account_group_black_36dp"
             android:title="التجار" />
         <item
+            android:id="@+id/nav_company_Categories"
+            android:icon="@drawable/category_defualt_icon"
+            android:title="الأقسام" />
+        <item
             android:id="@+id/nav_company_FeedBack"
             android:icon="@drawable/ic_comment_black_48dp"
             android:title="رأيك" />
@@ -36,7 +44,7 @@
             android:title="عنا" />
         <item
             android:id="@+id/nav_company_Log_Out"
-            android:icon="@drawable/ic_login_black_36dp"
+            android:icon="@drawable/logout"
             android:title="تسجيل الخروج" />
     </group>
 

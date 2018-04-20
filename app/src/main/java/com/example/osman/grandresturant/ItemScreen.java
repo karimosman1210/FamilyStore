@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Dialogs.MyAds_delete_dialog;
 import com.example.osman.grandresturant.Dialogs.Registration_Dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.NavigationActivities.MyAds;
 import com.example.osman.grandresturant.NavigationActivities.MyBasket;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +41,8 @@ public class ItemScreen extends AppCompatActivity {
     Button item_screen_add_btn;
     android.support.v7.widget.Toolbar itemToolbar;
 
-    DatabaseReference databaseReference, databaseReferenceUser, databaseReferenceRequests, databaseReferenceAddRequests ,databaseReferenceCheckRequests ;
-    String ItemID, ItemName, ItemPrice, ItemImage, UserID, UserImage, Username, UserEmail, UserMobile ,SallerID;
+    DatabaseReference databaseReference, databaseReferenceUser, databaseReferenceRequests, databaseReferenceAddRequests, databaseReferenceCheckRequests;
+    String ItemID, ItemName, ItemPrice, ItemImage, UserID, UserImage, Username, UserEmail, UserMobile, SallerID;
     FirebaseAuth auth;
 
     @Override
@@ -61,7 +63,7 @@ public class ItemScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        CollapsingToolbarLayout  collapsingToolbar  = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -110,8 +112,8 @@ public class ItemScreen extends AppCompatActivity {
                 user_number.setText(snapshot.child("UserNumber").getValue().toString());
                 user_mail.setText(snapshot.child("UserEmail").getValue().toString());
 
-//                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).fitCenter().into(user_image);
-                Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).fitCenter().into(Item_image);
+                Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).placeholder(user_image.getDrawable()).fitCenter().into(user_image);
+                Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).placeholder(Item_image.getDrawable()).fitCenter().into(Item_image);
 
 
                 long timestamp = Long.parseLong(String.valueOf(snapshot.child("UploadedTime").getValue().toString())) * 1000L;
@@ -134,70 +136,77 @@ public class ItemScreen extends AppCompatActivity {
         });
 
 
-        UserID = auth.getCurrentUser().getUid();
+        final FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            UserID = auth.getCurrentUser().getUid();
 
-        databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID);
-        databaseReferenceUser.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-
-
-                Username = snapshot.child("username").getValue().toString();
-                UserImage = snapshot.child("profile_image").getValue().toString();
-                UserEmail = snapshot.child("email").getValue().toString();
-                UserMobile = snapshot.child("mobile").getValue().toString();
+            databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID);
+            databaseReferenceUser.addValueEventListener(new ValueEventListener() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
 
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-        });
-
-        databaseReferenceRequests = FirebaseDatabase.getInstance().getReference().child("Requests");
+                    Username = snapshot.child("username").getValue().toString();
+                    UserImage = snapshot.child("profile_image").getValue().toString();
+                    UserEmail = snapshot.child("email").getValue().toString();
+                    UserMobile = snapshot.child("mobile").getValue().toString();
 
 
-        item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+            });
+
+            databaseReferenceRequests = FirebaseDatabase.getInstance().getReference().child("Requests");
 
 
-                databaseReferenceRequests.child(ItemID+UserID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
+            item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                        if (snapshot.hasChildren()) {
+                    if (user != null) {
+                        databaseReferenceRequests.child(ItemID + UserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
 
-                                Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
+                                if (snapshot.hasChildren()) {
 
-                        }
-                        else
-                        {
-                       sendRequest();
+                                    Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
 
-                        }
+                                } else {
+                                    sendRequest();
+
+                                }
 
 
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+
+                        });
+
+                    } else {
+                        Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
+                        cdd.show();
                     }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
-                    }
+                }
+            });
 
-                });
-
-
-            }
-        });
-
-
-
+        } else {
+            Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
+            cdd.show();
+        }
 
 
     }
@@ -215,14 +224,14 @@ public class ItemScreen extends AppCompatActivity {
     }
 
 
-    public void sendRequest(){
+    public void sendRequest() {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
 
 
             HelperMethods.showDialog(ItemScreen.this, "Wait", "sending Request...");
 
-            databaseReferenceAddRequests = databaseReferenceRequests.child(ItemID+UserID);
+            databaseReferenceAddRequests = databaseReferenceRequests.child(ItemID + UserID);
             databaseReferenceAddRequests.child("RequestUserName").setValue(Username);
             databaseReferenceAddRequests.child("RequestUserID").setValue(UserID);
             databaseReferenceAddRequests.child("RequestUserEmail").setValue(UserEmail);

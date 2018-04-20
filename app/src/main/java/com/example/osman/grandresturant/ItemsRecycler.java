@@ -83,28 +83,59 @@ public class ItemsRecycler extends AppCompatActivity {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
+                    if(Objects.equals(HelperMethods.Home_Filtter_Country_name, String.valueOf(R.string.action_settings)))
+                    {
+                        if (data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
-                    if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
+                            String id = data.getRef().getKey();
+                            String Itemid = data.child("idItem").getValue().toString();
+                            String Name = data.child("Name").getValue().toString();
+                            String image = data.child("image").getValue().toString();
+                            String CountryLocation = data.child("CountryLocation").getValue().toString();
+                            String Description = data.child("Description").getValue().toString();
+                            String ItemType = data.child("ItemType").getValue().toString();
+                            String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                            String Price = data.child("Price").getValue().toString();
+                            String UserID = data.child("UserID").getValue().toString();
+                            String UserName = data.child("UserName").getValue().toString();
+                            String UserEmail = data.child("UserEmail").getValue().toString();
+                            String UserNumber = data.child("UserNumber").getValue().toString();
+                            long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                        String id = data.getRef().getKey();
-                        String Itemid = data.child("idItem").getValue().toString();
-                        String Name = data.child("Name").getValue().toString();
-                        String image = data.child("image").getValue().toString();
-                        String CountryLocation = data.child("CountryLocation").getValue().toString();
-                        String Description = data.child("Description").getValue().toString();
-                        String ItemType = data.child("ItemType").getValue().toString();
-                        String PlaceLocation = data.child("PlaceLocation").getValue().toString();
-                        String Price = data.child("Price").getValue().toString();
-                        String UserID = data.child("UserID").getValue().toString();
-                        String UserName = data.child("UserName").getValue().toString();
-                        String UserEmail = data.child("UserEmail").getValue().toString();
-                        String UserNumber = data.child("UserNumber").getValue().toString();
-                        long UploadedTime = (long) data.child("UploadedTime").getValue();
-
-                        arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
-                        adapter.notifyDataSetChanged();
-                    } else {
+                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                            adapter.notifyDataSetChanged();
+                        } else {
+                        }
                     }
+                    else
+                    {
+                        if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
+
+                            String id = data.getRef().getKey();
+                            String Itemid = data.child("idItem").getValue().toString();
+                            String Name = data.child("Name").getValue().toString();
+                            String image = data.child("image").getValue().toString();
+                            String CountryLocation = data.child("CountryLocation").getValue().toString();
+                            String Description = data.child("Description").getValue().toString();
+                            String ItemType = data.child("ItemType").getValue().toString();
+                            String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                            String Price = data.child("Price").getValue().toString();
+                            String UserID = data.child("UserID").getValue().toString();
+                            String UserName = data.child("UserName").getValue().toString();
+                            String UserEmail = data.child("UserEmail").getValue().toString();
+                            String UserNumber = data.child("UserNumber").getValue().toString();
+                            long UploadedTime = (long) data.child("UploadedTime").getValue();
+
+                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                            adapter.notifyDataSetChanged();
+                        } else {
+                        }
+                    }
+
+
+
+
+
 
 
                 }
@@ -122,4 +153,9 @@ public class ItemsRecycler extends AppCompatActivity {
 
 
     }
+
+
+
+
+
 }

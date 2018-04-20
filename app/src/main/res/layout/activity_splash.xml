@@ -51,14 +51,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/retry_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:text="Retry"
-        android:textColor="@color/colorPrimary"
-        android:visibility="gone" />
+
 
     <io.github.yuweiguocn.lib.squareloading.SquareLoading
         android:id="@+id/progress_loader"
@@ -121,7 +114,27 @@
                 android:src="@android:color/white"
                 android:visibility="invisible" />
 
+
+
+
+
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/retry_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:text="Retry"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="visible" />
+        </RelativeLayout>
 
 
     </LinearLayout>

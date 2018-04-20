@@ -49,15 +49,15 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="11dp"
                             android:text="الأسم"
-                            android:textSize="20dp" />
+                            android:textSize="15dp" />
 
                     </RelativeLayout>
 
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/ic_account_box_grey600_48dp"/>
 
                 </LinearLayout>
@@ -81,15 +81,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="11dp"
                             android:layout_centerVertical="true"
-                            android:textSize="20dp"
+                            android:textSize="15dp"
                             android:text="المكان" />
                     </RelativeLayout>
 
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/ic_map_marker_grey600_48dp"/>
 
                 </LinearLayout>
@@ -113,15 +113,15 @@
                             android:layout_height="wrap_content"
                             android:layout_marginRight="11dp"
                             android:layout_centerVertical="true"
-                            android:textSize="20dp"
+                            android:textSize="15dp"
                             android:text="الرقم" />
                     </RelativeLayout>
 
 
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:src="@drawable/ic_phone_grey600_48dp"/>
 
                 </LinearLayout>
@@ -138,7 +138,8 @@
                 <ImageView
                     android:id="@+id/saller_recycler_item_image"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp" />
+                    android:layout_height="140dp"
+                    android:src="@drawable/salers_defualt_icon"/>
             </RelativeLayout>
 
 

@@ -37,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Adapters.Adapter_category;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.NavigationActivities.FeedBack;
@@ -88,9 +89,10 @@ public class HomeScreen extends AppCompatActivity
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    TextView login_textview, tv_nav_name, tv_nav_email, tv_nav_well;
-    ImageView image_shopping, imageView_nav_user;
-    String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    TextView login_textview,  nav_Text_view;
+    de.hdodenhof.circleimageview.CircleImageView nav_Image_view;
+    ImageView image_shopping;
+    String[] spinnerListCountry = {String.valueOf(R.string.action_settings), "بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
     MaterialBetterSpinner Country;
     ArrayAdapter<String> CountrySpinnerAdapter;
@@ -117,14 +119,15 @@ public class HomeScreen extends AppCompatActivity
 
         login_textview = (TextView) findViewById(R.id.home_login_btn);
         image_shopping = (ImageView) findViewById(R.id.home_shopping);
-
         recyclerView = (RecyclerView) findViewById(R.id.home_screen_card_recycler_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View headerLayout = navigationView.getHeaderView(0);
         Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
         locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         mLocationManager = LocationServices.getFusedLocationProviderClient(this);
-
+        nav_Image_view = (de.hdodenhof.circleimageview.CircleImageView) headerLayout.findViewById(R.id.nav_image_user);
+        nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
 
         checkForLocationPermissions();
@@ -157,8 +160,6 @@ public class HomeScreen extends AppCompatActivity
                 Country_name = adapterView.getItemAtPosition(i).toString();
                 Country_choose.setText(Country_name);
                 HelperMethods.Home_Filtter_Country_name = Country_name;
-
-
             }
         });
 
@@ -171,46 +172,10 @@ public class HomeScreen extends AppCompatActivity
         });
 
 
-
-
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
         navigation.setNavigationItemSelectedListener(this);
         final View header = navigation.getHeaderView(0);
 
-        tv_nav_email = (TextView) header.findViewById(R.id.tv_nav_email);
-        tv_nav_name = (TextView) header.findViewById(R.id.tv_nav_name);
-        tv_nav_well = (TextView) header.findViewById(R.id.tv_nav_well);
-        imageView_nav_user = (ImageView) header.findViewById(R.id.imageView_nav_user);
-
-        try {
-
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    String name_user = dataSnapshot.child("username").getValue().toString();
-                    String email_user = dataSnapshot.child("email").getValue().toString();
-
-                    tv_nav_name.setText(name_user);
-                    tv_nav_email.setText(email_user);
-
-//                 Picasso.with(header.getContext()).load(dataSnapshot.child("profile_image,").getValue().toString()).into(imageView_nav_user);
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
-        } catch (Exception e) {
-
-
-        }
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -257,11 +222,41 @@ public class HomeScreen extends AppCompatActivity
                     });
 
 
+                    mDatabase.child("profile_image").addValueEventListener(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+
+                            Glide.with(HomeScreen.this).load(snapshot.getValue()).placeholder(nav_Image_view.getDrawable()).into(nav_Image_view);
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+
+                    mDatabase.child("username").addValueEventListener(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+
+                            nav_Text_view.setText(snapshot.getValue().toString());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+
                 } else {
-                    tv_nav_email.setVisibility(View.INVISIBLE);
-                    tv_nav_name.setVisibility(View.INVISIBLE);
-                    imageView_nav_user.setVisibility(View.INVISIBLE);
-                    tv_nav_well.setVisibility(View.VISIBLE);
                     navigationView.getMenu().clear();
                     navigationView.inflateMenu(R.menu.activity_home_screen_drawer);
                     fab.setVisibility(View.GONE);
@@ -286,6 +281,7 @@ public class HomeScreen extends AppCompatActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -380,6 +376,10 @@ public class HomeScreen extends AppCompatActivity
 
         if (id == R.id.nav_Sallers) {
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
+        } else if (id == R.id.nav_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+
         } else if (id == R.id.nav_AboutUs) {
 
         } else if (id == R.id.nav_company_favorite_Ads) {
@@ -394,14 +394,25 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
 
+        } else if (id == R.id.nav_company_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+
+        } else if (id == R.id.nav_company_New_Requests) {
+            FirebaseUser user = mAuth.getCurrentUser();
+
+            if (user != null) {
+                startActivity(new Intent(HomeScreen.this, RequstsRecycler.class));
+            } else {
+            }
+
+
         } else if (id == R.id.nav_company_My_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();
-            if(user != null)
-            {
-                startActivity(new Intent(HomeScreen.this , MyBasket.class));
+            if (user != null) {
+                startActivity(new Intent(HomeScreen.this, MyBasket.class));
+            } else {
             }
-            else
-            {}
 
         } else if (id == R.id.nav_company_My_Ads) {
             startActivity(new Intent(HomeScreen.this, MyAds.class));
@@ -430,14 +441,16 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
 
+        } else if (id == R.id.nav_Use_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+
         } else if (id == R.id.nav_User_My_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();
-            if(user != null)
-            {
-                startActivity(new Intent(HomeScreen.this , MyBasket.class));
+            if (user != null) {
+                startActivity(new Intent(HomeScreen.this, MyBasket.class));
+            } else {
             }
-            else
-            {}
 
         } else if (id == R.id.nav_User_favorite_Ads) {
 
@@ -510,7 +523,7 @@ public class HomeScreen extends AppCompatActivity
         Geocoder geocoder = new Geocoder(HomeScreen.this, mLocale);
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocation(latti, longi, 5);
+            addresses = geocoder.getFromLocation(latti, longi, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -522,10 +535,12 @@ public class HomeScreen extends AppCompatActivity
                 String countryName = address.getAdminArea();
                 String regex = "\\s*\\bمحافظة\\b\\s*";
                 String country_Name = countryName.replaceAll(regex, "");
+
                 Country_choose.setText(country_Name);
+                country_Name = country_Name.replaceFirst("\u202C", "");
                 HelperMethods.Home_Filtter_Country_name = country_Name;
-                System.out.println("1 : " + address.getLocale().getDisplayLanguage());
-                System.out.println("2 : " + address.getFeatureName());
+
+                System.out.println("2 : " + country_Name);
                 //if (address.getLocale().getDisplayName().equals(mLocale.getDisplayName())) break;
             }
 
@@ -569,6 +584,16 @@ public class HomeScreen extends AppCompatActivity
         };
 
         createLocationRequest();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         mLocationManager.requestLocationUpdates(mLocationRequest, locationCallback, null);
 
     }

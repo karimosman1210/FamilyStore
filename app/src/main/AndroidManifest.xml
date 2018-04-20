@@ -19,9 +19,11 @@
         <activity android:name=".Registration.Login" />
         <activity android:name="com.example.osman.grandresturant.Registration.Sign" />
         <activity android:name=".VistorType" />
-        <activity android:name=".Activity_upload" />
+        <activity android:name=".Activity_upload"
+            android:label="التجار"/>
         <activity android:name=".ItemScreen" />
-        <activity android:name=".ItemsRecycler" />[
+        <activity android:name=".ItemsRecycler"
+            android:label="المنتجات"/>
         <activity
             android:name=".splash"
             android:label="@string/title_activity_home_screen"
@@ -38,18 +40,27 @@
         <activity
             android:name=".SallersRecycler"
             android:label="التجار" />
-        <activity android:name=".MyBasket" />
-        <activity android:name="com.example.osman.grandresturant.Registration.UserProfile" />
-        <activity android:name=".MyAds" />
+        <activity android:name="com.example.osman.grandresturant.NavigationActivities.MyBasket"
+            android:label="السلة"/>
+        <activity android:name="com.example.osman.grandresturant.Registration.UserProfile"
+            android:label="الملف الشخصى"/>
+        <activity android:name="com.example.osman.grandresturant.NavigationActivities.MyAds"
+            android:label="عروضى"/>
         <activity android:name=".ItemUpdate" />
-        <activity android:name=".Edit_Ads" />
-        <activity android:name=".Dialogs.LocationDialog" />
+        <activity android:name="com.example.osman.grandresturant.Edit_Ads"
+            android:label="تعديل العرض"/>
+
         <activity android:name=".MainActivity" />
-        <activity android:name=".Favorite_item" />
-        <activity android:name=".NavigationActivities.FeedBack" />
-        <activity android:name=".NavigationActivities.NavigationSallerRecycler" />
-        <activity android:name=".NavigationActivities.NavigationCategoriesRecycler" />
-        <activity android:name=".NavigationActivities.NavItemRecycler"></activity>
+        <activity android:name="com.example.osman.grandresturant.Favorite_item"
+            android:label="المفضلة"/>
+        <activity android:name=".NavigationActivities.FeedBack"
+            android:label="رأيك"/>
+        <activity android:name=".NavigationActivities.NavigationSallerRecycler"
+            android:label="التجار"/>
+        <activity android:name=".NavigationActivities.NavigationCategoriesRecycler"
+            android:label="الأقسام"/>
+        <activity android:name=".NavigationActivities.NavItemRecycler"
+            android:label="المنتجات"></activity>
     </application>
 
 </manifest>

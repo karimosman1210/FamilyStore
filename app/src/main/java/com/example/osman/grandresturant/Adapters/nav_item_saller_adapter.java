@@ -56,6 +56,7 @@ public class nav_item_saller_adapter extends RecyclerView.Adapter<nav_item_salle
                             String id = my_data.get(postion).getId();
                             Intent intent = new Intent(context, ItemScreen.class);
                             intent.putExtra("Item_ID", id);
+                            context.startActivity(intent);
                             
                         }
                     });
@@ -89,7 +90,7 @@ public class nav_item_saller_adapter extends RecyclerView.Adapter<nav_item_salle
         final String id = itemClass.getIdItem();
 
 
-        Glide.with(context).load(my_data.get(position).getImage()).listener(new RequestListener<String, GlideDrawable>() {
+        Glide.with(context).load(my_data.get(position).getImage()).placeholder(holder.item_image.getDrawable()).listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 return false;

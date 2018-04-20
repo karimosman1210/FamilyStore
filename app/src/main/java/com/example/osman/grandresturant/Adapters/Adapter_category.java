@@ -76,7 +76,7 @@ View v= LayoutInflater.from(context).inflate(R.layout.item_recycle_category,pare
 
         Item_recycle item_recycle=arrayList.get(position);
         holder.textView.setText(item_recycle.getName());
-        Picasso.with(context).load(item_recycle.getImage()).into(holder.imageView);
+        Picasso.with(context).load(item_recycle.getImage()).placeholder(holder.imageView.getDrawable()).into(holder.imageView);
     }
 
     @Override

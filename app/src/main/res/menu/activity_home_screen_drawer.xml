@@ -10,12 +10,16 @@
             android:icon="@drawable/ic_account_group_black_48dp"
             android:title="التجار" />
         <item
+            android:id="@+id/nav_Categories"
+            android:icon="@drawable/category_defualt_icon"
+            android:title="الأقسام" />
+        <item
             android:id="@+id/nav_AboutUs"
             android:icon="@drawable/ic_alert_circle_black_48dp"
             android:title="عنا" />
         <item
             android:id="@+id/nav_Login"
-            android:icon="@drawable/ic_guitar_pick_black_48dp"
+            android:icon="@drawable/login"
             android:title="تسجيل الدخول" />
 
     </group>

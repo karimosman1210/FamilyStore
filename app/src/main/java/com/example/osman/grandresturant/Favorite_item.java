@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.osman.grandresturant.Adapters.Favorite_Adapter;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -27,6 +29,11 @@ public class Favorite_item extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_item);
+
+        Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(ToolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycle_favorite);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -70,5 +77,16 @@ public class Favorite_item extends AppCompatActivity {
         });
 
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

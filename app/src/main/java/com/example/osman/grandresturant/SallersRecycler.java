@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -162,7 +163,7 @@ public class SallersRecycler extends AppCompatActivity {
 
 
         public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).fitCenter().into(saller_img);
+            Glide.with(view.getContext()).load(image).placeholder(saller_img.getDrawable()).fitCenter().into(saller_img);
         }
 
     }
@@ -204,10 +205,22 @@ public class SallersRecycler extends AppCompatActivity {
 
 
         public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).fitCenter().into(saller_img);
+            Glide.with(view.getContext()).load(image).placeholder(saller_img.getDrawable()).fitCenter().into(saller_img);
         }
 
     }
 
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
