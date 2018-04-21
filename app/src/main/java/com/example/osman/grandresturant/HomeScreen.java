@@ -130,7 +130,12 @@ public class HomeScreen extends AppCompatActivity
         nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
 
-
+        image_shopping.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this,MyBasket.class));
+            }
+        });
 
 
         checkForLocationPermissions();

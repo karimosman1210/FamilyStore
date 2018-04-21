@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -31,6 +33,7 @@ public class ItemsRecycler extends AppCompatActivity {
     LinearLayout barsearch;
     DatabaseReference databaseReference;
     RelativeLayout null_layout;
+    ImageButton goHome;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -52,20 +55,20 @@ public class ItemsRecycler extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-        secrchItem = (ImageView) findViewById(R.id.secrchItem);
         barsearch = (LinearLayout) findViewById(R.id.barsearch);
         arrayList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
-
+        goHome=(ImageButton)findViewById(R.id.goHome);
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        secrchItem.setOnClickListener(new View.OnClickListener() {
+        goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                barsearch.setVisibility(View.VISIBLE);
+                finish();
+                startActivity(new Intent(ItemsRecycler.this,HomeScreen.class));
 
             }
         });

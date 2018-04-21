@@ -83,7 +83,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
                         notifyDataSetChanged();
                             
 
-                        Toast.makeText(context, itemClass.getName()+"  تم حزف ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context," تم حزف "+itemClass.getName(), Toast.LENGTH_SHORT).show();
                     }
                 })
                         .setNegativeButton("لا ", new DialogInterface.OnClickListener() {

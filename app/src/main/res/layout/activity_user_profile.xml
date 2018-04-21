@@ -27,7 +27,7 @@
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="#F07923"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
 
@@ -92,11 +92,14 @@
 
                 </RelativeLayout>
 
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin" />
+
+
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

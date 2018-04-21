@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.NavigationActivities.MyBasket;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +29,7 @@ public class SallersRecycler extends AppCompatActivity {
     ImageView secrchItem;
     LinearLayout barsearch;
     RelativeLayout null_layout;
-
+    ImageButton goHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +38,13 @@ public class SallersRecycler extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
 
 
-        secrchItem = (ImageView) findViewById(R.id.secrchItem);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-
+        goHome=(ImageButton)findViewById(R.id.goHome);
 
         recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
         adminRecyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler_amin);
@@ -60,6 +61,14 @@ public class SallersRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         adminRecyclerView.setLayoutManager(layoutManagerAdmin);
 
+
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SallersRecycler.this,HomeScreen.class));
+                finish();
+            }
+        });
 
     }
 

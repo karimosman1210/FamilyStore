@@ -16,7 +16,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Custom_Humborer">
+            android:theme="@style/Custom_Humborer"
+            android:background="#F07923"
+            >
 
         </android.support.v7.widget.Toolbar>
 

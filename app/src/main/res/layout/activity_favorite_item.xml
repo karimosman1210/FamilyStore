@@ -10,21 +10,48 @@
     tools:context="com.example.osman.grandresturant.Favorite_item">
 
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_layout"
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:background="#F07923"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Custom_Humborer">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        </android.support.v7.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="المـــــفــضل "
+                    android:textColor="#b8ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    />
+
+                <ImageButton
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/iconapp"
+                    android:layout_marginLeft="200dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:id="@+id/goHome"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
 
 
     <android.support.v7.widget.RecyclerView

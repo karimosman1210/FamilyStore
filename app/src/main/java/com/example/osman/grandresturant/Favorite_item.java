@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 import com.example.osman.grandresturant.Adapters.Favorite_Adapter;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -24,7 +27,7 @@ public class Favorite_item extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference database, itemfav;
     String auth;
-
+    ImageButton goHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class Favorite_item extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference().child("Favorite").child(auth);
         itemfav = FirebaseDatabase.getInstance().getReference().child("Items");
         final com.example.osman.grandresturant.Adapters.Favorite_Adapter favorite_adapter = new Favorite_Adapter(this, list);
-
+        goHome=(ImageButton)findViewById(R.id.goHome);
         recyclerView.setAdapter(favorite_adapter);
         favorite_adapter.notifyDataSetChanged();
         database.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -76,7 +79,13 @@ public class Favorite_item extends AppCompatActivity {
             }
         });
 
-
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Favorite_item.this,HomeScreen.class));
+                finish();
+            }
+        });
     }
 
 

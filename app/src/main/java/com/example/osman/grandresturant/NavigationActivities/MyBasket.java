@@ -8,13 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Adapters.BasketAdapter;
 import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
+import com.example.osman.grandresturant.Favorite_item;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.HomeScreen;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.RequestsClass;
@@ -28,7 +31,7 @@ public class MyBasket extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
     FirebaseAuth firebaseAuth;
-
+  ImageButton goHome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,15 @@ public class MyBasket extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         firebaseAuth = FirebaseAuth.getInstance();
+        goHome=(ImageButton)findViewById(R.id.goHome);
 
+        goHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyBasket.this,HomeScreen.class));
+                finish();
+            }
+        });
 
     }
 
