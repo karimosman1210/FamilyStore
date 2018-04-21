@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,7 @@ public class SallersRecycler extends AppCompatActivity {
     DatabaseReference mDatabaseReference;
     ImageView secrchItem;
     LinearLayout barsearch;
+    RelativeLayout null_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +37,14 @@ public class SallersRecycler extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
+
+
         secrchItem = (ImageView) findViewById(R.id.secrchItem);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
+
+
         recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
         adminRecyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler_amin);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -209,8 +217,6 @@ public class SallersRecycler extends AppCompatActivity {
         }
 
     }
-
-
 
 
     @Override

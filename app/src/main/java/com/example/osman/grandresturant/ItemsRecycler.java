@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.example.osman.grandresturant.Adapters.ItemsAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
@@ -29,6 +30,7 @@ public class ItemsRecycler extends AppCompatActivity {
     ArrayList<ItemClass> arrayList;
     LinearLayout barsearch;
     DatabaseReference databaseReference;
+    RelativeLayout null_layout;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -49,11 +51,12 @@ public class ItemsRecycler extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         secrchItem = (ImageView) findViewById(R.id.secrchItem);
         barsearch = (LinearLayout) findViewById(R.id.barsearch);
         arrayList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -80,67 +83,92 @@ public class ItemsRecycler extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                if(dataSnapshot.hasChildren())
+                {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
-                    if(Objects.equals(HelperMethods.Home_Filtter_Country_name, String.valueOf(R.string.action_settings)))
-                    {
-                        if (data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
+                        if(Objects.equals(HelperMethods.Home_Filtter_Country_name, "الكل"))
+                        {
+                            if (data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
-                            String id = data.getRef().getKey();
-                            String Itemid = data.child("idItem").getValue().toString();
-                            String Name = data.child("Name").getValue().toString();
-                            String image = data.child("image").getValue().toString();
-                            String CountryLocation = data.child("CountryLocation").getValue().toString();
-                            String Description = data.child("Description").getValue().toString();
-                            String ItemType = data.child("ItemType").getValue().toString();
-                            String PlaceLocation = data.child("PlaceLocation").getValue().toString();
-                            String Price = data.child("Price").getValue().toString();
-                            String UserID = data.child("UserID").getValue().toString();
-                            String UserName = data.child("UserName").getValue().toString();
-                            String UserEmail = data.child("UserEmail").getValue().toString();
-                            String UserNumber = data.child("UserNumber").getValue().toString();
-                            long UploadedTime = (long) data.child("UploadedTime").getValue();
+                                String id = data.getRef().getKey();
+                                String Itemid = data.child("idItem").getValue().toString();
+                                String Name = data.child("Name").getValue().toString();
+                                String image = data.child("image").getValue().toString();
+                                String CountryLocation = data.child("CountryLocation").getValue().toString();
+                                String Description = data.child("Description").getValue().toString();
+                                String ItemType = data.child("ItemType").getValue().toString();
+                                String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                                String Price = data.child("Price").getValue().toString();
+                                String UserID = data.child("UserID").getValue().toString();
+                                String UserName = data.child("UserName").getValue().toString();
+                                String UserEmail = data.child("UserEmail").getValue().toString();
+                                String UserNumber = data.child("UserNumber").getValue().toString();
+                                long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
-                            adapter.notifyDataSetChanged();
-                        } else {
+                                arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                                adapter.notifyDataSetChanged();
+                                null_layout.setVisibility(View.GONE);
+
+
+
+
+
+                            } else {
+
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
+                        else
+                        {
+                            if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
-                            String id = data.getRef().getKey();
-                            String Itemid = data.child("idItem").getValue().toString();
-                            String Name = data.child("Name").getValue().toString();
-                            String image = data.child("image").getValue().toString();
-                            String CountryLocation = data.child("CountryLocation").getValue().toString();
-                            String Description = data.child("Description").getValue().toString();
-                            String ItemType = data.child("ItemType").getValue().toString();
-                            String PlaceLocation = data.child("PlaceLocation").getValue().toString();
-                            String Price = data.child("Price").getValue().toString();
-                            String UserID = data.child("UserID").getValue().toString();
-                            String UserName = data.child("UserName").getValue().toString();
-                            String UserEmail = data.child("UserEmail").getValue().toString();
-                            String UserNumber = data.child("UserNumber").getValue().toString();
-                            long UploadedTime = (long) data.child("UploadedTime").getValue();
+                                String id = data.getRef().getKey();
+                                String Itemid = data.child("idItem").getValue().toString();
+                                String Name = data.child("Name").getValue().toString();
+                                String image = data.child("image").getValue().toString();
+                                String CountryLocation = data.child("CountryLocation").getValue().toString();
+                                String Description = data.child("Description").getValue().toString();
+                                String ItemType = data.child("ItemType").getValue().toString();
+                                String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                                String Price = data.child("Price").getValue().toString();
+                                String UserID = data.child("UserID").getValue().toString();
+                                String UserName = data.child("UserName").getValue().toString();
+                                String UserEmail = data.child("UserEmail").getValue().toString();
+                                String UserNumber = data.child("UserNumber").getValue().toString();
+                                long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
-                            adapter.notifyDataSetChanged();
-                        } else {
+                                arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                                adapter.notifyDataSetChanged();
+
+
+                                null_layout.setVisibility(View.GONE);
+
+
+
+                            } else {
+
+
+                            }
                         }
+
+
+
+
+
+
+
                     }
-
-
-
-
-
-
+                    HelperMethods.hideDialog(ItemsRecycler.this);
+                    recyclerView.setAdapter(adapter);
+                }
+                else
+                { null_layout.setVisibility(View.VISIBLE);
 
                 }
-                HelperMethods.hideDialog(ItemsRecycler.this);
-                recyclerView.setAdapter(adapter);
+
+
 
 
             }

@@ -35,11 +35,11 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.util.ArrayList;
 
 public class Activity_upload extends AppCompatActivity {
-    Toolbar toolUp;
-    EditText place, title, price, description, phone, email;
-    Spinner location;
+
+    EditText place, title, price, description;
+
     Button upload;
-    Spinner spinner_category;
+
     ArrayList<String> arrayList;
     DatabaseReference databaseReference, mDatabaseCurrentUser;
     MaterialBetterSpinner Category, Country;
@@ -47,12 +47,11 @@ public class Activity_upload extends AppCompatActivity {
     String[] spinnerListDefualt = {};
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     FirebaseAuth mAuth;
-    String ID, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UploadedTime, UserID, UserName, UserEmail, UserNumber, UserImage;
+    String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage;
     ImageButton imgebtn;
     private static final int RUSLET_LOAD_IMAGE = 1;
     static Uri image_item;
     private StorageReference mStorageReference;
-    private DatabaseReference mDatabase;
 
 
     @Override
@@ -206,7 +205,7 @@ public class Activity_upload extends AppCompatActivity {
         title = (EditText) findViewById(R.id.et_upload_title);
         price = (EditText) findViewById(R.id.et_upload_price);
         description = (EditText) findViewById(R.id.et_upload_description);
-        place = (EditText) findViewById(R.id.et_upload_place);
+        place = (EditText) findViewById(R.id.et_upload_placee);
         imgebtn = (ImageButton) findViewById(R.id.image_new_item);
 
         upload = (Button) findViewById(R.id.upload_button);
@@ -228,11 +227,36 @@ public class Activity_upload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String Place = place.getText().toString();
 
-                if (image_item == null || TextUtils.isEmpty(price.getText()) || TextUtils.isEmpty(title.getText()) || TextUtils.isEmpty(description.getText()) || TextUtils.isEmpty(place.getText()) || TextUtils.isEmpty(CountryLocation) || TextUtils.isEmpty(ItemType)) {
+                if (image_item == null) {
 
 
-                    Toast.makeText(Activity_upload.this, "أكمل التفاصيل ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_upload.this, "إختار صورة المنتج ", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(price.getText())) {
+
+
+                    Toast.makeText(Activity_upload.this, "أدخل السعر", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(title.getText())) {
+
+
+                    Toast.makeText(Activity_upload.this, "أدخل أسم المنتج", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(description.getText())) {
+
+
+                    Toast.makeText(Activity_upload.this, "أدخل الوصف ", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(Place)) {
+
+
+                    Toast.makeText(Activity_upload.this, "أدخل المكان ", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(CountryLocation)) {
+
+
+                    Toast.makeText(Activity_upload.this, "أدخل المدينة ", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(ItemType)) {
+
+
+                    Toast.makeText(Activity_upload.this, "أختار القسم ", Toast.LENGTH_SHORT).show();
                 } else {
 
 
@@ -282,6 +306,7 @@ public class Activity_upload extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

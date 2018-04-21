@@ -128,12 +128,12 @@
                 android:id="@+id/retry_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="top|end"
                 android:text="Retry"
                 android:textColor="@color/colorPrimary"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
 
 

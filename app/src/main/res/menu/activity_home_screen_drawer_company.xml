@@ -30,10 +30,10 @@
             android:id="@+id/nav_company_sallers"
             android:icon="@drawable/ic_account_group_black_36dp"
             android:title="التجار" />
-        <!--<item-->
-            <!--android:id="@+id/nav_company_Categories"-->
-            <!--android:icon="@drawable/category_defualt_icon"-->
-            <!--android:title="الأقسام" />-->
+        <item
+            android:id="@+id/nav_company_Categories"
+            android:icon="@drawable/category_defualt_icon"
+            android:title="الأقسام" />
         <item
             android:id="@+id/nav_company_FeedBack"
             android:icon="@drawable/ic_comment_black_48dp"

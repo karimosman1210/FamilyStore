@@ -96,6 +96,7 @@ public class ItemScreen extends AppCompatActivity {
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items").child(ItemID);
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override

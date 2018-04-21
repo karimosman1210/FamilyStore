@@ -39,6 +39,7 @@ public class MyBasket extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
+
         recyclerView = (RecyclerView) findViewById(R.id.basket_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);

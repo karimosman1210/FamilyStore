@@ -40,89 +40,126 @@ android:orientation="vertical"
 
     </android.support.design.widget.AppBarLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
 
-<android.support.v4.widget.NestedScrollView
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:visibility="gone"
+    android:id="@+id/saller_recycler_reltivelayout_null">
+
     <LinearLayout
+        android:layout_width="250dp"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/item_defualt_image"
+            />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="20dp"
+                android:text="لا يوجد منتجات فى هذا القسم!"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        >
         <LinearLayout
-            android:id="@+id/barsearch"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:visibility="gone"
-            android:weightSum="10">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="8"
-                android:background="@color/white"
-                android:hint="What are you looking for ?"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+            <LinearLayout
+                android:id="@+id/barsearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:weightSum="10">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="8"
+                    android:background="@color/white"
+                    android:hint="What are you looking for ?"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" />
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="2"
+                    android:background="@color/Default"
+
+                    >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_magnify_white_48dp" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="2"
-                android:background="@color/Default"
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 >
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/saller_recycler_item_image_recycler_amin"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_magnify_white_48dp" />
+                    android:layout_margin="5dp"
+                    android:scrollbars="vertical" />
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/saller_recycler_item_image_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:scrollbars="vertical" />
             </RelativeLayout>
 
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/saller_recycler_item_image_recycler_amin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:scrollbars="vertical" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/saller_recycler_item_image_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:scrollbars="vertical" />
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
-
-
+    </android.support.v4.widget.NestedScrollView>
 
 
 

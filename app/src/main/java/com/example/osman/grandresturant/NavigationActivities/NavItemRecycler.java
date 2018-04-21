@@ -6,8 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.nav_item_saller_adapter;
@@ -32,7 +34,7 @@ public class NavItemRecycler extends AppCompatActivity {
     LinearLayout barsearch;
     DatabaseReference databaseReference;
     String Item_type , Filter;
-
+    RelativeLayout null_layout;
 
 
     @Override
@@ -45,6 +47,7 @@ public class NavItemRecycler extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
@@ -62,6 +65,7 @@ public class NavItemRecycler extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+
         recyclerView = (RecyclerView) findViewById(R.id.nav_item_saller_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -95,34 +99,45 @@ public class NavItemRecycler extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                if(dataSnapshot.hasChildren())
+                {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
 
 
-                    String id = data.getRef().getKey();
-                    String Itemid = data.child("idItem").getValue().toString();
-                    String Name = data.child("Name").getValue().toString();
-                    String image = data.child("image").getValue().toString();
-                    String CountryLocation = data.child("CountryLocation").getValue().toString();
-                    String Description = data.child("Description").getValue().toString();
-                    String ItemType = data.child("ItemType").getValue().toString();
-                    String PlaceLocation = data.child("PlaceLocation").getValue().toString();
-                    String Price = data.child("Price").getValue().toString();
-                    String UserID = data.child("UserID").getValue().toString();
-                    String UserName = data.child("UserName").getValue().toString();
-                    String UserEmail = data.child("UserEmail").getValue().toString();
-                    String UserNumber = data.child("UserNumber").getValue().toString();
-                    long UploadedTime = (long) data.child("UploadedTime").getValue();
+                        String id = data.getRef().getKey();
+                        String Itemid = data.child("idItem").getValue().toString();
+                        String Name = data.child("Name").getValue().toString();
+                        String image = data.child("image").getValue().toString();
+                        String CountryLocation = data.child("CountryLocation").getValue().toString();
+                        String Description = data.child("Description").getValue().toString();
+                        String ItemType = data.child("ItemType").getValue().toString();
+                        String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                        String Price = data.child("Price").getValue().toString();
+                        String UserID = data.child("UserID").getValue().toString();
+                        String UserName = data.child("UserName").getValue().toString();
+                        String UserEmail = data.child("UserEmail").getValue().toString();
+                        String UserNumber = data.child("UserNumber").getValue().toString();
+                        long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
-                    adapter.notifyDataSetChanged();
+                        arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                        adapter.notifyDataSetChanged();
 
 
 
+                    }
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                    recyclerView.setAdapter(adapter);
                 }
-                HelperMethods.hideDialog(NavItemRecycler.this);
-                recyclerView.setAdapter(adapter);
+                else
+                {
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                    null_layout.setVisibility(View.VISIBLE);
+                }
+
+
 
 
             }
@@ -144,34 +159,41 @@ public class NavItemRecycler extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if(dataSnapshot.hasChildren())
+                    {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
 
 
-                    String id = data.getRef().getKey();
-                    String Itemid = data.child("idItem").getValue().toString();
-                    String Name = data.child("Name").getValue().toString();
-                    String image = data.child("image").getValue().toString();
-                    String CountryLocation = data.child("CountryLocation").getValue().toString();
-                    String Description = data.child("Description").getValue().toString();
-                    String ItemType = data.child("ItemType").getValue().toString();
-                    String PlaceLocation = data.child("PlaceLocation").getValue().toString();
-                    String Price = data.child("Price").getValue().toString();
-                    String UserID = data.child("UserID").getValue().toString();
-                    String UserName = data.child("UserName").getValue().toString();
-                    String UserEmail = data.child("UserEmail").getValue().toString();
-                    String UserNumber = data.child("UserNumber").getValue().toString();
-                    long UploadedTime = (long) data.child("UploadedTime").getValue();
+                            String id = data.getRef().getKey();
+                            String Itemid = data.child("idItem").getValue().toString();
+                            String Name = data.child("Name").getValue().toString();
+                            String image = data.child("image").getValue().toString();
+                            String CountryLocation = data.child("CountryLocation").getValue().toString();
+                            String Description = data.child("Description").getValue().toString();
+                            String ItemType = data.child("ItemType").getValue().toString();
+                            String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                            String Price = data.child("Price").getValue().toString();
+                            String UserID = data.child("UserID").getValue().toString();
+                            String UserName = data.child("UserName").getValue().toString();
+                            String UserEmail = data.child("UserEmail").getValue().toString();
+                            String UserNumber = data.child("UserNumber").getValue().toString();
+                            long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                    arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
-                    adapter.notifyDataSetChanged();
+                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                            adapter.notifyDataSetChanged();
 
 
 
-                }
-                HelperMethods.hideDialog(NavItemRecycler.this);
-                recyclerView.setAdapter(adapter);
+                        }
+                        HelperMethods.hideDialog(NavItemRecycler.this);
+                        recyclerView.setAdapter(adapter);
+                    }
+                    else
+                    {
+                        null_layout.setVisibility(View.VISIBLE);
+                    }
 
 
             }

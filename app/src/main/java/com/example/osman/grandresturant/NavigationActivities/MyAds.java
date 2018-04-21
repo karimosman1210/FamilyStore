@@ -50,7 +50,9 @@ public class MyAds extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
+        mDatabaseReference.keepSynced(true);
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabase.keepSynced(true);
         recyclerView = (RecyclerView) findViewById(R.id.my_ads_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -66,6 +68,7 @@ public class MyAds extends AppCompatActivity {
         String id = firebaseAuth.getCurrentUser().getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
+
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override

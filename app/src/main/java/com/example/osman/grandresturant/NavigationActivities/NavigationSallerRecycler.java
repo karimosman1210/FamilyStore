@@ -39,6 +39,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
 
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+
         recyclerView = (RecyclerView) findViewById(R.id.nav_saller_recycler);
         adminRecyclerView = (RecyclerView) findViewById(R.id.nav_saller_recycler_admin);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

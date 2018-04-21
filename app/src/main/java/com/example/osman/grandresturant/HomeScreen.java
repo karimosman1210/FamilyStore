@@ -92,7 +92,7 @@ public class HomeScreen extends AppCompatActivity
     TextView login_textview,  nav_Text_view;
     de.hdodenhof.circleimageview.CircleImageView nav_Image_view;
     ImageView image_shopping;
-    String[] spinnerListCountry = {String.valueOf(R.string.action_settings), "بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    String[] spinnerListCountry = {"الكل", "بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
     MaterialBetterSpinner Country;
     ArrayAdapter<String> CountrySpinnerAdapter;
@@ -129,6 +129,9 @@ public class HomeScreen extends AppCompatActivity
         nav_Image_view = (de.hdodenhof.circleimageview.CircleImageView) headerLayout.findViewById(R.id.nav_image_user);
         nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
+
+
+
 
         checkForLocationPermissions();
 //        timer = new Timer();
@@ -189,7 +192,7 @@ public class HomeScreen extends AppCompatActivity
                     String id = mAuth.getCurrentUser().getUid();
 
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
-                    // HelperMethods.showDialog2(HomeScreen.this, "Wait", "Loading...");
+
                     mDatabase.child("user_tpe").addValueEventListener(new ValueEventListener() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
@@ -307,7 +310,7 @@ public class HomeScreen extends AppCompatActivity
         final Adapter_category adapter = new Adapter_category(this, arrayList);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Category");
-
+        databaseReference.keepSynced(true);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -394,11 +397,11 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
 
-//        } else if (id == R.id.nav_company_Categories) {
-//
-//            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
-//
-//        } else if (id == R.id.nav_company_New_Requests) {
+        } else if (id == R.id.nav_company_Categories) {
+
+            startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
+
+        } else if (id == R.id.nav_company_New_Requests) {
             FirebaseUser user = mAuth.getCurrentUser();
 
             if (user != null) {
