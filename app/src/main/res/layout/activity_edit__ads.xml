@@ -191,7 +191,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-
                     android:drawableStart="@drawable/ic_view_headline_grey600_24dp"
                     android:gravity="right"
                     android:hint="التفاصيل"
@@ -200,10 +199,8 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 app:hintTextAppearance="@style/hint_appearance"
                 android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
@@ -219,7 +216,8 @@
                     android:drawableStart="@drawable/ic_currency_usd_grey600_24dp"
                     android:gravity="right"
                     android:hint="السعر : جنيه مصرى"
-                    android:inputType="textNoSuggestions" />
+                    android:inputType="number" />
+
             </android.support.design.widget.TextInputLayout>
 
 

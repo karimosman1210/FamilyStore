@@ -100,7 +100,6 @@
                     app:layout_collapseMode="pin" />
 
 
-
             </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
@@ -217,9 +216,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="8dp"
+                            android:background="@color/colorPrimaryDark"
                             android:text="تغيير كلمة السر"
                             android:textSize="15dp"
-
                             android:visibility="visible"
 
                             />
@@ -366,7 +365,7 @@
                 android:id="@+id/editBtnProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/btn"
+                android:background="@color/colorPrimary"
                 android:fontFamily="serif"
                 android:text="تعديل"
                 android:textColor="#fff"

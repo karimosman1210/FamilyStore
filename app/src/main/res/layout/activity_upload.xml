@@ -218,7 +218,8 @@
                     android:drawableStart="@drawable/ic_currency_usd_grey600_24dp"
                     android:gravity="right"
                     android:hint="السعر : جنيه مصرى"
-                    android:inputType="textNoSuggestions" />
+
+                    android:inputType="number" />
             </android.support.design.widget.TextInputLayout>
 
 
