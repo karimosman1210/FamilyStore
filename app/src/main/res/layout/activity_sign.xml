@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/registration_background"
     android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.Registration.Sign">
@@ -13,7 +14,7 @@
         android:layout_above="@+id/btns_layout"
         android:layout_below="@+id/toolbar_layout"
             android:background="#C3000000"
-        android:paddingTop="50dp">
+        android:paddingTop="20dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -155,7 +156,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
+                                    android:drawableEnd="@drawable/ic_chevron_down_white_24dp"
                                     android:hint="اختار المدينة"
+                                    app:met_textColorHint="#fff"
                                     android:textColorHint="#ffffff"></com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
 
                             </RelativeLayout>

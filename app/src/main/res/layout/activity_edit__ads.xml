@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,259 +8,237 @@
 
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/tow"
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/Custom_Humborer">
 
+        </android.support.v7.widget.Toolbar>
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/itemToolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="#F07923"
-                app:contentInsetStartWithNavigation="0dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="الـــســلـه "
-                        android:textColor="#b8ffffff"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        />
-
-                    <ImageButton
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:background="@drawable/iconapp"
-                        android:layout_marginLeft="200dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:id="@+id/goHome"
-                        />
-                </RelativeLayout>
-
-            </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
 
-    <RelativeLayout
+
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btn_click"
-        android:layout_below="@+id/tow">
+        android:layout_height="match_parent">
 
-        <ScrollView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="إختار صورة المنتج "
+                    android:textSize="20dp" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="#fff"
+                    android:padding="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/border_layout"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:id="@+id/edit_ads_item_img"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/add_new_item_image" />
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/edit_ads_spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:drawableEnd="@drawable/ic_chevron_down_grey600_24dp"
+                android:drawableStart="@drawable/ic_border_all_grey600_24dp"
+                android:hint="اختار قسم المنتج "
+                android:textColorHint="#05ab9a"
+
+                />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/edit_ads_spinner_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="15dp"
+                android:drawableEnd="@drawable/ic_chevron_down_grey600_24dp"
+                android:drawableStart="@drawable/location_icon"
+                android:hint="اختار المحافظة "
+                android:textColorHint="#05ab9a" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <android.support.design.widget.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
+                app:errorEnabled="true"
+                app:hintTextAppearance="@style/hint_appearance"
+                app:errorTextAppearance="@style/error_appearance"
+                app:hintAnimationEnabled="true"
+
 
                 >
 
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:layout_gravity="center">
-
-                    <ImageButton
-                        android:id="@+id/edit_ads_item_img"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:layout_margin="10dp"
-                        android:layout_marginBottom="6dp"
-                        android:background="@drawable/ph"
-                        android:scaleType="centerInside"
-
-                        />
-                </RelativeLayout>
-
-                <RelativeLayout
+                <EditText
+                    android:id="@+id/edit_ads_place"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edit_ads_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:gravity="right"
-                            android:hint="الأسم"
-                            android:padding="6dp"
-                            android:textSize="20sp" />
+                    android:layout_gravity="right"
+                    android:drawableStart="@drawable/ic_map_marker_grey600_24dp"
+                    android:gravity="right"
+                    android:hint="المكان بالتفصيل"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="30" />
+            </android.support.design.widget.TextInputLayout>
 
 
-                    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:hintTextAppearance="@style/hint_appearance"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/error_appearance"
+                app:hintAnimationEnabled="true"
 
 
-                </RelativeLayout>
+                >
 
-                <RelativeLayout
+                <EditText
+                    android:id="@+id/edit_ads_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <android.support.design.widget.TextInputEditText
-
-                            android:id="@+id/edit_ads_desc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:gravity="right"
-                            android:hint="التفاصيل"
-                            android:padding="6dp" />
-                    </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="right"
+                    android:drawableStart="@drawable/ic_border_color_grey600_24dp"
+                    android:gravity="right"
+                    android:hint="أسم المنتج"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="20" />
+            </android.support.design.widget.TextInputLayout>
 
 
-                </RelativeLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                app:hintTextAppearance="@style/hint_appearance"
+                android:layout_marginStart="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="500"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/error_appearance"
+                app:hintAnimationEnabled="true"
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/edit_ads_spinner_category"
+
+                >
+
+                <EditText
+                    android:id="@+id/edit_ads_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp">
+                    android:layout_gravity="right"
 
-                </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
+                    android:drawableStart="@drawable/ic_view_headline_grey600_24dp"
+                    android:gravity="right"
+                    android:hint="التفاصيل"
+                    android:inputType="textNoSuggestions"
+                    android:maxLength="500" />
+            </android.support.design.widget.TextInputLayout>
 
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/edit_ads_spinner_place"
+            <android.support.design.widget.TextInputLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:hintTextAppearance="@style/hint_appearance"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                app:errorEnabled="true"
+                app:errorTextAppearance="@style/error_appearance"
+                app:hintAnimationEnabled="true">
+
+                <EditText
+                    android:id="@+id/edit_ads_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="6dp">
-
-                </com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner>
-
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edit_ads_place"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:gravity="right"
-                            android:hint="المكان"
-                            android:padding="6dp"
-                            android:textSize="17sp" />
-
-                    </android.support.design.widget.TextInputLayout>
+                    android:layout_gravity="right"
+                    android:drawableStart="@drawable/ic_currency_usd_grey600_24dp"
+                    android:gravity="right"
+                    android:hint="السعر : جنيه مصرى"
+                    android:inputType="textNoSuggestions" />
+            </android.support.design.widget.TextInputLayout>
 
 
-                </RelativeLayout>
+            <Button
+                android:id="@+id/edit_ads_update_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="serif"
+                android:text="أضافة المنتج"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="22sp" />
+
+        </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="100dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_weight="1"
-                        android:text="جنيه"
-                        android:textSize="17sp" />
+    </ScrollView>
 
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_weight="3"
-                        android:gravity="right">
-
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edit_ads_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="8dp"
-                            android:gravity="right"
-                            android:hint="السعر"
-                            android:inputType="number"
-                            android:padding="6dp"
-                            android:textColor="@color/Default"
-                            android:textSize="17sp"
-                            android:textStyle="bold" />
-
-
-                    </android.support.design.widget.TextInputLayout>
-
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-        </ScrollView>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/btn_click"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:padding="20dp">
-
-        <Button
-            android:id="@+id/edit_ads_update_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/btninput"
-            android:fontFamily="serif"
-            android:text="تحديث"
-            android:textColor="#fff"
-            android:textSize="25dp"
-
-            />
-    </RelativeLayout>
-
-</RelativeLayout>
-
-
+</LinearLayout>

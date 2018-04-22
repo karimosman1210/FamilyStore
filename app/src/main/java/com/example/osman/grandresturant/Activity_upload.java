@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -48,7 +49,7 @@ public class Activity_upload extends AppCompatActivity {
     String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     FirebaseAuth mAuth;
     String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage;
-    ImageButton imgebtn;
+    ImageView imgebtn;
     private static final int RUSLET_LOAD_IMAGE = 1;
     static Uri image_item;
     private StorageReference mStorageReference;
@@ -59,8 +60,8 @@ public class Activity_upload extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolUp);
-        setSupportActionBar(toolbar);
+        android.support.v7.widget.Toolbar ToolBar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(ToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -206,7 +207,7 @@ public class Activity_upload extends AppCompatActivity {
         price = (EditText) findViewById(R.id.et_upload_price);
         description = (EditText) findViewById(R.id.et_upload_description);
         place = (EditText) findViewById(R.id.et_upload_placee);
-        imgebtn = (ImageButton) findViewById(R.id.image_new_item);
+        imgebtn = (ImageView) findViewById(R.id.image_new_item);
 
         upload = (Button) findViewById(R.id.upload_button);
 
@@ -227,7 +228,7 @@ public class Activity_upload extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String Place = place.getText().toString();
+
 
                 if (image_item == null) {
 
@@ -236,19 +237,18 @@ public class Activity_upload extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(price.getText())) {
 
 
-                    Toast.makeText(Activity_upload.this, "أدخل السعر", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(title.getText())) {
+                    title.setError("أدخل أسم المنتج");
 
 
-                    Toast.makeText(Activity_upload.this, "أدخل أسم المنتج", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(description.getText())) {
 
+                    description.setError("أدخل الوصف ");
 
-                    Toast.makeText(Activity_upload.this, "أدخل الوصف ", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(Place)) {
+                } else if (TextUtils.isEmpty(   place.getText().toString())) {
 
+                    place.setError("أدخل المكان ");
 
-                    Toast.makeText(Activity_upload.this, "أدخل المكان ", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(CountryLocation)) {
 
 

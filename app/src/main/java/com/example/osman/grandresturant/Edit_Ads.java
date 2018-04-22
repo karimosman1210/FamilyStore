@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,7 @@ public class Edit_Ads extends AppCompatActivity {
     DatabaseReference data_category;
     EditText name, desc, price, place;
     MaterialBetterSpinner Category, Country;
-    ImageButton imageButton;
+    ImageView imageButton;
     Button save;
     ArrayAdapter<String> CategorySpinnerAdapter, CountrySpinnerAdapter;
     ArrayList<String> arrayList_category;
@@ -68,13 +69,13 @@ public class Edit_Ads extends AppCompatActivity {
 
         Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(ToolBar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         name = (EditText) findViewById(R.id.edit_ads_name);
         desc = (EditText) findViewById(R.id.edit_ads_desc);
         price = (EditText) findViewById(R.id.edit_ads_price);
         place = (EditText) findViewById(R.id.edit_ads_place);
-        imageButton = (ImageButton) findViewById(R.id.edit_ads_item_img);
+        imageButton = (ImageView) findViewById(R.id.edit_ads_item_img);
         save = (Button) findViewById(R.id.edit_ads_update_btn);
         Category = (MaterialBetterSpinner) findViewById(R.id.edit_ads_spinner_category);
         Country = (MaterialBetterSpinner) findViewById(R.id.edit_ads_spinner_place);
