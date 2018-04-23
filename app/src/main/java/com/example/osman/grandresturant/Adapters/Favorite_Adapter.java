@@ -1,25 +1,16 @@
 package com.example.osman.grandresturant.Adapters;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v4.app.NavUtils;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,8 +33,6 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
         this.context = context;
         this.my_data = my_data;
     }
-
-
 
 
     @Override
@@ -72,18 +60,18 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setCancelable(false);
                 dialog.setTitle("تنبيه");
-                dialog.setMessage("هل متاكد من حذف هذا الاعلان " );
-                dialog.setPositiveButton("نعم", new DialogInterface.OnClickListener(){
+                dialog.setMessage("هل متاكد من حذف هذا الاعلان ");
+                dialog.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        String firebaseAuth=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        String firebaseAuth = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Favorite");
                         database.child(firebaseAuth).child(itemClass.getIdItem()).removeValue();
                         my_data.remove(position);
                         notifyDataSetChanged();
-                            
 
-                        Toast.makeText(context," تم حزف "+itemClass.getName(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(context, " تم حزف " + itemClass.getName(), Toast.LENGTH_SHORT).show();
                     }
                 })
                         .setNegativeButton("لا ", new DialogInterface.OnClickListener() {
@@ -120,7 +108,6 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
             item_category = (TextView) view.findViewById(R.id.favorite_item_category);
             item_image = (ImageView) view.findViewById(R.id.favorite_item_image);
             unfavoritBtn = (ImageView) view.findViewById(R.id.unfavoritBtn);
-
 
 
         }
