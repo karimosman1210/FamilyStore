@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Adapters.SallerAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -29,6 +30,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class SallersRecycler extends AppCompatActivity {
 
@@ -47,6 +50,12 @@ public class SallersRecycler extends AppCompatActivity {
 
     private SearchView searchView;
     private TextView toolbarTitle;
+
+    private ArrayList<SallersClass> sellers = new ArrayList<>();
+    private SallerAdapter adapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,9 @@ public class SallersRecycler extends AppCompatActivity {
 //        });
 
 
+        adapter = new SallerAdapter(sellers, sellers, this);
+
+
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -98,6 +110,20 @@ public class SallersRecycler extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toolbarTitle.setVisibility(View.GONE);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
             }
         });
 
@@ -143,14 +169,21 @@ public class SallersRecycler extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
-
         super.onStart();
+        sellers.clear();
+        recyclerView.setAdapter(adapter);
 
         mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    SallersClass seller = child.getValue(SallersClass.class);
+                    seller.setId(child.getKey());
+                    if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                        sellers.add(seller);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -159,33 +192,6 @@ public class SallersRecycler extends AppCompatActivity {
             }
         });
 
-        FirebaseRecyclerAdapter<SallersClass, AdminHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<SallersClass, AdminHolder>(
-                SallersClass.class,
-                R.layout.saller_recycler_item,
-                AdminHolder.class,
-                mDatabaseReference.orderByChild("user_tpe").equalTo("company")
-        ) {
-            @Override
-            protected void populateViewHolder(AdminHolder viewHolder, final SallersClass model, int position) {
-                if (model.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
-                    final String key_post = getRef(position).getKey();
-                    viewHolder.setItemName(model.getUsername());
-                    viewHolder.setLocation(model.getCountry());
-                    viewHolder.setNumber(model.getMobile());
-                    viewHolder.setItemImage(model.getProfile_image());
-
-                    viewHolder.view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            HelperMethods.Home_Filtter_sallerID = key_post;
-                            startActivity(new Intent(SallersRecycler.this, ItemsRecycler.class));
-                        }
-                    });
-                }
-            }
-        };
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
     }
 
     private void initView() {
@@ -281,7 +287,6 @@ public class SallersRecycler extends AppCompatActivity {
         }
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

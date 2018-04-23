@@ -8,7 +8,7 @@ import com.example.osman.grandresturant.SallersRecycler;
 
 public class SallersClass {
 
-    String country , email , mobile , profile_image , user_tpe , username ;
+    String country , email , mobile , profile_image , user_tpe , username, id ;
 
 
     public SallersClass(){}
@@ -59,6 +59,14 @@ public class SallersClass {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public SallersClass(String country, String email, String mobile, String profile_image, String user_tpe, String username) {
