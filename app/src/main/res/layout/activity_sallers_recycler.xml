@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.osman.grandresturant.SallersRecycler">
 
     <android.support.design.widget.AppBarLayout
@@ -12,91 +12,105 @@ android:orientation="vertical"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#F07923"
-        app:popupTheme="@style/AppTheme.PopupOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#F07923"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="التجـــــــــار "
-                android:textColor="#b8ffffff"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                />
-            <ImageButton
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/iconapp"
-                android:layout_marginLeft="200dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:id="@+id/goHome"
-                />
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="100"
+                    android:fontFamily="@font/droid_kufi_bold"
+                    android:gravity="center"
+                    android:text="التجار"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
-        </RelativeLayout>
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layoutDirection="rtl">
+
+                </SearchView>
+
+                <ImageButton
+                    android:id="@+id/goHome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/iconapp"
+                    android:foreground="?attr/selectableItemBackground" />
+
+            </LinearLayout>
 
 
-    </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
 
+    <RelativeLayout
+        android:id="@+id/saller_recycler_reltivelayout_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:visibility="gone"
-    android:id="@+id/saller_recycler_reltivelayout_null">
-
-    <LinearLayout
-        android:layout_width="250dp"
-        android:orientation="vertical"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/item_defualt_image"
-            />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:textSize="20dp"
-                android:text="لا يوجد منتجات فى هذا القسم!"
-                />
-        </RelativeLayout>
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/item_defualt_image" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="لا يوجد منتجات فى هذا القسم!"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
 
-</RelativeLayout>
+    </RelativeLayout>
 
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -140,23 +154,12 @@ android:orientation="vertical"
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/saller_recycler_item_image_recycler_amin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:scrollbars="vertical" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                <include layout="@layout/saller_admin_item" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/saller_recycler_item_image_recycler"
@@ -164,14 +167,13 @@ android:orientation="vertical"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:scrollbars="vertical" />
-            </RelativeLayout>
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
 
 
 </LinearLayout>

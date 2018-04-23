@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/admin_admin_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        app:cardElevation="2dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -21,84 +21,63 @@
             android:orientation="vertical"
             android:weightSum="8">
 
-
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/saller_recycler_item_name"
-                    android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="أسم المتجر"
-                    android:textSize="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               >
+                android:layout_height="150dp">
 
                 <ImageView
                     android:id="@+id/saller_recycler_item_image"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"
-                    android:src="@drawable/salers_defualt_icon"/>
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/salers_defualt_icon" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#b8000000" />
+
+                <TextView
+                    android:id="@+id/saller_recycler_item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/droid_kufi_bold"
+                    android:text="أسم المتجر"
+                    android:textColor="#fff"
+                    android:textSize="18sp" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-               >
-
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:gravity="right"
-                    android:padding="5dp"
+                    android:orientation="vertical"
                     tools:ignore="RtlHardcoded">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_place" />
 
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_map_marker_grey600_48dp"/>
-
-                    </RelativeLayout>
-
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/saller_recycler_item_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="11dp"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="20dp"
-                            android:text="المكان" />
-                    </RelativeLayout>
-
-
+                    <TextView
+                        android:id="@+id/saller_recycler_item_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/droid_kufi_regular"
+                        android:text="المكان"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -107,51 +86,26 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:padding="5dp"
                     android:orientation="vertical"
                     tools:ignore="RtlHardcoded">
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/ic_local_phone" />
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:padding="5dp"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_phone_grey600_48dp"/>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/saller_recycler_item_mobile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="11dp"
-                            android:layout_centerVertical="true"
-                            android:layout_centerHorizontal="true"
-                            android:textSize="20dp"
-                            android:text="الرقم" />
-                    </RelativeLayout>
-
-
-
-
-
+                    <TextView
+                        android:id="@+id/saller_recycler_item_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/droid_kufi_regular"
+                        android:text="الرقم"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
-
-
             </LinearLayout>
-
-
-
-
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
