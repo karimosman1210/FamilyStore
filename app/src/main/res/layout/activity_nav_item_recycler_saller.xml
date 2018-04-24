@@ -23,30 +23,6 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="#F07923"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingLeft="10dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="الـــتجــار"
-                            android:textColor="#b8ffffff"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            />
-
-                    </RelativeLayout>
-                </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
@@ -56,7 +32,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/saller_recycler_reltivelayout_null">
 
         <LinearLayout

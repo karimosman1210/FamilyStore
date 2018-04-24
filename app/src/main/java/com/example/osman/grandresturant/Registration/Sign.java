@@ -32,6 +32,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.rilixtech.Country;
+import com.rilixtech.CountryCodePicker;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.IOException;
@@ -45,7 +47,7 @@ public class Sign extends AppCompatActivity {
     EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener listener;
-    String User_Type, myEmail, CountryLocation;
+    String User_Type, myEmail, mobile_code;
     private DatabaseReference mDatabaseUsers;
     private StorageReference mStorageRef;
     DatabaseReference currentuser_db;
@@ -60,6 +62,8 @@ public class Sign extends AppCompatActivity {
     double latti;
     double longi;
     Timer timer;
+    CountryCodePicker ccp;
+
 
 
     @Override
@@ -70,6 +74,7 @@ public class Sign extends AppCompatActivity {
 
 
         mStorageRef = mStorageRef = FirebaseStorage.getInstance().getReference();
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
         spinner = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
         auto = (Button) findViewById(R.id.location_dialog_btn_auto);
@@ -83,6 +88,17 @@ public class Sign extends AppCompatActivity {
         nameEt = (EditText) findViewById(R.id.nameEt);
         user_mobile = (EditText) findViewById(R.id.phone_Et);
         auth = FirebaseAuth.getInstance();
+
+        mobile_code = ccp.getSelectedCountryCode();
+        user_mobile .setText(mobile_code);
+        ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+            @Override
+            public void onCountrySelected(Country selectedCountry) {
+                Toast.makeText(Sign.this,   selectedCountry.getName(), Toast.LENGTH_SHORT).show();
+
+                user_mobile.setError("تأكد من إدخال رقم الهاتف صحيح بدون 0");
+            }
+        });
 
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -108,11 +124,12 @@ public class Sign extends AppCompatActivity {
                         try {
                             assert addresses != null;
                             String countryName1 = addresses.get(0).getAdminArea();
-                            String countr = "محافظة";
+
                             String regex = "\\s*\\bمحافظة\\b\\s*";
                             countryName1 = countryName1.replaceAll(regex, "");
-                            auto.setText(countryName1);
-                            user_country=countryName1;
+                            user_country  = countryName1.replaceFirst("\u202C", "");
+                            auto.setText(user_country);
+
 
                         } catch (Exception e) {
                         }
@@ -216,11 +233,28 @@ public class Sign extends AppCompatActivity {
         myEmail = emailEtSignUp.getText().toString().trim();
         String myPass = passwordEtSignUp.getText().toString().trim();
         String passSure = surepassSignUp.getText().toString().trim();
+        String mobileNum = user_mobile.getText().toString().trim();
 
-        if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPass) || TextUtils.isEmpty(passSure)) {
+        if (TextUtils.isEmpty(myEmail)) {
 
-            Toast.makeText(this, "أكمل البيانات", Toast.LENGTH_SHORT).show();
+            emailEtSignUp.setError("أدخل البريد الإليكترونى!");
 
+
+        }
+        else if (mobileNum.length() != 10 || mobileNum.contains(" ")) {
+            user_mobile.setError("تأكد من إدخال رقم الهاتف صحيح بدون 0");
+        }
+        else if (!myPass.equals(passSure)) {
+            passwordEtSignUp.setError("كلمة السر غير متطابفة!");
+        }
+        else if (TextUtils.isEmpty(nameEt.getText().toString())) {
+
+            nameEt.setError("أدخل المستخدم!");
+
+        }
+        else if (TextUtils.isEmpty(passwordEtSignUp.getText().toString())) {
+
+            passwordEtSignUp.setError("أدخل كلمة السر!");
 
         } else if (!myPass.equals(passSure)) {
             Toast.makeText(this, "كلمة السر غير متطابقة", Toast.LENGTH_SHORT).show();
@@ -247,11 +281,12 @@ public class Sign extends AppCompatActivity {
                             String user_id = auth.getCurrentUser().getUid();
                             currentuser_db = mDatabaseUsers.child(user_id);
                             currentuser_db.child("username").setValue(nameEt.getText().toString());
+                            currentuser_db.child("id").setValue(auth.getUid());
                             currentuser_db.child("user_tpe").setValue(User_Type);
                             currentuser_db.child("email").setValue(myEmail);
-                            currentuser_db.child("mobile").setValue(user_mobile.getText().toString());
+                            currentuser_db.child("mobile").setValue(ccp.getSelectedCountryCode() + user_mobile.getText().toString());
                             currentuser_db.child("country").setValue(user_country);
-                            currentuser_db.child("profile_image,").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
+                            currentuser_db.child("profile_image").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
 
 
                             HelperMethods.hideDialog(Sign.this);

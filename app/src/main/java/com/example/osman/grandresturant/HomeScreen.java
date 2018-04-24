@@ -22,6 +22,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,11 +39,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.osman.grandresturant.Adapters.Adapter_category;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.NavigationActivities.FeedBack;
 import com.example.osman.grandresturant.NavigationActivities.MyAds;
 import com.example.osman.grandresturant.NavigationActivities.MyBasket;
+import com.example.osman.grandresturant.NavigationActivities.NavItemRecycler;
 import com.example.osman.grandresturant.NavigationActivities.NavigationCategoriesRecycler;
 import com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler;
 import com.example.osman.grandresturant.NavigationActivities.RequstsRecycler;
@@ -63,11 +70,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -75,7 +84,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class HomeScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -89,13 +98,12 @@ public class HomeScreen extends AppCompatActivity
     RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private DividerItemDecoration dividerItemDecoration;
-    TextView login_textview,  nav_Text_view;
+    TextView   nav_Text_view;
     de.hdodenhof.circleimageview.CircleImageView nav_Image_view;
-    ImageView image_shopping;
     String[] spinnerListCountry = {"الكل", "بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     DatabaseReference databaseReference;
-    MaterialBetterSpinner Country;
-    ArrayAdapter<String> CountrySpinnerAdapter;
+   // MaterialBetterSpinner Country;
+   // ArrayAdapter<String> CountrySpinnerAdapter;
     ArrayList<Item_recycle> arrayList;
     String Country_name;
     static final int REQUEST_LOCATION = 1;
@@ -103,10 +111,13 @@ public class HomeScreen extends AppCompatActivity
     double latti;
     double longi;
     Timer timer;
-
+    SliderLayout sliderLayout;
+    HashMap<String,String> Hash_file_maps ;
     private FusedLocationProviderClient mLocationManager;
     private LocationCallback locationCallback;
     private LocationRequest mLocationRequest;
+    MaterialSearchView searchView;
+
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -117,46 +128,106 @@ public class HomeScreen extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        login_textview = (TextView) findViewById(R.id.home_login_btn);
-        image_shopping = (ImageView) findViewById(R.id.home_shopping);
+
         recyclerView = (RecyclerView) findViewById(R.id.home_screen_card_recycler_view);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerLayout = navigationView.getHeaderView(0);
-        Country_choose = (TextView) findViewById(R.id.home_screen_place);
+      //  Country_choose = (TextView) findViewById(R.id.home_screen_place);
         arrayList = new ArrayList<>();
         locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
         mLocationManager = LocationServices.getFusedLocationProviderClient(this);
         nav_Image_view = (de.hdodenhof.circleimageview.CircleImageView) headerLayout.findViewById(R.id.nav_image_user);
         nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
+        Hash_file_maps = new HashMap<String, String>();
 
-        image_shopping.setOnClickListener(new View.OnClickListener() {
+        sliderLayout = (SliderLayout)findViewById(R.id.slider);
+
+
+        Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
+        Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
+        Hash_file_maps.put("Android Eclair", "http://androidblog.esy.es/images/eclair-3.png");
+        Hash_file_maps.put("Android Froyo", "http://androidblog.esy.es/images/froyo-4.png");
+        Hash_file_maps.put("Android GingerBread", "http://androidblog.esy.es/images/gingerbread-5.png");
+
+        for(String name : Hash_file_maps.keySet()){
+
+            TextSliderView textSliderView = new TextSliderView(HomeScreen.this);
+            textSliderView
+                    .description(name)
+                    .image(Hash_file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(HomeScreen.this);
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+            sliderLayout.addSlider(textSliderView);
+        }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(3000);
+        sliderLayout.addOnPageChangeListener(HomeScreen.this);
+
+
+
+
+        searchView = (MaterialSearchView) findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomeScreen.this,MyBasket.class));
+            public boolean onQueryTextSubmit(String query) {
+                //Do some magic
+
+
+                Toast.makeText(HomeScreen.this, query, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(HomeScreen.this, NavItemRecycler.class);
+                intent.putExtra("Item_type", "Search");
+                intent.putExtra("Filter", query);
+                startActivity(intent);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Do some magic
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
             }
         });
 
 
-        checkForLocationPermissions();
-//        timer = new Timer();
-//        timer.schedule(new TimerTask() {
-//            public void run() {
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//
-//                    }
-//                });
-//
-//
-//            }
-//        }, 0, 1 * (1000 * 1));
 
 
-        Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+  checkForLocationPermissions();
+                    }
+                });
+
+
+            }
+        }, 0, 1 * (1000 * 1));
+
+
+        /*Country = (MaterialBetterSpinner) findViewById(R.id.home_screen_spinner);
         CountrySpinnerAdapter = new ArrayAdapter<String>(HomeScreen.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
         Country.setAdapter(CountrySpinnerAdapter);
 
@@ -169,15 +240,9 @@ public class HomeScreen extends AppCompatActivity
                 Country_choose.setText(Country_name);
                 HelperMethods.Home_Filtter_Country_name = Country_name;
             }
-        });
+        });*/
 
 
-        login_textview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeScreen.this, Login.class));
-            }
-        });
 
 
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
@@ -208,17 +273,14 @@ public class HomeScreen extends AppCompatActivity
                                 navigationView.getMenu().clear();
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_user);
                                 fab.setVisibility(View.GONE);
-                                login_textview.setVisibility(View.GONE);
-                                image_shopping.setVisibility(View.VISIBLE);
+
 
 
                             } else {
                                 navigationView.getMenu().clear();
                                 navigationView.inflateMenu(R.menu.activity_home_screen_drawer_company);
                                 fab.setVisibility(View.VISIBLE);
-                                login_textview.setVisibility(View.GONE);
-                                image_shopping.setVisibility(View.VISIBLE);
-                                //    HelperMethods.hideDialog2(HomeScreen.this);
+
                             }
                         }
 
@@ -268,9 +330,6 @@ public class HomeScreen extends AppCompatActivity
                     navigationView.getMenu().clear();
                     navigationView.inflateMenu(R.menu.activity_home_screen_drawer);
                     fab.setVisibility(View.GONE);
-                    login_textview.setVisibility(View.VISIBLE);
-                    image_shopping.setVisibility(View.GONE);
-                    //    HelperMethods.hideDialog2(HomeScreen.this);
 
 
                 }
@@ -353,7 +412,12 @@ public class HomeScreen extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(searchView.isSearchOpen())
+        {
+            searchView.closeSearch();
+        }
+        else {
             if (doubleBackToExitPressedOnce) {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
@@ -494,6 +558,10 @@ public class HomeScreen extends AppCompatActivity
         if (mAuthStateListener != null) {
             mAuth.removeAuthStateListener(mAuthStateListener);
         }
+
+        sliderLayout.stopAutoCycle();
+
+        super.onStop();
     }
 
     @Override
@@ -615,5 +683,42 @@ public class HomeScreen extends AppCompatActivity
 
     private void stopLocationUpdates() {
         mLocationManager.removeLocationUpdates(locationCallback);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_screen, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+
+    }
+
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

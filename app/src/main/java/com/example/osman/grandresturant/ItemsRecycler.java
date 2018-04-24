@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.ItemsAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
@@ -64,6 +65,7 @@ public class ItemsRecycler extends AppCompatActivity {
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
+        Toast.makeText(this, HelperMethods.Home_Filtter_sallerID + "  " +HelperMethods.Home_Filtter_categoryName+ "  " +HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

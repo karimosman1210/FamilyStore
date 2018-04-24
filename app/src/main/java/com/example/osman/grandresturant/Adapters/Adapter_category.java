@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.Dialogs.HomeScreenChooceCountry;
+import com.example.osman.grandresturant.Dialogs.MyAds_delete_dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.NavigationActivities.MyAds;
 import com.example.osman.grandresturant.classes.Item_recycle;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.SallersRecycler;
@@ -47,7 +51,9 @@ ArrayList<Item_recycle> arrayList;
 
                     if(HelperMethods.Home_Filtter_Country_name == null)
                     {
-                        Toast.makeText(context, "من فضلك اختار المدينة", Toast.LENGTH_SHORT).show();
+                        HomeScreenChooceCountry cdd=new HomeScreenChooceCountry((Activity) context);
+                        cdd.show();
+
                     }
                     else
                     {

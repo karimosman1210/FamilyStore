@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.example.osman.grandresturant.Adapters.Favorite_Adapter;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -28,6 +29,7 @@ public class Favorite_item extends AppCompatActivity {
     DatabaseReference database, itemfav;
     String auth;
     ImageButton goHome;
+    RelativeLayout null_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,7 @@ public class Favorite_item extends AppCompatActivity {
         setSupportActionBar(ToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         recyclerView = (RecyclerView) findViewById(R.id.recycle_favorite);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         auth = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -55,9 +57,19 @@ public class Favorite_item extends AppCompatActivity {
                     itemfav.child(allData.getKey()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
-                            list.add(itemClass);
-                            favorite_adapter.notifyDataSetChanged();
+
+
+                            if (dataSnapshot.hasChildren())
+                            {
+                                null_layout.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
+                                list.add(itemClass);
+                                favorite_adapter.notifyDataSetChanged();
+
+                            }
 
 
                         }

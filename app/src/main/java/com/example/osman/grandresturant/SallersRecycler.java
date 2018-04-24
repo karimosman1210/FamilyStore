@@ -55,8 +55,6 @@ public class SallersRecycler extends AppCompatActivity {
     private SallerAdapter adapter;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +65,7 @@ public class SallersRecycler extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-
+        Toast.makeText(this, HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -102,6 +100,7 @@ public class SallersRecycler extends AppCompatActivity {
             @Override
             public boolean onClose() {
                 toolbarTitle.setVisibility(View.VISIBLE);
+                adminAdminContainer.setVisibility(View.VISIBLE);
                 return false;
             }
         });
@@ -110,6 +109,7 @@ public class SallersRecycler extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 toolbarTitle.setVisibility(View.GONE);
+                adminAdminContainer.setVisibility(View.GONE);
             }
         });
 
@@ -172,7 +172,7 @@ public class SallersRecycler extends AppCompatActivity {
         super.onStart();
         sellers.clear();
         recyclerView.setAdapter(adapter);
-
+        HelperMethods.showDialog(this, "Wait", "Loading...");
         mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -181,9 +181,11 @@ public class SallersRecycler extends AppCompatActivity {
                     seller.setId(child.getKey());
                     if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
                         sellers.add(seller);
+
                     }
                 }
                 adapter.notifyDataSetChanged();
+                HelperMethods.hideDialog(SallersRecycler.this);
             }
 
             @Override
@@ -208,7 +210,7 @@ public class SallersRecycler extends AppCompatActivity {
 
 
         public View view;
-        ImageView saller_img;
+        de.hdodenhof.circleimageview.CircleImageView saller_img;
         TextView saller_name, saller_location, saller_number;
 
 
@@ -216,11 +218,11 @@ public class SallersRecycler extends AppCompatActivity {
             super(itemView);
             view = itemView;
 
-            saller_name = (TextView) view.findViewById(R.id.saller_recycler_item_name);
-            saller_location = (TextView) view.findViewById(R.id.saller_recycler_item_location);
-            saller_number = (TextView) view.findViewById(R.id.saller_recycler_item_mobile);
+            saller_name = (TextView) view.findViewById(R.id.saller_recycler_name);
+            saller_location = (TextView) view.findViewById(R.id.saller_recycler_country_icon);
 
-            saller_img = (ImageView) view.findViewById(R.id.saller_recycler_item_image);
+
+            saller_img = (de.hdodenhof.circleimageview.CircleImageView) view.findViewById(R.id.saller_recycler_image);
 
         }
 
@@ -234,10 +236,7 @@ public class SallersRecycler extends AppCompatActivity {
             saller_location.setText(location);
         }
 
-        public void setNumber(String number) {
 
-            saller_number.setText(number);
-        }
 
 
         public void setItemImage(String image) {
@@ -296,5 +295,17 @@ public class SallersRecycler extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if( !searchView.isIconified())
+        {
+            searchView.setIconified(true);
+        }
+        else
+        { super.onBackPressed();}
+
     }
 }

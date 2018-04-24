@@ -43,12 +43,11 @@ public class Activity_upload extends AppCompatActivity {
 
     ArrayList<String> arrayList;
     DatabaseReference databaseReference, mDatabaseCurrentUser;
-    MaterialBetterSpinner Category, Country;
+    MaterialBetterSpinner Category;
     ArrayAdapter<String> CategorySpinnerAdapter, CountrySpinnerAdapter;
     String[] spinnerListDefualt = {};
-    String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
     FirebaseAuth mAuth;
-    String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage;
+    String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage, UserCountry;
     ImageView imgebtn;
     private static final int RUSLET_LOAD_IMAGE = 1;
     static Uri image_item;
@@ -70,7 +69,7 @@ public class Activity_upload extends AppCompatActivity {
 
         mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
         mStorageReference = FirebaseStorage.getInstance().getReference();
-
+        HelperMethods.showDialog(Activity_upload.this, "wait", "Loading...");
         mDatabaseCurrentUser.child("profile_image").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -149,8 +148,31 @@ public class Activity_upload extends AppCompatActivity {
         });
 
 
+        mDatabaseCurrentUser.child("country").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                System.out.println(snapshot.getValue());
+                try {
+                    UserCountry = snapshot.getValue().toString();
+                    HelperMethods.hideDialog(Activity_upload.this);
+
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+
         Category = (MaterialBetterSpinner) findViewById(R.id.type_design_spinner);
-        Country = (MaterialBetterSpinner) findViewById(R.id.country_design_spinner);
+
 
 
         CategorySpinnerAdapter = new ArrayAdapter<String>(Activity_upload.this, android.R.layout.simple_dropdown_item_1line, spinnerListDefualt);
@@ -166,17 +188,7 @@ public class Activity_upload extends AppCompatActivity {
         });
 
 
-        CountrySpinnerAdapter = new ArrayAdapter<String>(Activity_upload.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
-        Country.setAdapter(CountrySpinnerAdapter);
 
-        Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                CountryLocation = adapterView.getItemAtPosition(i).toString();
-
-            }
-        });
 
         arrayList = new ArrayList<>();
 
@@ -229,7 +241,6 @@ public class Activity_upload extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
                 if (image_item == null) {
 
 
@@ -244,10 +255,6 @@ public class Activity_upload extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(description.getText())) {
 
                     description.setError("أدخل الوصف ");
-
-                } else if (TextUtils.isEmpty(   place.getText().toString())) {
-
-                    place.setError("أدخل المكان ");
 
                 } else if (TextUtils.isEmpty(CountryLocation)) {
 
@@ -286,7 +293,7 @@ public class Activity_upload extends AppCompatActivity {
                             databaseReference.child("PlaceLocation").setValue(place.getText().toString());
 
 
-                            databaseReference.child("CountryLocation").setValue(CountryLocation);
+                            databaseReference.child("CountryLocation").setValue(UserCountry);
                             databaseReference.child("ItemType").setValue(ItemType);
                             HelperMethods.hideDialog(Activity_upload.this);
                             Toast.makeText(Activity_upload.this, "Added", Toast.LENGTH_SHORT).show();

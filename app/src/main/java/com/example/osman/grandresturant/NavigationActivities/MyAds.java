@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,12 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyAds extends AppCompatActivity {
     RecyclerView recyclerView;
-    DatabaseReference mDatabaseReference , mDatabase;
+    DatabaseReference mDatabaseReference, mDatabase;
     FirebaseAuth firebaseAuth;
-    String profile_image_url , saller_name ;
-    ImageView SallerImageView ;
+    String profile_image_url, saller_name;
+    ImageView SallerImageView;
     CollapsingToolbarLayout collapsingToolbar;
-    TextView card_mail , card_nuber , card_place ;
+    RelativeLayout null_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,10 @@ public class MyAds extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar  = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
         mDatabaseReference.keepSynced(true);
@@ -59,10 +60,6 @@ public class MyAds extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         SallerImageView = (ImageView) findViewById(R.id.saller_app_bar_image);
-        card_mail = (TextView) findViewById(R.id.my_ads_card_email);
-        card_nuber = (TextView) findViewById(R.id.my_ads_card_number);
-        card_place = (TextView) findViewById(R.id.my_ads_card_place);
-
 
 
         String id = firebaseAuth.getCurrentUser().getUid();
@@ -75,22 +72,16 @@ public class MyAds extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
 
                 System.out.println(snapshot.getValue());
-                try
-                {
+                try {
                     profile_image_url = snapshot.child("profile_image").getValue().toString();
                     collapsingToolbar.setTitle(snapshot.child("username").getValue().toString());
-                    card_mail.setText(snapshot.child("email").getValue().toString());
-                    card_nuber.setText(snapshot.child("mobile").getValue().toString());
-                    card_place.setText(snapshot.child("country").getValue().toString());
 
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
 
                 }
 
-                Glide.with(MyAds.this).load(profile_image_url).into(SallerImageView);
+                Glide.with(getApplicationContext()).load(profile_image_url).into(SallerImageView);
             }
 
             @Override
@@ -99,8 +90,6 @@ public class MyAds extends AppCompatActivity {
             }
 
         });
-
-
 
 
     }
@@ -118,6 +107,9 @@ public class MyAds extends AppCompatActivity {
             protected void populateViewHolder(MyAds.holder viewHolder, final ItemClass model, int position) {
                 final String key_post = getRef(position).getKey();
 
+
+
+
                 viewHolder.setItemName(model.getName());
                 viewHolder.setLocation(model.getCountryLocation());
                 viewHolder.setprice(model.getPrice());
@@ -127,8 +119,8 @@ public class MyAds extends AppCompatActivity {
                 viewHolder.myAds_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        HelperMethods.delete_ads_id = key_post ;
-                        MyAds_delete_dialog cdd=new MyAds_delete_dialog(MyAds.this);
+                        HelperMethods.delete_ads_id = key_post;
+                        MyAds_delete_dialog cdd = new MyAds_delete_dialog(MyAds.this);
                         cdd.show();
 
 
@@ -138,8 +130,8 @@ public class MyAds extends AppCompatActivity {
                 viewHolder.myAds_edit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(MyAds.this,Edit_Ads.class);
-                        intent.putExtra("id",key_post);
+                        Intent intent = new Intent(MyAds.this, Edit_Ads.class);
+                        intent.putExtra("id", key_post);
                         startActivity(intent);
 
                     }
@@ -164,6 +156,12 @@ public class MyAds extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+        if (firebaseRecyclerAdapter.getItemCount() == 0) {
+            null_layout.setVisibility(View.VISIBLE);
+        } else {
+        }
+
+
     }
 
 

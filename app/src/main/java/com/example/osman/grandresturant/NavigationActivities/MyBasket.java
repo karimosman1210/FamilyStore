@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,7 +32,9 @@ public class MyBasket extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
     FirebaseAuth firebaseAuth;
-  ImageButton goHome;
+    ImageButton goHome;
+    RelativeLayout null_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +45,19 @@ public class MyBasket extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
-
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         recyclerView = (RecyclerView) findViewById(R.id.basket_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         firebaseAuth = FirebaseAuth.getInstance();
-        goHome=(ImageButton)findViewById(R.id.goHome);
+        goHome = (ImageButton) findViewById(R.id.goHome);
 
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MyBasket.this,HomeScreen.class));
+                startActivity(new Intent(MyBasket.this, HomeScreen.class));
                 finish();
             }
         });
@@ -98,8 +101,8 @@ public class MyBasket extends AppCompatActivity {
                     public void onClick(View view) {
 
 
-                        HelperMethods.delete_ads_id = key_post ;
-                        MyBasket_delete_dialog cdd=new MyBasket_delete_dialog(MyBasket.this);
+                        HelperMethods.delete_ads_id = key_post;
+                        MyBasket_delete_dialog cdd = new MyBasket_delete_dialog(MyBasket.this);
                         cdd.show();
 
                     }
@@ -109,6 +112,10 @@ public class MyBasket extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+        if (firebaseRecyclerAdapter.getItemCount() == 0) {
+
+        } else { null_layout.setVisibility(View.GONE);
+        }
     }
 
 
@@ -141,6 +148,7 @@ public class MyBasket extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

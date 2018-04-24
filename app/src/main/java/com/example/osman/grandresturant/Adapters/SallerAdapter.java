@@ -2,14 +2,19 @@ package com.example.osman.grandresturant.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemsRecycler;
@@ -53,6 +58,88 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
                 context.startActivity(new Intent(context, ItemsRecycler.class));
             }
         });
+
+
+        holder.whats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try
+                {
+                    String smsNumber = "201206007713"; // E164 format without '+' sign
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.setType("text/plain");
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                    sendIntent.putExtra("jid", sallersClass.getMobile() + "@s.whatsapp.net"); //phone number without "+" prefix
+                    sendIntent.setPackage("com.whatsapp");
+                    if (sendIntent.resolveActivity(context.getPackageManager()) == null) {
+                        Toast.makeText(context, "لا يوجد برنامج الواتس أب ", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    context.startActivity(sendIntent);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(context, sallersClass.getMobile(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+            }
+        });
+
+
+        holder.call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                try
+                {
+
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:0123456789"));
+                    context.startActivity(intent);
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(context, sallersClass.getMobile(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+            }
+        });
+
+
+        holder.mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                try
+                {
+                    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + sallersClass.getEmail()));
+              /*  emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, body);*/
+//emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
+
+                    context.startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(context, sallersClass.getEmail(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+            }
+        });
+
+
     }
 
     @Override
@@ -61,24 +148,26 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
     }
 
     class Holder extends RecyclerView.ViewHolder {
-        TextView name, location, mobile;
-        ImageView image;
+        TextView name, location;
+        de.hdodenhof.circleimageview.CircleImageView image;
+        ImageButton whats, call, mail;
 
         Holder(View itemView) {
             super(itemView);
 
-            name = (TextView) itemView.findViewById(R.id.saller_recycler_item_name);
-            location = (TextView) itemView.findViewById(R.id.saller_recycler_item_location);
-            mobile = (TextView) itemView.findViewById(R.id.saller_recycler_item_mobile);
-            image = (ImageView) itemView.findViewById(R.id.saller_recycler_item_image);
+            name = (TextView) itemView.findViewById(R.id.saller_recycler_name);
+            location = (TextView) itemView.findViewById(R.id.saller_recycler_country_icon);
+            whats = (ImageButton) itemView.findViewById(R.id.saller_recycler_whats_icon);
+            call = (ImageButton) itemView.findViewById(R.id.saller_recycler_call_icon);
+            mail = (ImageButton) itemView.findViewById(R.id.saller_recycler_email_icon);
+            image = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.saller_recycler_image);
 
         }
 
         void updateUI(SallersClass sallersClass) {
             name.setText(sallersClass.getUsername());
             location.setText(sallersClass.getCountry());
-            mobile.setText(sallersClass.getMobile());
-            Picasso.with(context).load(sallersClass.getProfile_image()).into(image);
+            Picasso.with(context).load(sallersClass.getProfile_image()).placeholder(image.getDrawable()).into(image);
         }
     }
 

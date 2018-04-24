@@ -60,97 +60,45 @@
                 android:orientation="vertical"
                 android:paddingTop="10dp">
 
-                <android.support.v7.widget.CardView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/saller_recycler_reltivelayout_null">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <LinearLayout
+                        android:layout_width="250dp"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        >
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/my_ads_card_email"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="البريد الإلكترونى"
-                                android:textSize="17dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="البريد الإلكترونى : "
-                                android:textSize="17dp" />
-
-
-                        </LinearLayout>
-
-                        <View
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/item_defualt_image"
+                                />
+                        </RelativeLayout>
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#e6e6e6" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/my_ads_card_number"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="رقم الموبايل"
-                                android:textSize="17dp" />
-
+                            android:layout_height="wrap_content">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="رقم الموبايل : "
-                                android:textSize="17dp" />
-
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#e6e6e6" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:id="@+id/my_ads_card_place"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="المدينة"
-                                android:textSize="17dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="المدينة : "
-                                android:textSize="17dp" />
-
-
-                        </LinearLayout>
-
+                                android:layout_centerHorizontal="true"
+                                android:textSize="20dp"
+                                android:text="لا يوجد منتجات فى هذا القسم!"
+                                />
+                        </RelativeLayout>
 
                     </LinearLayout>
 
-                </android.support.v7.widget.CardView>
+
+                </RelativeLayout>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/my_ads_recycler"

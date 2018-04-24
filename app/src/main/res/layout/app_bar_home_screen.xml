@@ -11,69 +11,23 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
+            android:id="@+id/toolbar_container"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#F07923"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary" />
 
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="الأقـســــــام "
-                        android:textColor="#b8ffffff"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="20dp">
-
-
-                    <ImageView
-                        android:id="@+id/home_shopping"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentEnd="true"
-                        android:visibility="gone"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/shopping_icon"
-                        android:background="@drawable/button_style"
-                        />
-
-                    <TextView
-                        android:id="@+id/home_login_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:text="تسجيل الدخول"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-
-                </RelativeLayout>
-            </RelativeLayout>
-
-        </android.support.v7.widget.Toolbar>
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:hint=""
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
     </android.support.design.widget.AppBarLayout>
 

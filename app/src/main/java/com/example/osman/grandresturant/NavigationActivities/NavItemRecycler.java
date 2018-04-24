@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.example.osman.grandresturant.Adapters.nav_item_saller_adapter;
+import com.example.osman.grandresturant.Adapters.nav_item_adapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -33,7 +32,7 @@ public class NavItemRecycler extends AppCompatActivity {
     ArrayList<ItemClass> arrayList;
     LinearLayout barsearch;
     DatabaseReference databaseReference;
-    String Item_type , Filter;
+    String Item_type, Filter;
     RelativeLayout null_layout;
 
 
@@ -50,7 +49,7 @@ public class NavItemRecycler extends AppCompatActivity {
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null) {
+            if (extras == null) {
                 Item_type = null;
                 Filter = null;
             } else {
@@ -73,18 +72,16 @@ public class NavItemRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
 
-        if(Objects.equals(Item_type, "Saller"))
-        {
+        if (Objects.equals(Item_type, "Saller")) {
 
             loadDataSaller();
-        }
-        else {
+        } else if (Objects.equals(Item_type, "Search")) {
 
+            loadDataSearch();
 
+        } else {
             loadDataCategory();
         }
-
-
 
 
     }
@@ -92,7 +89,7 @@ public class NavItemRecycler extends AppCompatActivity {
 
     public void loadDataSaller() {
         HelperMethods.showDialog(NavItemRecycler.this, "Wait", "Loading data...");
-        final nav_item_saller_adapter adapter = new nav_item_saller_adapter(this, arrayList);
+        final nav_item_adapter adapter = new nav_item_adapter(this, arrayList);
 
 
         databaseReference.orderByChild("UserID").equalTo(Filter).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -100,11 +97,9 @@ public class NavItemRecycler extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                if(dataSnapshot.hasChildren())
-                {
+                if (dataSnapshot.hasChildren()) {
+                    null_layout.setVisibility(View.GONE);
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
-
-
 
 
                         String id = data.getRef().getKey();
@@ -122,22 +117,17 @@ public class NavItemRecycler extends AppCompatActivity {
                         String UserNumber = data.child("UserNumber").getValue().toString();
                         long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                        arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                        arrayList.add(new ItemClass(id, Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                         adapter.notifyDataSetChanged();
-
 
 
                     }
                     HelperMethods.hideDialog(NavItemRecycler.this);
                     recyclerView.setAdapter(adapter);
-                }
-                else
-                {
+                } else {
                     HelperMethods.hideDialog(NavItemRecycler.this);
-                    null_layout.setVisibility(View.VISIBLE);
+
                 }
-
-
 
 
             }
@@ -150,21 +140,76 @@ public class NavItemRecycler extends AppCompatActivity {
 
 
     }
+
     public void loadDataCategory() {
         HelperMethods.showDialog(NavItemRecycler.this, "Wait", "Loading data...");
-        final nav_item_saller_adapter adapter = new nav_item_saller_adapter(this, arrayList);
+        final nav_item_adapter adapter = new nav_item_adapter(this, arrayList);
 
 
         databaseReference.orderByChild("ItemType").equalTo(Filter).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if(dataSnapshot.hasChildren())
-                    {
-                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                if (dataSnapshot.hasChildren()) {
+
+                    null_layout.setVisibility(View.GONE);
+
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
+                        String id = data.getRef().getKey();
+                        String Itemid = data.child("idItem").getValue().toString();
+                        String Name = data.child("Name").getValue().toString();
+                        String image = data.child("image").getValue().toString();
+                        String CountryLocation = data.child("CountryLocation").getValue().toString();
+                        String Description = data.child("Description").getValue().toString();
+                        String ItemType = data.child("ItemType").getValue().toString();
+                        String PlaceLocation = data.child("PlaceLocation").getValue().toString();
+                        String Price = data.child("Price").getValue().toString();
+                        String UserID = data.child("UserID").getValue().toString();
+                        String UserName = data.child("UserName").getValue().toString();
+                        String UserEmail = data.child("UserEmail").getValue().toString();
+                        String UserNumber = data.child("UserNumber").getValue().toString();
+                        long UploadedTime = (long) data.child("UploadedTime").getValue();
 
+                        arrayList.add(new ItemClass(id, Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                    recyclerView.setAdapter(adapter);
+                } else {
+
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    public void loadDataSearch() {
+        HelperMethods.showDialog(NavItemRecycler.this, "Wait", "Loading data...");
+        final nav_item_adapter adapter = new nav_item_adapter(this, arrayList);
+
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.hasChildren()) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+
+                        if (data.child("Name").getValue().toString().toLowerCase().contains(Filter.toLowerCase())) {
 
                             String id = data.getRef().getKey();
                             String Itemid = data.child("idItem").getValue().toString();
@@ -181,19 +226,33 @@ public class NavItemRecycler extends AppCompatActivity {
                             String UserNumber = data.child("UserNumber").getValue().toString();
                             long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                            arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                            arrayList.add(new ItemClass(id, Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                             adapter.notifyDataSetChanged();
+                            if (arrayList.isEmpty()) {
 
+
+
+
+                            }
+                            else
+                            {    null_layout.setVisibility(View.GONE);
+
+                            }
+
+
+                        } else {
 
 
                         }
-                        HelperMethods.hideDialog(NavItemRecycler.this);
-                        recyclerView.setAdapter(adapter);
+
+
                     }
-                    else
-                    {
-                        null_layout.setVisibility(View.VISIBLE);
-                    }
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    null_layout.setVisibility(View.VISIBLE);
+                    HelperMethods.hideDialog(NavItemRecycler.this);
+                }
 
 
             }
@@ -216,4 +275,7 @@ public class NavItemRecycler extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

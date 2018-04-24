@@ -90,8 +90,23 @@
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="50dp"
+                    android:paddingRight="20dp"
+                   >
 
+
+                <ImageView
+                        android:layout_width="40dp"
+                    android:id="@+id/editBtnProfile"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                    android:src="@drawable/ic_border_color_white_48dp"/>
+
+                </RelativeLayout>
+                </RelativeLayout>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -123,220 +138,97 @@
                     android:orientation="vertical">
 
 
-                    <RelativeLayout
+                    <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:padding="10dp">
+                        android:layout_margin="10dp">
 
-
-                        <EditText
-                            android:id="@+id/phoneEditProfile"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/input"
-                            android:drawableEnd="@drawable/mycall"
-                            android:gravity="right"
-                            android:hint="  رقمي"
-                            android:paddingBottom="7dp"
-                            android:paddingLeft="7dp"
-                            android:paddingRight="7dp"
-                            android:paddingTop="7dp"
-                            android:textSize="18dp" />
+                            android:orientation="vertical">
 
-
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:padding="10dp">
-
-
-                        <EditText
-
-                            android:id="@+id/countryEditProfile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/input"
-
-                            android:drawableEnd="@drawable/location"
-
-                            android:gravity="right"
-
-                            android:hint="محافظتك"
-
-                            android:paddingBottom="7dp"
-                            android:paddingLeft="7dp"
-                            android:paddingRight="7dp"
-                            android:paddingTop="7dp"
-                            android:textSize="18dp" />
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:padding="10dp">
-
-
-                        <EditText
-
-                            android:id="@+id/emailEditProfile"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/input"
-
-                            android:drawableEnd="@drawable/name"
-
-                            android:gravity="right"
-
-                            android:hint="أسمك"
-
-                            android:paddingBottom="7dp"
-                            android:paddingLeft="7dp"
-                            android:paddingRight="7dp"
-                            android:paddingTop="7dp"
-                            android:textSize="18dp" />
-
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <Button
-                            android:id="@+id/change_password"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="8dp"
-                            android:background="@color/colorPrimaryDark"
-                            android:text="تغيير كلمة السر"
-                            android:textSize="15dp"
-                            android:visibility="visible"
-
-                            />
-
-
-                    </RelativeLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/allLiniar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:elevation="9dp"
-                            app:cardCornerRadius="5dp"
-
-                            >
 
                             <LinearLayout
-                                android:id="@+id/Linear_password"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="8dp"
-                                android:visibility="visible"
+                                android:gravity="right"
+                                android:padding="10dp">
 
-
-                                >
-
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
+                                <TextView
+                                    android:id="@+id/my_ads_card_email"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:padding="10dp">
+                                    android:text="البريد الإلكترونى"
+                                    android:textSize="17dp" />
 
-
-                                    <EditText
-
-                                        android:id="@+id/password_old"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/input"
-                                        android:drawableEnd="@drawable/name"
-                                        android:gravity="right"
-                                        android:hint="الرقم السري الحالي"
-                                        android:paddingBottom="7dp"
-                                        android:paddingLeft="7dp"
-                                        android:paddingRight="7dp"
-                                        android:paddingTop="7dp"
-                                        android:textSize="18dp" />
-
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
+                                <TextView
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:padding="10dp">
-
-
-                                    <EditText
-
-                                        android:id="@+id/password_new"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/input"
-                                        android:drawableEnd="@drawable/name"
-                                        android:gravity="right"
-                                        android:hint="الرقم السري الجديد"
-                                        android:paddingBottom="7dp"
-                                        android:paddingLeft="7dp"
-                                        android:paddingRight="7dp"
-                                        android:paddingTop="7dp"
-                                        android:textSize="18dp" />
-
-
-                                </RelativeLayout>
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="right"
-                                    android:padding="10dp">
-
-
-                                    <EditText
-
-                                        android:id="@+id/password_new2"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/input"
-
-                                        android:drawableEnd="@drawable/name"
-
-                                        android:gravity="right"
-
-                                        android:hint="اعد كتابه الرقم السري"
-
-                                        android:paddingBottom="7dp"
-                                        android:paddingLeft="7dp"
-                                        android:paddingRight="7dp"
-                                        android:paddingTop="7dp"
-                                        android:textSize="18dp" />
-
-
-                                </RelativeLayout>
+                                    android:text="البريد الإلكترونى : "
+                                    android:textSize="17dp" />
 
 
                             </LinearLayout>
-                        </android.support.v7.widget.CardView>
-                    </LinearLayout>
 
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#e6e6e6" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:padding="10dp">
+
+                                <TextView
+                                    android:id="@+id/my_ads_card_number"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="رقم الموبايل"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="رقم الموبايل : "
+                                    android:textSize="17dp" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="#e6e6e6" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="right"
+                                android:padding="10dp">
+
+                                <TextView
+                                    android:id="@+id/my_ads_card_place"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="المدينة"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="المدينة : "
+                                    android:textSize="17dp" />
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
 
@@ -349,28 +241,6 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <RelativeLayout
-        android:id="@+id/btn_click"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/Default"
-            android:elevation="8dp">
-
-            <Button
-                android:id="@+id/editBtnProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="serif"
-                android:text="تعديل"
-                android:textColor="#fff"
-                android:textSize="25sp" />
-        </android.support.v7.widget.CardView>
-    </RelativeLayout>
 
 </RelativeLayout>

@@ -27,11 +27,6 @@ public class HelperMethods {
     public static String delete_ads_id;
 
 
-
-
-
-
-
     public static ProgressDialog blg , blg2;
 
     public static void showDialog(Activity currentActivity, String title, String msg) {
@@ -39,6 +34,7 @@ public class HelperMethods {
         blg.setTitle(title);
         blg.setCanceledOnTouchOutside(false);
         blg.setMessage(msg);
+        blg.setCancelable(false);
         blg.show();
     }
 

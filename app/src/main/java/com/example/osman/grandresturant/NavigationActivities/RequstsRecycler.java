@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ public class RequstsRecycler extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
     FirebaseAuth firebaseAuth;
+    RelativeLayout null_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class RequstsRecycler extends AppCompatActivity {
         Toolbar ToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(ToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Requests");
         recyclerView = (RecyclerView) findViewById(R.id.requests_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -71,6 +73,11 @@ public class RequstsRecycler extends AppCompatActivity {
         };
 
         recyclerView.setAdapter(firebaseRecyclerAdapter);
+
+        if (firebaseRecyclerAdapter.getItemCount() == 0) {
+            null_layout.setVisibility(View.VISIBLE);
+        } else {
+        }
     }
 
 

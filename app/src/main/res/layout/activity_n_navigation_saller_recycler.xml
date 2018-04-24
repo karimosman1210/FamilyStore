@@ -8,7 +8,6 @@
     tools:context="com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -17,18 +16,101 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/Custom_Humborer">
+            android:background="#F07923"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="100">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="100"
+                    android:fontFamily="@font/droid_kufi_bold"
+                    android:gravity="center"
+                    android:text="التجار"
+                    android:textColor="#ffffff"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:layoutDirection="rtl">
+
+                </SearchView>
+
+                <ImageButton
+                    android:id="@+id/goHome"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/iconapp"
+                    android:foreground="?attr/selectableItemBackground" />
+
+            </LinearLayout>
+
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
 
+    <RelativeLayout
+        android:id="@+id/saller_recycler_reltivelayout_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/item_defualt_image" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="لا يوجد منتجات فى هذا القسم!"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,38 +154,26 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:orientation="vertical">
+
+                <include layout="@layout/saller_admin_item" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/nav_saller_recycler_admin"
+                    android:id="@+id/saller_recycler_item_image_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:scrollbars="vertical" />
-            </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/nav_saller_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="vertical" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
-
-
-
-
 
 
 </LinearLayout>
