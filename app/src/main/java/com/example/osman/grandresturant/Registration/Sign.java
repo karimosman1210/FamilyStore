@@ -90,13 +90,13 @@ public class Sign extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         mobile_code = ccp.getSelectedCountryCode();
-        user_mobile .setText(mobile_code);
+
         ccp.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
             @Override
             public void onCountrySelected(Country selectedCountry) {
-                Toast.makeText(Sign.this,   selectedCountry.getName(), Toast.LENGTH_SHORT).show();
 
-                user_mobile.setError("تأكد من إدخال رقم الهاتف صحيح بدون 0");
+                mobile_code=selectedCountry.getPhoneCode();
+
             }
         });
 
@@ -284,7 +284,7 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("id").setValue(auth.getUid());
                             currentuser_db.child("user_tpe").setValue(User_Type);
                             currentuser_db.child("email").setValue(myEmail);
-                            currentuser_db.child("mobile").setValue(ccp.getSelectedCountryCode() + user_mobile.getText().toString());
+                            currentuser_db.child("mobile").setValue(mobile_code + user_mobile.getText().toString());
                             currentuser_db.child("country").setValue(user_country);
                             currentuser_db.child("profile_image").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
 
