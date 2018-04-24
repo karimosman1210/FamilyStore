@@ -2,8 +2,6 @@ package com.example.osman.grandresturant.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,8 +61,7 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
             @Override
             public void onClick(View v) {
 
-                try
-                {
+                try {
                     String smsNumber = "201206007713"; // E164 format without '+' sign
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
@@ -77,14 +73,9 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
                         return;
                     }
                     context.startActivity(sendIntent);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(context, sallersClass.getMobile(), Toast.LENGTH_SHORT).show();
                 }
-
-
-
 
 
             }
@@ -96,19 +87,14 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
             public void onClick(View v) {
 
 
-                try
-                {
+                try {
 
                     Intent intent = new Intent(Intent.ACTION_DIAL);
                     intent.setData(Uri.parse("tel:0123456789"));
                     context.startActivity(intent);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(context, sallersClass.getMobile(), Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }
@@ -120,20 +106,16 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
             public void onClick(View v) {
 
 
-                try
-                {
+                try {
                     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + sallersClass.getEmail()));
               /*  emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 emailIntent.putExtra(Intent.EXTRA_TEXT, body);*/
 //emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
 
                     context.startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Toast.makeText(context, sallersClass.getEmail(), Toast.LENGTH_SHORT).show();
                 }
-
 
 
             }

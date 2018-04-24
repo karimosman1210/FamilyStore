@@ -256,11 +256,11 @@ public class Activity_upload extends AppCompatActivity {
 
                     description.setError("أدخل الوصف ");
 
-                } else if (TextUtils.isEmpty(CountryLocation)) {
-
-
-                    Toast.makeText(Activity_upload.this, "أدخل المدينة ", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(ItemType)) {
+//                } else if (TextUtils.isEmpty(CountryLocation)) {
+//
+//
+//                    Toast.makeText(Activity_upload.this, "أدخل المدينة ", Toast.LENGTH_SHORT).show();
+//                } else if (TextUtils.isEmpty(ItemType)) {
 
 
                     Toast.makeText(Activity_upload.this, "أختار القسم ", Toast.LENGTH_SHORT).show();

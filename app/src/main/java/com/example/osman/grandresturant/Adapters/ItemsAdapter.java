@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import com.example.osman.grandresturant.Dialogs.Registration_Dialog;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
+import com.example.osman.grandresturant.classes.SallersClass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,20 +29,64 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by a.taher on 7/3/2016.
  */
-public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder>  implements Filterable{
 
     private Context context;
     private List<ItemClass> my_data;
+    ArrayList<ItemClass> itemCopy;
 
-    public ItemsAdapter(Context context, List<ItemClass> my_data) {
+    public ItemsAdapter(Context context, List<ItemClass> my_data, ArrayList<ItemClass> itemCopy) {
         this.context = context;
         this.my_data = my_data;
+        this.itemCopy = itemCopy;
+    }
+
+
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                ArrayList<ItemClass> filterResult=null;
+                if (constraint.length()==0){
+                    filterResult=itemCopy;
+
+                }else {
+
+                    filterResult=getFilteredResults(constraint.toString().toLowerCase());
+
+                }
+
+                FilterResults results = new FilterResults();
+                results.values=filterResult;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                my_data = (ArrayList<ItemClass>) results.values;
+                ItemsAdapter.this.notifyDataSetChanged();
+
+            }
+        };
+    }
+
+    private ArrayList<ItemClass> getFilteredResults(String constraint) {
+        ArrayList<ItemClass> results = new ArrayList<>();
+        for (ItemClass item : itemCopy) {
+            if (item.getName().toLowerCase().contains(constraint)) {
+                results.add(item);
+            }
+
+        }
+        return results;
     }
 
 
@@ -91,8 +138,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         final FirebaseUser user = firebaseAuth.getCurrentUser();
 
 
-        if(user != null)
-        {
+        if (user != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(firebaseAuth.getCurrentUser().getUid()).child(itemClass.getIdItem());
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -111,13 +157,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                 }
             });
-        }
-        else
-        {
+        } else {
 
         }
-
-
 
 
         holder.item_name.setText(itemClass.getName());
@@ -131,8 +173,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             public void onClick(View v) {
 
 
-                if(user != null)
-                {
+                if (user != null) {
                     FirebaseAuth auth = FirebaseAuth.getInstance();
                     final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Favorite").child(auth.getCurrentUser().getUid()).child(itemClass.getIdItem());
 
@@ -161,11 +202,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                         }
                     });
-                }
-                else
-                {
+                } else {
 
-                    Registration_Dialog cdd=new Registration_Dialog(context);
+                    Registration_Dialog cdd = new Registration_Dialog(context);
                     cdd.show();
                 }
 

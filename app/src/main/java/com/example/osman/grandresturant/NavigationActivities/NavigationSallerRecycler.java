@@ -1,8 +1,8 @@
 package com.example.osman.grandresturant.NavigationActivities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,14 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.osman.grandresturant.Adapters.SallerAdapter;
 import com.example.osman.grandresturant.Adapters.nav_saller_adapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemsRecycler;
 import com.example.osman.grandresturant.R;
-import com.example.osman.grandresturant.SallersRecycler;
 import com.example.osman.grandresturant.classes.SallersClass;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,7 +63,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-        Toast.makeText(this, HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, HelperMethods.Home_Filtter_Country_name, Toast.LENGTH_SHORT).show();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
@@ -181,7 +178,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
                     SallersClass seller = child.getValue(SallersClass.class);
                     seller.setId(child.getKey());
 
-                        sellers.add(seller);
+                    sellers.add(seller);
 
                 }
                 adapter.notifyDataSetChanged();
@@ -235,8 +232,6 @@ public class NavigationSallerRecycler extends AppCompatActivity {
 
             saller_location.setText(location);
         }
-
-
 
 
         public void setItemImage(String image) {
@@ -300,12 +295,11 @@ public class NavigationSallerRecycler extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if( searchView.isIconified())
-        {
+        if (searchView.isIconified()) {
             searchView.setIconified(false);
+        } else {
+            super.onBackPressed();
         }
-        else
-        { super.onBackPressed();}
 
     }
 }

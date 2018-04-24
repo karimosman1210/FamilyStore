@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Adapters.ItemsAdapter;
@@ -35,7 +37,8 @@ public class ItemsRecycler extends AppCompatActivity {
     DatabaseReference databaseReference;
     RelativeLayout null_layout;
     ImageButton goHome;
-
+    private SearchView searchView;
+    TextView toolbar_title_item;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -59,29 +62,67 @@ public class ItemsRecycler extends AppCompatActivity {
         barsearch = (LinearLayout) findViewById(R.id.barsearch);
         arrayList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
-        goHome=(ImageButton)findViewById(R.id.goHome);
+        goHome = (ImageButton) findViewById(R.id.goHome);
         recyclerView = (RecyclerView) findViewById(R.id.item_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
-        Toast.makeText(this, HelperMethods.Home_Filtter_sallerID + "  " +HelperMethods.Home_Filtter_categoryName+ "  " +HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
+        TextView toolbar_title_item;
+        Toast.makeText(this, HelperMethods.Home_Filtter_sallerID + "  " + HelperMethods.Home_Filtter_categoryName + "  " + HelperMethods.Home_Filtter_Country_name, Toast.LENGTH_SHORT).show();
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                startActivity(new Intent(ItemsRecycler.this,HomeScreen.class));
+                startActivity(new Intent(ItemsRecycler.this, HomeScreen.class));
 
             }
         });
 
         loadData();
+
+
+
     }
 
 
     public void loadData() {
         HelperMethods.showDialog(ItemsRecycler.this, "Wait", "Loading data...");
-        final ItemsAdapter adapter = new ItemsAdapter(this, arrayList);
+        final ItemsAdapter adapter = new ItemsAdapter(this, arrayList, arrayList);
+
+        toolbar_title_item = (TextView) findViewById(R.id.toolbar_title_item);
+        searchView = (SearchView) findViewById(R.id.itemSearch);
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                toolbar_title_item.setVisibility(View.VISIBLE);
+
+                return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolbar_title_item.setVisibility(View.GONE);
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
 
 
         databaseReference.orderByChild("UserID").equalTo(HelperMethods.Home_Filtter_sallerID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -89,13 +130,11 @@ public class ItemsRecycler extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                if(dataSnapshot.hasChildren())
-                {
+                if (dataSnapshot.hasChildren()) {
                     for (DataSnapshot data : dataSnapshot.getChildren()) {
 
 
-                        if(Objects.equals(HelperMethods.Home_Filtter_Country_name, "الكل"))
-                        {
+                        if (Objects.equals(HelperMethods.Home_Filtter_Country_name, "الكل")) {
                             if (data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
                                 String id = data.getRef().getKey();
@@ -113,20 +152,15 @@ public class ItemsRecycler extends AppCompatActivity {
                                 String UserNumber = data.child("UserNumber").getValue().toString();
                                 long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                                arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                                arrayList.add(new ItemClass(id, Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                                 adapter.notifyDataSetChanged();
                                 null_layout.setVisibility(View.GONE);
-
-
-
 
 
                             } else {
 
                             }
-                        }
-                        else
-                        {
+                        } else {
                             if (data.child("CountryLocation").getValue().equals(HelperMethods.Home_Filtter_Country_name) && data.child("ItemType").getValue().equals(HelperMethods.Home_Filtter_categoryName)) {
 
                                 String id = data.getRef().getKey();
@@ -144,12 +178,11 @@ public class ItemsRecycler extends AppCompatActivity {
                                 String UserNumber = data.child("UserNumber").getValue().toString();
                                 long UploadedTime = (long) data.child("UploadedTime").getValue();
 
-                                arrayList.add(new ItemClass(id , Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
+                                arrayList.add(new ItemClass(id, Itemid, Name, image, CountryLocation, Description, ItemType, PlaceLocation, Price, UserID, UserName, UserEmail, UserNumber, UploadedTime));
                                 adapter.notifyDataSetChanged();
 
 
                                 null_layout.setVisibility(View.GONE);
-
 
 
                             } else {
@@ -159,21 +192,13 @@ public class ItemsRecycler extends AppCompatActivity {
                         }
 
 
-
-
-
-
-
                     }
                     HelperMethods.hideDialog(ItemsRecycler.this);
                     recyclerView.setAdapter(adapter);
-                }
-                else
-                { null_layout.setVisibility(View.VISIBLE);
+                } else {
+                    null_layout.setVisibility(View.VISIBLE);
 
                 }
-
-
 
 
             }
@@ -186,9 +211,6 @@ public class ItemsRecycler extends AppCompatActivity {
 
 
     }
-
-
-
 
 
 }
