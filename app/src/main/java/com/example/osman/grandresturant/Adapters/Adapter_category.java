@@ -80,9 +80,21 @@ View v= LayoutInflater.from(context).inflate(R.layout.item_recycle_category,pare
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        Item_recycle item_recycle=arrayList.get(position);
+        final Item_recycle item_recycle=arrayList.get(position);
         holder.textView.setText(item_recycle.getName());
         Picasso.with(context).load(item_recycle.getImage()).placeholder(holder.imageView.getDrawable()).into(holder.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(context,com.example.osman.grandresturant.SallersRecycler.class);
+                intent.putExtra("name", item_recycle.getName());
+                context.startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override

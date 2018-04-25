@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 
 public class Registration_Dialog extends Dialog {
 
-    public Activity c;
+    public Context c;
     public Dialog d;
     Button SignUp, SignIn;
     DatabaseReference mDatabaseReference;
@@ -53,7 +53,7 @@ public class Registration_Dialog extends Dialog {
             @Override
             public void onClick(View view) {
 
-                c.startActivity(new Intent(c , Sign.class));
+                getContext().startActivity(new Intent(getContext() , Sign.class));
                 dismiss();
             }
         });
@@ -62,7 +62,7 @@ public class Registration_Dialog extends Dialog {
             @Override
             public void onClick(View view) {
 
-                c.startActivity(new Intent(c , Sign.class));
+                getContext().startActivity(new Intent(getContext() , Sign.class));
                 dismiss();
             }
         });

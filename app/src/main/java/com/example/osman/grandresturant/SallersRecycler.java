@@ -53,7 +53,7 @@ public class SallersRecycler extends AppCompatActivity {
 
     private ArrayList<SallersClass> sellers = new ArrayList<>();
     private SallerAdapter adapter;
-
+    String namereceved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,23 +65,33 @@ public class SallersRecycler extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-        Toast.makeText(this, HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        //goHome = (ImageButton) findViewById(R.id.goHome);
 
-        recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        LinearLayoutManager layoutManagerAdmin = new LinearLayoutManager(this);
-        layoutManagerAdmin.setReverseLayout(true);
-        layoutManagerAdmin.setStackFromEnd(true);
+        Bundle alldata = getIntent().getExtras();
+        if (alldata != null) {
+            namereceved = alldata.getString("name");
+            toolbarTitle.setText(" تجار "+namereceved);
 
-        recyclerView.setNestedScrollingEnabled(false);
 
-        recyclerView.setLayoutManager(layoutManager);
+
+
+
+            //goHome = (ImageButton) findViewById(R.id.goHome);
+
+            recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            layoutManager.setReverseLayout(true);
+            layoutManager.setStackFromEnd(true);
+            LinearLayoutManager layoutManagerAdmin = new LinearLayoutManager(this);
+            layoutManagerAdmin.setReverseLayout(true);
+            layoutManagerAdmin.setStackFromEnd(true);
+
+            recyclerView.setNestedScrollingEnabled(false);
+
+            recyclerView.setLayoutManager(layoutManager);
 
 
 //        goHome.setOnClickListener(new View.OnClickListener() {
@@ -93,43 +103,43 @@ public class SallersRecycler extends AppCompatActivity {
 //        });
 
 
-        adapter = new SallerAdapter(sellers, sellers, this);
+            adapter = new SallerAdapter(sellers, sellers, this);
 
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                toolbarTitle.setVisibility(View.VISIBLE);
-                adminAdminContainer.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    adminAdminContainer.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            });
 
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toolbarTitle.setVisibility(View.GONE);
-                adminAdminContainer.setVisibility(View.GONE);
-            }
-        });
+            searchView.setOnSearchClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toolbarTitle.setVisibility(View.GONE);
+                    adminAdminContainer.setVisibility(View.GONE);
+                }
+            });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                adapter.getFilter().filter(query);
-                return false;
-            }
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    adapter.getFilter().filter(query);
+                    return false;
+                }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
 
-        initAdminView();
+            initAdminView();
 
-    }
+        }}
 
     private void initAdminView() {
 

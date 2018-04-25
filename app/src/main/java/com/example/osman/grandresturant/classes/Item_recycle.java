@@ -1,10 +1,12 @@
 package com.example.osman.grandresturant.classes;
 
+import java.io.Serializable;
+
 /**
  * Created by Abdel Rahman on 06-Apr-18.
  */
 
-public class Item_recycle {
+public class Item_recycle  implements Serializable{
 
     String name,image,id;
 

@@ -184,12 +184,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             if (dataSnapshot.exists()) {
                                 databaseReference.removeValue();
                                 Toast.makeText(context, "تم الحذف من المفضل ", Toast.LENGTH_SHORT).show();
-
                                 notifyDataSetChanged();
                             } else {
                                 FirebaseAuth auth = FirebaseAuth.getInstance();
 
                                 databaseReference.setValue(true);
+
                                 Toast.makeText(context, "تم الاضافه الي المفضل ", Toast.LENGTH_SHORT).show();
 
                             }

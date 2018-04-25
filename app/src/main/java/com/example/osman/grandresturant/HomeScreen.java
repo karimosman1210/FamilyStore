@@ -9,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -74,6 +75,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,35 +141,7 @@ public class HomeScreen extends AppCompatActivity
         nav_Image_view = (de.hdodenhof.circleimageview.CircleImageView) headerLayout.findViewById(R.id.nav_image_user);
         nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
-        Hash_file_maps = new HashMap<String, String>();
 
-        sliderLayout = (SliderLayout)findViewById(R.id.slider);
-
-
-        Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
-        Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
-        Hash_file_maps.put("Android Eclair", "http://androidblog.esy.es/images/eclair-3.png");
-        Hash_file_maps.put("Android Froyo", "http://androidblog.esy.es/images/froyo-4.png");
-        Hash_file_maps.put("Android GingerBread", "http://androidblog.esy.es/images/gingerbread-5.png");
-
-        for(String name : Hash_file_maps.keySet()){
-
-            TextSliderView textSliderView = new TextSliderView(HomeScreen.this);
-            textSliderView
-                    .description(name)
-                    .image(Hash_file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(HomeScreen.this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra",name);
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(3000);
-        sliderLayout.addOnPageChangeListener(HomeScreen.this);
 
 
 
@@ -179,7 +153,7 @@ public class HomeScreen extends AppCompatActivity
                 //Do some magic
 
 
-                Toast.makeText(HomeScreen.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(HomeScreen.this, query, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(HomeScreen.this, NavItemRecycler.class);
                 intent.putExtra("Item_type", "Search");
@@ -291,14 +265,14 @@ public class HomeScreen extends AppCompatActivity
 
                     });
 
-
                     mDatabase.child("profile_image").addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
-                        public void onDataChange(DataSnapshot snapshot) {
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            Glide.with(HomeScreen.this).load(snapshot.getValue()).placeholder(nav_Image_view.getDrawable()).into(nav_Image_view);
-
+                           String imageuri= (String) dataSnapshot.getValue();
+                            Glide.with(HomeScreen.this)
+                                    .load(imageuri)
+                                    .into(nav_Image_view);
 
                         }
 
@@ -306,7 +280,6 @@ public class HomeScreen extends AppCompatActivity
                         public void onCancelled(DatabaseError databaseError) {
 
                         }
-
                     });
 
 
@@ -362,15 +335,48 @@ public class HomeScreen extends AppCompatActivity
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(dividerItemDecoration);
         navigationView.setNavigationItemSelectedListener(this);
+        initSlider();
 
         loadData();
 
+    }
 
+    private void initSlider() {
+
+        Hash_file_maps = new HashMap<String, String>();
+
+        sliderLayout = (SliderLayout)findViewById(R.id.slider);
+
+
+        Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
+        Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
+        Hash_file_maps.put("Android Eclair", "http://androidblog.esy.es/images/eclair-3.png");
+        Hash_file_maps.put("Android Froyo", "http://androidblog.esy.es/images/froyo-4.png");
+        Hash_file_maps.put("Android GingerBread", "http://androidblog.esy.es/images/gingerbread-5.png");
+
+        for(String name : Hash_file_maps.keySet()){
+
+            TextSliderView textSliderView = new TextSliderView(HomeScreen.this);
+            textSliderView
+                    .description(name)
+                    .image(Hash_file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(HomeScreen.this);
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+            sliderLayout.addSlider(textSliderView);
+        }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(3000);
+        sliderLayout.addOnPageChangeListener(HomeScreen.this);
     }
 
 
     public void loadData() {
-        HelperMethods.showDialog(HomeScreen.this, "Wait", "Loading data...");
+        HelperMethods.showDialog(HomeScreen.this, "من فضلك انتظر", "جاري اظهار النتائج . . .");
         final Adapter_category adapter = new Adapter_category(this, arrayList);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Category");
@@ -453,6 +459,8 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, NavigationCategoriesRecycler.class));
 
         } else if (id == R.id.nav_AboutUs) {
+            startActivity(new Intent(HomeScreen.this,AboutAs.class));
+
 
         } else if (id == R.id.nav_company_favorite_Ads) {
 
@@ -498,6 +506,9 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, FeedBack.class));
 
         } else if (id == R.id.nav_company_Abouts_Us) {
+            startActivity(new Intent(HomeScreen.this,AboutAs.class));
+
+
 
         } else if (id == R.id.nav_company_Edite_Profile) {
 
@@ -530,6 +541,9 @@ public class HomeScreen extends AppCompatActivity
             startActivity(new Intent(HomeScreen.this, FeedBack.class));
 
         } else if (id == R.id.nav_User_Abouts_Us) {
+            startActivity(new Intent(HomeScreen.this,AboutAs.class));
+
+
 
         } else if (id == R.id.nav_User_Edite_Profile) {
 

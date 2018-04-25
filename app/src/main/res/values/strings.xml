@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Family Store</string>
+    <string name="app_name">أسر الخير</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="title_activity_home_screen">HomeScreen</string>
@@ -8,6 +8,14 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="all_Countries">الكل</string>
+
+    <string name="aboutUs" >
+
+        هذا التطبيق هوا منصه لخدمه الاسرة المنتجه
+        لعرض منتجاتها اونلاين سواء كانت ماكولات او حرف يدويه او غيرها من الاشياء التي تقوم بانتاجها الاسره ولا تستطيع  تسويقها او عرضها في خارج نطاق المنزل لاي ظرف من الظروف
+        كما يتيج هذا التطبيق لاسره فرصه ذهبيه للترويج عن منتجاتها من خلال منصه متكامله تجمع جميع المنتجات و تضمن رواجها عن نطاق واسع .
+
+    </string>
 
 
 </resources>

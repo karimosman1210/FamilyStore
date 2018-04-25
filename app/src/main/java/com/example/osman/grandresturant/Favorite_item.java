@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,6 +29,7 @@ public class Favorite_item extends AppCompatActivity {
     String auth;
     ImageButton goHome;
     RelativeLayout null_layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +46,10 @@ public class Favorite_item extends AppCompatActivity {
         database = FirebaseDatabase.getInstance().getReference().child("Favorite").child(auth);
         itemfav = FirebaseDatabase.getInstance().getReference().child("Items");
         final com.example.osman.grandresturant.Adapters.Favorite_Adapter favorite_adapter = new Favorite_Adapter(this, list);
-        goHome=(ImageButton)findViewById(R.id.goHome);
+        goHome = (ImageButton) findViewById(R.id.goHome);
         recyclerView.setAdapter(favorite_adapter);
         favorite_adapter.notifyDataSetChanged();
+
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -59,12 +60,9 @@ public class Favorite_item extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                            if (dataSnapshot.hasChildren())
-                            {
+                            if (dataSnapshot.hasChildren()) {
                                 null_layout.setVisibility(View.GONE);
-                            }
-                            else
-                            {
+                            } else {
                                 ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
                                 list.add(itemClass);
                                 favorite_adapter.notifyDataSetChanged();
@@ -94,7 +92,7 @@ public class Favorite_item extends AppCompatActivity {
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Favorite_item.this,HomeScreen.class));
+                startActivity(new Intent(Favorite_item.this, HomeScreen.class));
                 finish();
             }
         });
