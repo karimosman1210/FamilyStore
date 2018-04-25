@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.example.osman.grandresturant.Adapters.Favorite_Adapter;
@@ -30,6 +32,7 @@ public class Favorite_item extends AppCompatActivity {
     ImageButton goHome;
     RelativeLayout null_layout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,34 +53,79 @@ public class Favorite_item extends AppCompatActivity {
         recyclerView.setAdapter(favorite_adapter);
         favorite_adapter.notifyDataSetChanged();
 
+
+//        database.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot allData : dataSnapshot.getChildren()) {
+//
+//                    itemfav.child(allData.getKey()).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//                            if (dataSnapshot.hasChildren()) {
+//                             null_layout.setVisibility(View.GONE);
+//                            } else {
+//                                ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
+//                                list.add(itemClass);
+//                                favorite_adapter.notifyDataSetChanged();
+//
+//                            }
+//
+//
+//                        }
+//
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+        try {
+
+
         database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot allData : dataSnapshot.getChildren()) {
-
-                    itemfav.child(allData.getKey()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataFavorit: dataSnapshot.getChildren()) {
+                    if (dataFavorit.getKey() == null) {
 
 
-                            if (dataSnapshot.hasChildren()) {
-                                null_layout.setVisibility(View.GONE);
-                            } else {
+
+                    } else {
+
+
+                        null_layout.setVisibility(View.GONE);
+                        itemfav.child(dataFavorit.getKey()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
                                 ItemClass itemClass = dataSnapshot.getValue(ItemClass.class);
                                 list.add(itemClass);
                                 favorite_adapter.notifyDataSetChanged();
 
+
+
                             }
 
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                        }
+                            }
+                        });
 
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
+                    }
 
 
                 }
@@ -88,7 +136,9 @@ public class Favorite_item extends AppCompatActivity {
 
             }
         });
+        }catch (Exception e){
 
+        }
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
