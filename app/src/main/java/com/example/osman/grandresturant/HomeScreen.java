@@ -119,7 +119,7 @@ public class HomeScreen extends AppCompatActivity
     private LocationCallback locationCallback;
     private LocationRequest mLocationRequest;
     MaterialSearchView searchView;
-
+TextView privTv;
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -142,6 +142,13 @@ public class HomeScreen extends AppCompatActivity
         nav_Text_view = (TextView) headerLayout.findViewById(R.id.nav_text_view);
         recyclerView.setNestedScrollingEnabled(false);
 
+        privTv=(TextView)findViewById(R.id.privTv);
+        privTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeScreen.this,Privacy.class));
+            }
+        });
 
 
 

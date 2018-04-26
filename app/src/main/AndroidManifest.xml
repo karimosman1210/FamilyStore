@@ -73,7 +73,8 @@
             android:name=".NavigationActivities.RequstsRecycler"
             android:label="التجار" />
         <activity android:name=".Registration.UserEdit" />
-        <activity android:name=".AboutAs"></activity>
+        <activity android:name=".AboutAs" />
+        <activity android:name=".Privacy"></activity>
     </application>
 
 </manifest>

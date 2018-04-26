@@ -139,7 +139,9 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:text="سياسة الخصوصية"
-                                android:textColor="#0004ff"/>
+                                android:textColor="#0004ff"
+                                android:id="@+id/privTv"
+                                />
 
                         </RelativeLayout>
 
