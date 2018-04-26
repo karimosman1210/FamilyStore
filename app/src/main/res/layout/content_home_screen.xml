@@ -34,6 +34,19 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+
+                        <com.rilixtech.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:ccp_textColor="#fff"
+                            app:ccp_arrowSize="30dp"
+                            android:visibility="gone"
+                            />
+
+
+
                     <com.daimajia.slider.library.SliderLayout
                         android:id="@+id/slider"
                         android:layout_width="fill_parent"

@@ -19,6 +19,7 @@
         <item
             android:id="@+id/nav_company_favorite_Ads"
             android:icon="@drawable/favorit_icon"
+            android:visible="false"
             android:title="المفضل" />
 
         <item

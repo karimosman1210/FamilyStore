@@ -1,19 +1,29 @@
 package com.example.osman.grandresturant.Registration;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,12 +49,20 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.w3c.dom.Text;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class UserEdit extends AppCompatActivity {
-    EditText phoneEditProfile, countryEditProfile, emailEditProfile, password_old, password_new, password_new2;
+    EditText phoneEditProfile,  emailEditProfile, password_old, password_new, password_new2, PlaceEditProfile;
     TextView tv_email;
     Button change_password;
     de.hdodenhof.circleimageview.CircleImageView imageButton;
@@ -58,7 +76,16 @@ public class UserEdit extends AppCompatActivity {
     private StorageReference mStorageReference;
     boolean checkClick = false;
     boolean checkPass = false;
-
+    ArrayAdapter<String> arrayAdapter;
+    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    static final int REQUEST_LOCATION = 1;
+    LocationManager locationManager;
+    double latti;
+    double longi;
+    Timer timer;
+    String countryName1, user_country;
+    Button auto;
+    MaterialBetterSpinner spinner;
 
     @Override
     protected void onStart() {
@@ -77,11 +104,11 @@ public class UserEdit extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         phoneEditProfile = (EditText) findViewById(R.id.phoneEditProfile);
-        countryEditProfile = (EditText) findViewById(R.id.countryEditProfile);
-        emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
+            emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
         editBtnProfile = (Button) findViewById(R.id.editBtnProfile);
+        PlaceEditProfile = (EditText) findViewById(R.id.placeEditProfile);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference().child("Users");
         final String id_user = auth.getCurrentUser().getUid();
@@ -90,11 +117,12 @@ public class UserEdit extends AppCompatActivity {
         password_new = (EditText) findViewById(R.id.password_new);
         password_new2 = (EditText) findViewById(R.id.password_new2);
         imageButton = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.imagebutton_user);
-
+        auto = (Button) findViewById(R.id.location_dialog_btn_auto);
         change_password = (Button) findViewById(R.id.change_password);
         mStorageReference = FirebaseStorage.getInstance().getReference();
         allLiniar = (LinearLayout) findViewById(R.id.allLiniar);
-
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
+        spinner.setAdapter(arrayAdapter);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +134,25 @@ public class UserEdit extends AppCompatActivity {
             }
         });
 
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                user_country = adapterView.getItemAtPosition(i).toString();
+                timer.cancel();
+                auto.setText("إختيار المكان الحالى");
+
+            }
+        });
+
+        auto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auto.setText(countryName1);
+                user_country=countryName1;
+                timer.cancel();
+            }
+        });
 
         change_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +179,6 @@ public class UserEdit extends AppCompatActivity {
 
                 phoneEditProfile.setText(model_user.getMobile());
                 emailEditProfile.setText(model_user.getUsername());
-                countryEditProfile.setText(model_user.getCountry());
 
                 Glide.with(UserEdit.this).load(model_user.getProfile_image()).placeholder(imageButton.getDrawable()).into(imageButton);
 
@@ -170,13 +216,13 @@ public class UserEdit extends AppCompatActivity {
 
                                 HelperMethods.showDialog(UserEdit.this, "Wait", "Editing your data...");
                                 String phone = phoneEditProfile.getText().toString().trim();
-                                String country = countryEditProfile.getText().toString().trim();
                                 String email = emailEditProfile.getText().toString().trim();
                                 // database.child(id_user).child("profile_image").setValue(imageUri.toString());
 
-                                database.child(id_user).child("country").setValue(country);
+                                database.child(id_user).child("country").setValue(countryName1);
                                 database.child(id_user).child("username").setValue(email);
                                 database.child(id_user).child("mobile").setValue(phone);
+                                database.child(id_user).child("place").setValue(PlaceEditProfile.getText().toString());
                                 try {
                                     if (checkClick == true) {
 
@@ -229,6 +275,45 @@ public class UserEdit extends AppCompatActivity {
 
             }
         });
+
+
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            public void run() {
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        getLocation();
+                        Locale mLocale = new Locale("ar");
+
+                        Geocoder geocoder = new Geocoder(UserEdit.this, mLocale);
+                        List<Address> addresses = null;
+                        try {
+                            addresses = geocoder.getFromLocation(latti, longi, 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        try {
+                            assert addresses != null;
+                            countryName1 = addresses.get(0).getAdminArea();
+                            String regex = "\\s*\\bمحافظة\\b\\s*";
+                            countryName1 = countryName1.replaceAll(regex, "");
+                            countryName1 = countryName1.replaceFirst("\u202C", "");
+
+                        } catch (Exception e) {
+                        }
+
+                    }
+                });
+
+
+            }
+        }, 0, 1 * (1000 * 1));
 
 
     }
@@ -294,6 +379,36 @@ public class UserEdit extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            if (location != null) {
+
+
+                latti = location.getLatitude();
+                longi = location.getLongitude();
+
+
+            } else {
+
+            }
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
     }
 }
 

@@ -166,48 +166,50 @@ public class ItemScreen extends AppCompatActivity {
             databaseReferenceRequests = FirebaseDatabase.getInstance().getReference().child("Requests");
 
 
-            item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (user != null) {
-                        databaseReferenceRequests.child(ItemID + UserID).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                            @Override
-                            public void onDataChange(DataSnapshot snapshot) {
-
-                                if (snapshot.hasChildren()) {
-
-                                    Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
-
-                                } else {
-                                    sendRequest();
-
-                                }
-
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-
-                        });
-
-                    } else {
-                        Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
-                        cdd.show();
-                    }
-
-
-                }
-            });
 
         } else {
-            Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
-            cdd.show();
+
         }
+
+
+        item_screen_add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (user != null) {
+                    databaseReferenceRequests.child(ItemID + UserID).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+
+                            if (snapshot.hasChildren()) {
+
+                                Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                sendRequest();
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+                } else {
+                    Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
+                    cdd.show();
+                }
+
+
+            }
+        });
+
 
 
     }
@@ -243,6 +245,7 @@ public class ItemScreen extends AppCompatActivity {
             databaseReferenceAddRequests.child("RequestItemPrice").setValue(ItemPrice);
             databaseReferenceAddRequests.child("RequestItemImage").setValue(ItemImage);
             databaseReferenceAddRequests.child("RequestSallerID").setValue(SallerID);
+            databaseReferenceAddRequests.child("RequestID").setValue(databaseReferenceAddRequests.getKey());
             databaseReferenceAddRequests.child("RequestTime").setValue(System.currentTimeMillis() / 1000).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
@@ -254,10 +257,14 @@ public class ItemScreen extends AppCompatActivity {
             Toast.makeText(ItemScreen.this, "تم إرسال الطلب والإضافة الى السلة", Toast.LENGTH_SHORT).show();
         } else {
 
-            Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
-            cdd.show();
+
         }
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

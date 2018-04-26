@@ -44,7 +44,7 @@ import java.util.TimerTask;
 
 public class Sign extends AppCompatActivity {
     Button signUpBtnSignUp, signUpBtnCancel;
-    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile;
+    EditText emailEtSignUp, passwordEtSignUp, surepassSignUp, nameEt, user_mobile , user_place;
     FirebaseAuth auth;
     FirebaseAuth.AuthStateListener listener;
     String User_Type, myEmail, mobile_code;
@@ -87,6 +87,7 @@ public class Sign extends AppCompatActivity {
         surepassSignUp = (EditText) findViewById(R.id.surepassSignUp);
         nameEt = (EditText) findViewById(R.id.nameEt);
         user_mobile = (EditText) findViewById(R.id.phone_Et);
+        user_place = (EditText) findViewById(R.id.placeEt);
         auth = FirebaseAuth.getInstance();
 
         mobile_code = ccp.getSelectedCountryCode();
@@ -176,18 +177,14 @@ public class Sign extends AppCompatActivity {
                         assert addresses != null;
 
 
-                        String countryName = addresses.get(0).getAdminArea();
-
-
-                        String countr = "محافظة";
-
+                        String countryName1 = addresses.get(0).getAdminArea();
                         String regex = "\\s*\\bمحافظة\\b\\s*";
-                        countryName = countryName.replaceAll(regex, "");
+                        countryName1 = countryName1.replaceAll(regex, "");
+                        user_country  = countryName1.replaceFirst("\u202C", "");
+                        auto.setText(user_country);
 
-                        user_country = countryName;
-
-                        auto.setText(countryName);
-                        Toast.makeText(Sign.this, countryName, Toast.LENGTH_SHORT).show();
+                        auto.setText(countryName1);
+                        Toast.makeText(Sign.this, countryName1, Toast.LENGTH_SHORT).show();
 
 
                     } catch (Exception e) {
@@ -261,8 +258,12 @@ public class Sign extends AppCompatActivity {
         } else if (User_Type == null) {
             Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(user_country)) {
-            Toast.makeText(this, "أختار مكان المستخدم  ", Toast.LENGTH_SHORT).show();
-        } else {
+            Toast.makeText(this, "أختار مدينة المستخدم  ", Toast.LENGTH_SHORT).show();
+        }
+        else if (TextUtils.isEmpty(user_place.getText().toString())) {
+            Toast.makeText(this, "أختار عنوان المستخدم  ", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
             HelperMethods.showDialog(Sign.this, "Wait...", "Create new user");
 
@@ -286,6 +287,7 @@ public class Sign extends AppCompatActivity {
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(mobile_code + user_mobile.getText().toString());
                             currentuser_db.child("country").setValue(user_country);
+                            currentuser_db.child("place").setValue(user_place.getText().toString());
                             currentuser_db.child("profile_image").setValue("https://firebasestorage.googleapis.com/v0/b/clashbook-3a339.appspot.com/o/default-user-icon-profile.png?alt=media&token=27cc7679-276a-497e-90a5-b558c26275ab");
 
 
@@ -309,25 +311,7 @@ public class Sign extends AppCompatActivity {
     }
 
 
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
-        switch (view.getId()) {
-
-            case R.id.radio_user:
-                if (checked)
-                    User_Type = "user";
-                break;
-            case R.id.radio_company:
-                if (checked)
-                    User_Type = "company";
-                break;
-        }
-
-
-    }
 
     void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -353,5 +337,23 @@ public class Sign extends AppCompatActivity {
 
     }
 
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
 
+        // Check which radio button was clicked
+        switch (view.getId()) {
+
+            case R.id.radio_user:
+                if (checked)
+                    User_Type = "user";
+                break;
+            case R.id.radio_company:
+                if (checked)
+                    User_Type = "company";
+                break;
+        }
+
+
+    }
 }

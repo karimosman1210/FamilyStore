@@ -69,7 +69,6 @@ public class ItemsRecycler extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         TextView toolbar_title_item;
-        Toast.makeText(this, HelperMethods.Home_Filtter_sallerID + "  " + HelperMethods.Home_Filtter_categoryName + "  " + HelperMethods.Home_Filtter_Country_name, Toast.LENGTH_SHORT).show();
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +155,8 @@ public class ItemsRecycler extends AppCompatActivity {
                                 adapter.notifyDataSetChanged();
                                 null_layout.setVisibility(View.GONE);
 
+                                HelperMethods.hideDialog(ItemsRecycler.this);
+
 
                             } else {
 
@@ -183,6 +184,7 @@ public class ItemsRecycler extends AppCompatActivity {
 
 
                                 null_layout.setVisibility(View.GONE);
+                                HelperMethods.hideDialog(ItemsRecycler.this);
 
 
                             } else {
@@ -197,6 +199,7 @@ public class ItemsRecycler extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                 } else {
                     null_layout.setVisibility(View.VISIBLE);
+                    HelperMethods.hideDialog(ItemsRecycler.this);
 
                 }
 

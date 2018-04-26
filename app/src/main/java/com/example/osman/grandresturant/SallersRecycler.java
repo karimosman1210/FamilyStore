@@ -1,6 +1,8 @@
 package com.example.osman.grandresturant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -10,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,17 +35,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
 
 public class SallersRecycler extends AppCompatActivity {
 
-    RecyclerView recyclerView, adminRecyclerView;
+    RecyclerView recyclerView;
     DatabaseReference mDatabaseReference;
-    ImageView secrchItem;
-    LinearLayout barsearch;
+
     RelativeLayout null_layout;
-    ImageButton goHome;
+
     private TextView sallerRecyclerItemName;
     private ImageView sallerRecyclerItemImage;
     private TextView sallerRecyclerItemLocation;
@@ -53,7 +58,12 @@ public class SallersRecycler extends AppCompatActivity {
 
     private ArrayList<SallersClass> sellers = new ArrayList<>();
     private SallerAdapter adapter;
-    String namereceved;
+
+    MaterialBetterSpinner spinner;
+    TextView location;
+    ArrayAdapter<String> arrayAdapter;
+    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,33 +75,63 @@ public class SallersRecycler extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-      //  Toast.makeText(this, HelperMethods.Home_Filtter_Country_name , Toast.LENGTH_SHORT).show();
+
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        spinner = (MaterialBetterSpinner) findViewById(R.id.saller_spinner_place);
+        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
+        spinner.setAdapter(arrayAdapter);
+        location= (TextView)findViewById(R.id.location_recycler_sallers);
+        recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        LinearLayoutManager layoutManagerAdmin = new LinearLayoutManager(this);
+        layoutManagerAdmin.setReverseLayout(true);
+        layoutManagerAdmin.setStackFromEnd(true);
 
-        Bundle alldata = getIntent().getExtras();
-        if (alldata != null) {
-            namereceved = alldata.getString("name");
-            toolbarTitle.setText(" تجار "+namereceved);
+        recyclerView.setNestedScrollingEnabled(false);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        location.setText(HelperMethods.Home_Filtter_Country_name);
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                HelperMethods.Home_Filtter_Country_name = adapterView.getItemAtPosition(i).toString();
+                location.setText(adapterView.getItemAtPosition(i).toString());
+
+                location.setText(HelperMethods.Home_Filtter_Country_name);
+
+                sellers.clear();
+                recyclerView.setAdapter(adapter);
+                HelperMethods.showDialog(SallersRecycler.this, "Wait", "Loading...");
+                mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            SallersClass seller = child.getValue(SallersClass.class);
+                            seller.setId(child.getKey());
+                            if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                                sellers.add(seller);
+
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        HelperMethods.hideDialog(SallersRecycler.this);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
-
-
-
-            //goHome = (ImageButton) findViewById(R.id.goHome);
-
-            recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-            layoutManager.setReverseLayout(true);
-            layoutManager.setStackFromEnd(true);
-            LinearLayoutManager layoutManagerAdmin = new LinearLayoutManager(this);
-            layoutManagerAdmin.setReverseLayout(true);
-            layoutManagerAdmin.setStackFromEnd(true);
-
-            recyclerView.setNestedScrollingEnabled(false);
-
-            recyclerView.setLayoutManager(layoutManager);
+            }
+        });
 
 
 //        goHome.setOnClickListener(new View.OnClickListener() {
@@ -103,43 +143,43 @@ public class SallersRecycler extends AppCompatActivity {
 //        });
 
 
-            adapter = new SallerAdapter(sellers, sellers, this);
+        adapter = new SallerAdapter(sellers, sellers, this);
 
 
-            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-                @Override
-                public boolean onClose() {
-                    toolbarTitle.setVisibility(View.VISIBLE);
-                    adminAdminContainer.setVisibility(View.VISIBLE);
-                    return false;
-                }
-            });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                toolbarTitle.setVisibility(View.VISIBLE);
+                adminAdminContainer.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
 
-            searchView.setOnSearchClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    toolbarTitle.setVisibility(View.GONE);
-                    adminAdminContainer.setVisibility(View.GONE);
-                }
-            });
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toolbarTitle.setVisibility(View.GONE);
+                adminAdminContainer.setVisibility(View.GONE);
+            }
+        });
 
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    adapter.getFilter().filter(query);
-                    return false;
-                }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
 
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    adapter.getFilter().filter(newText);
-                    return false;
-                }
-            });
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
 
-            initAdminView();
+        initAdminView();
 
-        }}
+    }
 
     private void initAdminView() {
 
@@ -247,8 +287,6 @@ public class SallersRecycler extends AppCompatActivity {
         }
 
 
-
-
         public void setItemImage(String image) {
             Glide.with(view.getContext()).load(image).placeholder(saller_img.getDrawable()).fitCenter().into(saller_img);
         }
@@ -310,12 +348,11 @@ public class SallersRecycler extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if( !searchView.isIconified())
-        {
+        if (!searchView.isIconified()) {
             searchView.setIconified(true);
+        } else {
+            super.onBackPressed();
         }
-        else
-        { super.onBackPressed();}
 
     }
 }

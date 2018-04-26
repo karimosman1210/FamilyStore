@@ -63,7 +63,6 @@ public class NavigationSallerRecycler extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
-        Toast.makeText(this, HelperMethods.Home_Filtter_Country_name, Toast.LENGTH_SHORT).show();
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 

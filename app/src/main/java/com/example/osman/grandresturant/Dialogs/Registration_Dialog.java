@@ -54,7 +54,7 @@ public class Registration_Dialog extends Dialog {
             public void onClick(View view) {
 
                 getContext().startActivity(new Intent(getContext() , Sign.class));
-                dismiss();
+
             }
         });
 
@@ -63,7 +63,7 @@ public class Registration_Dialog extends Dialog {
             public void onClick(View view) {
 
                 getContext().startActivity(new Intent(getContext() , Sign.class));
-                dismiss();
+
             }
         });
     }

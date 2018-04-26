@@ -2,6 +2,7 @@ package com.example.osman.grandresturant.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.HomeScreen;
+import com.example.osman.grandresturant.NavigationActivities.MyAds;
+import com.example.osman.grandresturant.NavigationActivities.MyBasket;
 import com.example.osman.grandresturant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,7 +51,7 @@ public class MyBasket_delete_dialog extends Dialog {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         Toast.makeText(c, "تم إلغاء الطلب", Toast.LENGTH_SHORT).show();
-                        dismiss();
+                        c.startActivity(new Intent(c , HomeScreen.class));
                     }
                 });
 

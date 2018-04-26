@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class Activity_upload extends AppCompatActivity {
 
-    EditText place, title, price, description;
+    EditText  title, price, description;
 
     Button upload;
 
@@ -47,7 +47,7 @@ public class Activity_upload extends AppCompatActivity {
     ArrayAdapter<String> CategorySpinnerAdapter, CountrySpinnerAdapter;
     String[] spinnerListDefualt = {};
     FirebaseAuth mAuth;
-    String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage, UserCountry;
+    String CountryLocation, ItemType, UserName, UserEmail, UserNumber, UserImage, UserCountry , UserPlace;
     ImageView imgebtn;
     private static final int RUSLET_LOAD_IMAGE = 1;
     static Uri image_item;
@@ -147,6 +147,25 @@ public class Activity_upload extends AppCompatActivity {
 
         });
 
+        mDatabaseCurrentUser.child("place").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+
+                System.out.println(snapshot.getValue());
+                try {
+                    UserPlace = snapshot.getValue().toString();
+                } catch (Exception e) {
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
 
         mDatabaseCurrentUser.child("country").addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,7 +237,6 @@ public class Activity_upload extends AppCompatActivity {
         title = (EditText) findViewById(R.id.et_upload_title);
         price = (EditText) findViewById(R.id.et_upload_price);
         description = (EditText) findViewById(R.id.et_upload_description);
-        place = (EditText) findViewById(R.id.et_upload_placee);
         imgebtn = (ImageView) findViewById(R.id.image_new_item);
 
         upload = (Button) findViewById(R.id.upload_button);
@@ -290,7 +308,7 @@ public class Activity_upload extends AppCompatActivity {
                             databaseReference.child("UserEmail").setValue(UserEmail);
                             databaseReference.child("UserID").setValue(mAuth.getCurrentUser().getUid());
                             databaseReference.child("idItem").setValue(databaseReference.getKey());
-                            databaseReference.child("PlaceLocation").setValue(place.getText().toString());
+                            databaseReference.child("PlaceLocation").setValue(UserPlace);
 
 
                             databaseReference.child("CountryLocation").setValue(UserCountry);

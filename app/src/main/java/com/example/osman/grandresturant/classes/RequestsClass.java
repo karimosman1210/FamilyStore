@@ -6,12 +6,12 @@ package com.example.osman.grandresturant.classes;
 
 public class RequestsClass {
 
-    private String RequestUserName, RequestUserID, RequestUserEmail, RequestUserNumber, RequestUserImage, RequestItemID, RequestItemName, RequestItemPrice, RequestItemImage, RequestSallerID;
+    private String RequestUserName, RequestUserID, RequestUserEmail, RequestUserNumber, RequestUserImage, RequestItemID, RequestItemName, RequestItemPrice, RequestItemImage, RequestSallerID , RequestID;
     private long RequestTime;
 
     public RequestsClass(){}
 
-    public RequestsClass(String requestUserName, String requestUserID, String requestUserEmail, String requestUserNumber, String requestUserImage, String requestItemID, String requestItemName, String requestItemPrice, String requestItemImage, String requestSallerID, long requestTime) {
+    public RequestsClass(String requestUserName, String requestUserID, String requestUserEmail, String requestUserNumber, String requestUserImage, String requestItemID, String requestItemName, String requestItemPrice, String requestItemImage, String requestSallerID, String requestID, long requestTime) {
         RequestUserName = requestUserName;
         RequestUserID = requestUserID;
         RequestUserEmail = requestUserEmail;
@@ -22,6 +22,7 @@ public class RequestsClass {
         RequestItemPrice = requestItemPrice;
         RequestItemImage = requestItemImage;
         RequestSallerID = requestSallerID;
+        RequestID = requestID;
         RequestTime = requestTime;
     }
 
@@ -103,6 +104,14 @@ public class RequestsClass {
 
     public void setRequestSallerID(String requestSallerID) {
         RequestSallerID = requestSallerID;
+    }
+
+    public String getRequestID() {
+        return RequestID;
+    }
+
+    public void setRequestID(String requestID) {
+        RequestID = requestID;
     }
 
     public long getRequestTime() {

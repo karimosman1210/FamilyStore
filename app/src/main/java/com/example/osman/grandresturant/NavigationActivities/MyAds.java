@@ -14,12 +14,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Adapters.MyAds_Adapter;
+import com.example.osman.grandresturant.Adapters.NewRequests_Adapter;
 import com.example.osman.grandresturant.Dialogs.MyAds_delete_dialog;
 import com.example.osman.grandresturant.Edit_Ads;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.HomeScreen;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
+import com.example.osman.grandresturant.classes.RequestsClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MyAds extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -36,6 +42,9 @@ public class MyAds extends AppCompatActivity {
     ImageView SallerImageView;
     CollapsingToolbarLayout collapsingToolbar;
     RelativeLayout null_layout;
+    private ArrayList<ItemClass> my_ads_list = new ArrayList<>();
+    private MyAds_Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +60,16 @@ public class MyAds extends AppCompatActivity {
         null_layout = (RelativeLayout) findViewById(R.id.saller_recycler_reltivelayout_null);
         firebaseAuth = FirebaseAuth.getInstance();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Items");
-        mDatabaseReference.keepSynced(true);
+
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        mDatabase.keepSynced(true);
+
         recyclerView = (RecyclerView) findViewById(R.id.my_ads_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         SallerImageView = (ImageView) findViewById(R.id.saller_app_bar_image);
-
+        adapter = new MyAds_Adapter(my_ads_list, my_ads_list, MyAds.this);
 
         String id = firebaseAuth.getCurrentUser().getUid();
 
@@ -97,130 +106,55 @@ public class MyAds extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<ItemClass, MyAds.holder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<ItemClass, MyAds.holder>(
-                ItemClass.class,
-                R.layout.my_ads_item,
-                MyAds.holder.class,
-                mDatabaseReference.orderByChild("UserID").equalTo(firebaseAuth.getCurrentUser().getUid())
-        ) {
+
+
+        my_ads_list.clear();
+        recyclerView.setAdapter(adapter);
+        HelperMethods.showDialog(this, "Wait", "Loading...");
+        mDatabaseReference.orderByChild("UserID").equalTo(firebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
             @Override
-            protected void populateViewHolder(MyAds.holder viewHolder, final ItemClass model, int position) {
-                final String key_post = getRef(position).getKey();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    ItemClass request = child.getValue(ItemClass.class);
 
-
-
-
-                viewHolder.setItemName(model.getName());
-                viewHolder.setLocation(model.getCountryLocation());
-                viewHolder.setprice(model.getPrice());
-                viewHolder.setUserName(model.getUserName());
-                viewHolder.setItemImage(model.getImage());
-
-                viewHolder.myAds_delete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        HelperMethods.delete_ads_id = key_post;
-                        MyAds_delete_dialog cdd = new MyAds_delete_dialog(MyAds.this);
-                        cdd.show();
-
-
+                    if (dataSnapshot.hasChildren())
+                    {
+                        my_ads_list.add(request);
+                        null_layout.setVisibility(View.GONE);
                     }
-                });
-
-                viewHolder.myAds_edit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MyAds.this, Edit_Ads.class);
-                        intent.putExtra("id", key_post);
-                        startActivity(intent);
-
-                    }
-                });
 
 
-                viewHolder.view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        Intent intent = new Intent(MyAds.this, ItemScreen.class);
+                }
+                adapter.notifyDataSetChanged();
+                HelperMethods.hideDialog(MyAds.this);
+            }
 
-                        intent.putExtra("Item_ID", key_post);
-
-
-                        startActivity(intent);
-
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-        };
+        });
 
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-        if (firebaseRecyclerAdapter.getItemCount() == 0) {
-            null_layout.setVisibility(View.VISIBLE);
-        } else {
-        }
 
 
     }
 
 
-    public static class holder extends RecyclerView.ViewHolder {
 
-
-        View view;
-        ImageView myAds_img, myAds_delete, myAds_edit;
-        TextView myAds_name, myAds_price, myAds_country, myAds_username;
-
-
-        public holder(View itemView) {
-            super(itemView);
-            view = itemView;
-
-            myAds_name = (TextView) view.findViewById(R.id.my_ads_recycler_name);
-            myAds_price = (TextView) view.findViewById(R.id.my_ads_recycler_price);
-            myAds_country = (TextView) view.findViewById(R.id.my_ads_recycler__place);
-            myAds_username = (TextView) view.findViewById(R.id.my_ads_recycler_user_name);
-            myAds_img = (ImageView) view.findViewById(R.id.my_ads_recycler_img);
-            myAds_delete = (ImageView) view.findViewById(R.id.my_ads_recycler_delete);
-            myAds_edit = (ImageView) view.findViewById(R.id.my_ads_recycler_edit);
-
-        }
-
-        public void setItemName(String name) {
-
-            myAds_name.setText(name);
-        }
-
-        public void setLocation(String location) {
-
-            myAds_country.setText(location);
-        }
-
-        public void setprice(String price) {
-
-            myAds_price.setText(price);
-        }
-
-        public void setUserName(String userName) {
-
-            myAds_username.setText(userName);
-        }
-
-
-        public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).placeholder(myAds_img.getDrawable()).fitCenter().into(myAds_img);
-        }
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+              startActivity(new Intent(MyAds.this , HomeScreen.class));
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MyAds.this , HomeScreen.class));
     }
 }

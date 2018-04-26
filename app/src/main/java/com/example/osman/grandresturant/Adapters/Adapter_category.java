@@ -44,26 +44,7 @@ ArrayList<Item_recycle> arrayList;
 
             imageView=(ImageView)itemView.findViewById(R.id.iv_item_category);
             textView=(TextView)itemView.findViewById(R.id.tv_item_category);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-
-                    if(HelperMethods.Home_Filtter_Country_name == null)
-                    {
-                        HomeScreenChooceCountry cdd=new HomeScreenChooceCountry((Activity) context);
-                        cdd.show();
-
-                    }
-                    else
-                    {
-                        int postion = getLayoutPosition();
-                        HelperMethods.Home_Filtter_categoryName = arrayList.get(postion).getName();
-                        context.startActivity(new Intent(context, SallersRecycler.class));
-                    }
-
-                }
-            });
 
 
         }
@@ -88,9 +69,26 @@ View v= LayoutInflater.from(context).inflate(R.layout.item_recycle_category,pare
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(context,com.example.osman.grandresturant.SallersRecycler.class);
-                intent.putExtra("name", item_recycle.getName());
-                context.startActivity(intent);
+
+
+                if(HelperMethods.Home_Filtter_Country_name == null)
+                {
+
+                    HelperMethods.Home_Filtter_categoryName = item_recycle.getName();
+                    HomeScreenChooceCountry cdd=new HomeScreenChooceCountry((Activity) context);
+                    cdd.show();
+
+                }
+                else
+                {
+
+
+                    HelperMethods.Home_Filtter_categoryName =  item_recycle.getName();
+                    context.startActivity(new Intent(context, SallersRecycler.class));
+                }
+
+
+
             }
         });
 

@@ -1,9 +1,11 @@
 package com.example.osman.grandresturant.Registration;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -45,13 +47,13 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class UserProfile extends AppCompatActivity {
-    EditText phoneEditProfile, countryEditProfile, emailEditProfile, password_old, password_new, password_new2;
+    EditText phoneEditProfile, emailEditProfile, password_old, password_new, password_new2;
     TextView tv_email;
     de.hdodenhof.circleimageview.CircleImageView imageButton;
     ImageView edit_profile ;
     FirebaseAuth auth;
     DatabaseReference database , mDatabase;
-    TextView card_mail , card_nuber , card_place ;
+    TextView card_mail , card_nuber , card_place , card_country ;
 
 
 
@@ -74,7 +76,6 @@ public class UserProfile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         phoneEditProfile = (EditText) findViewById(R.id.phoneEditProfile);
-        countryEditProfile = (EditText) findViewById(R.id.countryEditProfile);
         emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -89,6 +90,7 @@ public class UserProfile extends AppCompatActivity {
         card_mail = (TextView) findViewById(R.id.my_ads_card_email);
         card_nuber = (TextView) findViewById(R.id.my_ads_card_number);
         card_place = (TextView) findViewById(R.id.my_ads_card_place);
+        card_country = (TextView) findViewById(R.id.my_ads_card_country);
 
 
         String id = auth.getCurrentUser().getUid();
@@ -106,7 +108,8 @@ public class UserProfile extends AppCompatActivity {
 
                     card_mail.setText(snapshot.child("email").getValue().toString());
                     card_nuber.setText(snapshot.child("mobile").getValue().toString());
-                    card_place.setText(snapshot.child("country").getValue().toString());
+                    card_country.setText(snapshot.child("country").getValue().toString());
+                    card_place.setText(snapshot.child("place").getValue().toString());
 
 
                 }

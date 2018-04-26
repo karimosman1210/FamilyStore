@@ -48,6 +48,7 @@
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
                         android:background="@drawable/ic_favorite_border_black_24dp"
+                        android:visibility="gone"
                         android:id="@+id/favoritBtn" />
 
 

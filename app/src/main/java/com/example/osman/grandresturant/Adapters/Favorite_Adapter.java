@@ -3,6 +3,7 @@ package com.example.osman.grandresturant.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.osman.grandresturant.Favorite_item;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -66,12 +69,17 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
                     public void onClick(DialogInterface dialog, int id) {
                         String firebaseAuth = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         DatabaseReference database = FirebaseDatabase.getInstance().getReference().child("Favorite");
-                        database.child(firebaseAuth).child(itemClass.getIdItem()).removeValue();
-                        my_data.remove(position);
-                        notifyDataSetChanged();
+                        database.child(firebaseAuth).child(itemClass.getIdItem()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(context, " تم حزف " + itemClass.getName(), Toast.LENGTH_SHORT).show();
+                                context.startActivity(new Intent(context , Favorite_item.class));
+                            }
+                        });
 
 
-                        Toast.makeText(context, " تم حزف " + itemClass.getName(), Toast.LENGTH_SHORT).show();
+
+
                     }
                 })
                         .setNegativeButton("لا ", new DialogInterface.OnClickListener() {

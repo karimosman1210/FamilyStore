@@ -60,6 +60,7 @@
             android:background="@drawable/input"
             android:drawableEnd="@drawable/ic_email"
             android:hint=" البريد الإليكترونى"
+            android:inputType="textEmailAddress"
             android:padding="7dp"
             android:textColor="#fff"
             android:textColorHint="#fff"

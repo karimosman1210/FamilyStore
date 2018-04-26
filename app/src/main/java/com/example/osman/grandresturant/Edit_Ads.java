@@ -46,15 +46,15 @@ public class Edit_Ads extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     DatabaseReference data_category;
-    EditText name, desc, price, place;
-    MaterialBetterSpinner Category, Country;
+    EditText name, desc, price;
+    MaterialBetterSpinner Category;
     ImageView imageButton;
     Button save;
-    ArrayAdapter<String> CategorySpinnerAdapter, CountrySpinnerAdapter;
+    ArrayAdapter<String> CategorySpinnerAdapter;
     ArrayList<String> arrayList_category;
     String current_position_category, current_position_Location;
 
-    String[] spinnerListCountry = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+
     String s_name, s_desc, s_price, s_place, ItemType, CountryLocation;
     Uri imageUri;
     private static final int RUSLET_LOAD_IMAGE = 1;
@@ -74,11 +74,11 @@ public class Edit_Ads extends AppCompatActivity {
         name = (EditText) findViewById(R.id.edit_ads_name);
         desc = (EditText) findViewById(R.id.edit_ads_desc);
         price = (EditText) findViewById(R.id.edit_ads_price);
-        place = (EditText) findViewById(R.id.edit_ads_place);
+
         imageButton = (ImageView) findViewById(R.id.edit_ads_item_img);
         save = (Button) findViewById(R.id.edit_ads_update_btn);
         Category = (MaterialBetterSpinner) findViewById(R.id.edit_ads_spinner_category);
-        Country = (MaterialBetterSpinner) findViewById(R.id.edit_ads_spinner_place);
+
 
         mStorageReference = FirebaseStorage.getInstance().getReference();
 
@@ -118,20 +118,6 @@ public class Edit_Ads extends AppCompatActivity {
         });
 
 
-        CountrySpinnerAdapter = new ArrayAdapter<String>(Edit_Ads.this, android.R.layout.simple_dropdown_item_1line, spinnerListCountry);
-
-
-        Country.setAdapter(CountrySpinnerAdapter);
-
-        Country.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                CountryLocation = adapterView.getItemAtPosition(i).toString();
-
-
-            }
-        });
 
 
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +144,6 @@ public class Edit_Ads extends AppCompatActivity {
                 name.setText(dataSnapshot.child("Name").getValue().toString());
                 desc.setText(dataSnapshot.child("Description").getValue().toString());
                 price.setText(dataSnapshot.child("Price").getValue().toString());
-                place.setText(dataSnapshot.child("PlaceLocation").getValue().toString());
                 Picasso.with(Edit_Ads.this).load(dataSnapshot.child("image").getValue().toString()).into(imageButton);
 
 
@@ -173,7 +158,7 @@ public class Edit_Ads extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(price.getText()) || TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(desc.getText()) || TextUtils.isEmpty(place.getText()) || TextUtils.isEmpty(CountryLocation) || TextUtils.isEmpty(ItemType)) {
+                if (TextUtils.isEmpty(price.getText()) || TextUtils.isEmpty(name.getText()) || TextUtils.isEmpty(desc.getText()) || TextUtils.isEmpty(CountryLocation) || TextUtils.isEmpty(ItemType)) {
                     Toast.makeText(Edit_Ads.this, "اكمل باقي البيانات", Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -187,14 +172,12 @@ public class Edit_Ads extends AppCompatActivity {
 
                             s_name = name.getText().toString();
                             s_desc = desc.getText().toString();
-                            s_place = place.getText().toString();
                             s_price = price.getText().toString();
 
                             //  System.out.println(s_name+"     "+s_price+"   "+s_desc+" "+s_place+"  "+" ");
                             databaseReference.child("Name").setValue(s_name);
                             databaseReference.child("Description").setValue(s_desc);
                             databaseReference.child("Price").setValue(s_price);
-                            databaseReference.child("PlaceLocation").setValue(s_place);
                             databaseReference.child("CountryLocation").setValue(CountryLocation);
                             databaseReference.child("UploadedTime").setValue(System.currentTimeMillis() / 1000);
                             databaseReference.child("ItemType").setValue(ItemType);

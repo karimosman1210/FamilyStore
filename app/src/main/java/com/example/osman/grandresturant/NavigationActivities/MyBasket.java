@@ -12,20 +12,29 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Adapters.BasketAdapter;
+import com.example.osman.grandresturant.Adapters.MyAds_Adapter;
+import com.example.osman.grandresturant.Adapters.MyBasket_Adapter;
 import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
 import com.example.osman.grandresturant.Favorite_item;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.HomeScreen;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.RequestsClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MyBasket extends AppCompatActivity {
     RecyclerView recycleBasket;
@@ -34,6 +43,9 @@ public class MyBasket extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     ImageButton goHome;
     RelativeLayout null_layout;
+    private ArrayList<RequestsClass> my_ads_list = new ArrayList<>();
+    private MyBasket_Adapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +65,7 @@ public class MyBasket extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         firebaseAuth = FirebaseAuth.getInstance();
         goHome = (ImageButton) findViewById(R.id.goHome);
+        adapter = new MyBasket_Adapter(my_ads_list, my_ads_list, MyBasket.this);
 
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,96 +80,55 @@ public class MyBasket extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<RequestsClass, MyBasket.holder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<RequestsClass, MyBasket.holder>(
-                RequestsClass.class,
-                R.layout.my_basket_item,
-                MyBasket.holder.class,
-                mDatabaseReference.orderByChild("RequestUserID").equalTo(firebaseAuth.getCurrentUser().getUid())
-        ) {
+
+
+        my_ads_list.clear();
+        recyclerView.setAdapter(adapter);
+        HelperMethods.showDialog(this, "Wait", "Loading...");
+        mDatabaseReference.orderByChild("RequestUserID").equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            protected void populateViewHolder(MyBasket.holder viewHolder, final RequestsClass model, int position) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    RequestsClass request = child.getValue(RequestsClass.class);
 
-                final String key_post = getRef(position).getKey();
-                viewHolder.RequestItemName.setText(model.getRequestItemName());
-                viewHolder.RequestItemPrice.setText(model.getRequestItemPrice());
-
-
-                viewHolder.setItemImage(model.getRequestItemImage());
-
-
-                viewHolder.view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-
-                        Intent intent = new Intent(MyBasket.this, ItemScreen.class);
-                        intent.putExtra("Item_ID", model.getRequestItemID());
-                        startActivity(intent);
-
+                    if (dataSnapshot.hasChildren())
+                    {
+                        my_ads_list.add(request);
+                        null_layout.setVisibility(View.GONE);
                     }
-                });
-
-                viewHolder.RequestDeleteBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
 
-                        HelperMethods.delete_ads_id = key_post;
-                        MyBasket_delete_dialog cdd = new MyBasket_delete_dialog(MyBasket.this);
-                        cdd.show();
 
-                    }
-                });
+                }
+                adapter.notifyDataSetChanged();
+                HelperMethods.hideDialog(MyBasket.this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
-        };
-
-        recyclerView.setAdapter(firebaseRecyclerAdapter);
-        if (firebaseRecyclerAdapter.getItemCount() == 0) {
-
-        } else { null_layout.setVisibility(View.GONE);
-        }
-    }
-
-
-    public static class holder extends RecyclerView.ViewHolder {
-
-
-        View view;
-        ImageView RequestItemImage, RequestDeleteBtn;
-        TextView RequestItemName, RequestItemPrice, RequestItemPlace, RequestItemcategory, RequestItemAdded;
-
-
-        public holder(View itemView) {
-            super(itemView);
-            view = itemView;
-
-
-            RequestItemName = (TextView) view.findViewById(R.id.My_Basket_item_name);
-            RequestItemPrice = (TextView) view.findViewById(R.id.My_Basket_item_price);
-
-
-            RequestItemImage = (ImageView) view.findViewById(R.id.My_Basket_item_image);
-            RequestDeleteBtn = (ImageView) view.findViewById(R.id.My_Basket_delete_btn);
-
-
-        }
-
-        public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).placeholder(RequestItemImage.getDrawable()).fitCenter().into(RequestItemImage);
-        }
+        });
 
 
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                startActivity(new Intent(MyBasket.this , HomeScreen.class));
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(MyBasket.this , HomeScreen.class));
     }
 }
 
