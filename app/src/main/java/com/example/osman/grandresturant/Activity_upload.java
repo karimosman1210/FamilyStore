@@ -245,9 +245,12 @@ public class Activity_upload extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+        try {
+
 
                 Intent open = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(open, RUSLET_LOAD_IMAGE);
+        }catch (Exception e){}
 
 
             }

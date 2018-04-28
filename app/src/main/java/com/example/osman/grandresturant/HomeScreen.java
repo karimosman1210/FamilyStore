@@ -499,7 +499,13 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, Favorite_item.class));
 
-        } else if (id == R.id.nav_Login) {
+        }else if (id==R.id.naveAddAds){
+
+            startActivity(new Intent(HomeScreen.this, Activity_upload.class));
+
+        }
+
+        else if (id == R.id.nav_Login) {
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
@@ -566,6 +572,7 @@ public class HomeScreen extends AppCompatActivity
                 startActivity(new Intent(HomeScreen.this, MyBasket.class));
             } else {
             }
+
 
         } else if (id == R.id.nav_User_favorite_Ads) {
 

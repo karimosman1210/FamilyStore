@@ -9,6 +9,12 @@
             android:title="البيانات الشخصيه" />
 
         <item
+            android:id="@+id/naveAddAds"
+            android:icon="@drawable/add_adsicon"
+            android:title="أضف أعلان" />
+
+
+        <item
             android:id="@+id/nav_company_My_Ads"
             android:icon="@drawable/item_defualt_image"
             android:title="منتجاتى" />
