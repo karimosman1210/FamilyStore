@@ -64,8 +64,8 @@ public class SallersRecycler extends AppCompatActivity {
     MaterialBetterSpinner spinnerCountry, spinnerCity;
     TextView location;
     ArrayAdapter<String> arrayAdapterCountry, arrayAdapterCity;
-    String[] spinnerListEgy = {"القاهرة", "البحيرة", "الإسكندرية", "المنوفية", "الإسماعيلية", "أسوان", "أسيوط", "الأقصر", "البحر الأحمر", "البحيرة", "بني سويف", "بورسعيد", "جنوب سيناء", "الدقهلية", "دمياط", "سوهاج", "السويس", "الشرقية", "شمال سيناء", "الغربية", "الفيوم", "القليوبية", "قنا", "كفر الشيخ", "مطروح", "المنيا", "الوادي الجديد"};
-    String[] spinnerListSudi = {"الرياض", "مكة", "المدينة المنورة", "بريدة", "بريدة", "تبوك", "الدمام", "الاحساء", "القطيف", "خميس مشيط", "الطائف", "نجران", "حفر الباطن", "الجبيل", "ضباء", "الخرج", "الثقبة", "ينبع البحر", "الخبر", "عرعر", "الحوية", "عنيزة", "سكاكا", "جيزان", "القريات", "الظهران", "الباحة", "الزلفي", "الرس", "وادي الدواسر", "بيشه", "سيهات", "شروره", "بحره", "تاروت", "الدوادمي", "صبياء", "بيش", "أحد رفيدة", "الفريش", "بارق", "الحوطة", "الأفلاج"};
+    String[] spinnerListEgy = {"الكل","القاهرة", "البحيرة", "الإسكندرية", "المنوفية", "الإسماعيلية", "أسوان", "أسيوط", "الأقصر", "البحر الأحمر", "البحيرة", "بني سويف", "بورسعيد", "جنوب سيناء", "الدقهلية", "دمياط", "سوهاج", "السويس", "الشرقية", "شمال سيناء", "الغربية", "الفيوم", "القليوبية", "قنا", "كفر الشيخ", "مطروح", "المنيا", "الوادي الجديد"};
+    String[] spinnerListSudi = {"الكل","الرياض", "مكة", "المدينة المنورة", "بريدة", "بريدة", "تبوك", "الدمام", "الاحساء", "القطيف", "خميس مشيط", "الطائف", "نجران", "حفر الباطن", "الجبيل", "ضباء", "الخرج", "الثقبة", "ينبع البحر", "الخبر", "عرعر", "الحوية", "عنيزة", "سكاكا", "جيزان", "القريات", "الظهران", "الباحة", "الزلفي", "الرس", "وادي الدواسر", "بيشه", "سيهات", "شروره", "بحره", "تاروت", "الدوادمي", "صبياء", "بيش", "أحد رفيدة", "الفريش", "بارق", "الحوطة", "الأفلاج"};
     String[] spinnerListCountries = {"مصر", "السعودية"};
     String[] spinnerListDefualt = {};
     ImageButton whats, call, mail;
@@ -140,26 +140,56 @@ public class SallersRecycler extends AppCompatActivity {
                 sellers.clear();
                 recyclerView.setAdapter(adapter);
                 HelperMethods.showDialog(SallersRecycler.this, "Wait", "Loading...");
-                mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            SallersClass seller = child.getValue(SallersClass.class);
-                            seller.setId(child.getKey());
-                            if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
-                                sellers.add(seller);
+
+
+                if(Objects.equals(HelperMethods.Home_Filtter_Country_name, "الكل"))
+                {
+                    mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                SallersClass seller = child.getValue(SallersClass.class);
+                                seller.setId(child.getKey());
+                                 sellers.add(seller);
 
                             }
+                            adapter.notifyDataSetChanged();
+                            HelperMethods.hideDialog(SallersRecycler.this);
                         }
-                        adapter.notifyDataSetChanged();
-                        HelperMethods.hideDialog(SallersRecycler.this);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+
+                }
+                else
+                {
+                    mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                SallersClass seller = child.getValue(SallersClass.class);
+                                seller.setId(child.getKey());
+                                if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                                    sellers.add(seller);
+
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            HelperMethods.hideDialog(SallersRecycler.this);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
+
+
 
 
             }
