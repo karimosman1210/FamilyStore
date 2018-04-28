@@ -76,7 +76,7 @@ public class MyBasket extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         firebaseAuth = FirebaseAuth.getInstance();
         goHome = (ImageButton) findViewById(R.id.goHome);
-        adapter = new MyBasket_Adapter(HelperMethods.orders.get(firebaseAuth.getCurrentUser().getUid()), HelperMethods.orders.get(firebaseAuth.getCurrentUser().getUid()), MyBasket.this);
+        adapter = new MyBasket_Adapter(new ArrayList<>(HelperMethods.orders.values()), new ArrayList<>(HelperMethods.orders.values()), MyBasket.this);
 
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override

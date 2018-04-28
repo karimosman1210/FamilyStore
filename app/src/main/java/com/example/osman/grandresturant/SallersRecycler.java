@@ -82,7 +82,7 @@ public class SallersRecycler extends AppCompatActivity {
         spinner = (MaterialBetterSpinner) findViewById(R.id.saller_spinner_place);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
         spinner.setAdapter(arrayAdapter);
-        location= (TextView)findViewById(R.id.location_recycler_sallers);
+        location = (TextView) findViewById(R.id.location_recycler_sallers);
         recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -100,34 +100,12 @@ public class SallersRecycler extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                HelperMethods.Home_Filtter_Country_name = adapterView.getItemAtPosition(i).toString();
+                HelperMethods.Home_Filtter_Country_name = arrayAdapter.getItem(i);
                 location.setText(adapterView.getItemAtPosition(i).toString());
 
                 location.setText(HelperMethods.Home_Filtter_Country_name);
 
-                sellers.clear();
-                recyclerView.setAdapter(adapter);
-                HelperMethods.showDialog(SallersRecycler.this, "Wait", "Loading...");
-                mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            SallersClass seller = child.getValue(SallersClass.class);
-                            seller.setId(child.getKey());
-                            if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
-                                sellers.add(seller);
-
-                            }
-                        }
-                        adapter.notifyDataSetChanged();
-                        HelperMethods.hideDialog(SallersRecycler.this);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                getSellers();
 
 
             }
@@ -220,30 +198,36 @@ public class SallersRecycler extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        sellers.clear();
-        recyclerView.setAdapter(adapter);
-        HelperMethods.showDialog(this, "Wait", "Loading...");
-        mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    SallersClass seller = child.getValue(SallersClass.class);
-                    seller.setId(child.getKey());
-                    if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
-                        sellers.add(seller);
+        getSellers();
 
+    }
+
+    private void getSellers() {
+        if (HelperMethods.Home_Filtter_Country_name != null) {
+            sellers.clear();
+            recyclerView.setAdapter(adapter);
+            HelperMethods.showDialog(this, "Wait", "Loading...");
+            mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        SallersClass seller = child.getValue(SallersClass.class);
+                        seller.setId(child.getKey());
+                        System.out.println(seller.getCountry());
+                        if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                            sellers.add(seller);
+                        }
                     }
+                    adapter.notifyDataSetChanged();
+                    HelperMethods.hideDialog(SallersRecycler.this);
                 }
-                adapter.notifyDataSetChanged();
-                HelperMethods.hideDialog(SallersRecycler.this);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
     private void initView() {

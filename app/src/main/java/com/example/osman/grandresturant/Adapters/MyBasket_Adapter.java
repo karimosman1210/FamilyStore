@@ -40,13 +40,14 @@ public class MyBasket_Adapter extends RecyclerView.Adapter<MyBasket_Adapter.Hold
     private Context context;
     public List<Order> sellers;
     public List<Order> sellersCopy;
-    public ArrayList<Integer> quantities;
+    public static ArrayList<Integer> quantities;
 
     public MyBasket_Adapter(List<Order> sellers, List<Order> sellersCopy, Context context) {
         this.sellers = sellers;
         this.sellersCopy = sellers;
         this.context = context;
-        this.quantities = new ArrayList<>(sellers.size());
+        quantities = new ArrayList<>(Collections.nCopies(sellers.size(), 1));
+        System.out.println(quantities.size());
         Collections.fill(quantities, 1);
     }
 
@@ -118,6 +119,7 @@ public class MyBasket_Adapter extends RecyclerView.Adapter<MyBasket_Adapter.Hold
 
             RequestItemName.setText(itemsClass.getRequestItemName());
             RequestItemPrice.setText(itemsClass.getRequestItemPrice());
+            quantity.setText(String.valueOf(quantities.get(position)));
 
             Glide.with(view.getContext()).load(itemsClass.getRequestItemImage()).placeholder(RequestItemImage.getDrawable()).fitCenter().into(RequestItemImage);
 
