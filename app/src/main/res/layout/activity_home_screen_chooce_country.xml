@@ -60,13 +60,19 @@
     </RelativeLayout>
 
 
-
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:textDirection="rtl"
         android:id="@+id/chooce_country_listView"></ListView>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:textDirection="rtl"
+        android:visibility="gone"
+        android:id="@+id/chooce_city_listView"></ListView>
 
 </LinearLayout>

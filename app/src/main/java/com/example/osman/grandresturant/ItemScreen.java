@@ -2,7 +2,7 @@ package com.example.osman.grandresturant;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -100,7 +100,7 @@ public class ItemScreen extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Items").child(ItemID);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
 
@@ -145,7 +145,7 @@ public class ItemScreen extends AppCompatActivity {
 
             databaseReferenceUser = FirebaseDatabase.getInstance().getReference().child("Users").child(UserID);
             databaseReferenceUser.addValueEventListener(new ValueEventListener() {
-                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 

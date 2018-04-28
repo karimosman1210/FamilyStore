@@ -1,6 +1,7 @@
 package com.example.osman.grandresturant.NavigationActivities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ import com.example.osman.grandresturant.Adapters.nav_saller_adapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemsRecycler;
 import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.SallersRecycler;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,7 +49,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
 
     private SearchView searchView;
     private TextView toolbarTitle;
-
+    ImageButton whats, call, mail;
     private ArrayList<SallersClass> sellers = new ArrayList<>();
     private nav_saller_adapter adapter;
 
@@ -135,7 +137,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
                 final DataSnapshot child = dataSnapshot.getChildren().iterator().next();
-                SallersClass user = child.getValue(SallersClass.class);
+                final SallersClass user = child.getValue(SallersClass.class);
 
                 sallerRecyclerItemName.setText(user.getUsername());
                 sallerRecyclerItemLocation.setText(user.getCountry());
@@ -143,6 +145,73 @@ public class NavigationSallerRecycler extends AppCompatActivity {
                 Glide.with(getApplicationContext()).load(user.getProfile_image()).placeholder(sallerRecyclerItemImage.getDrawable()).fitCenter().into(sallerRecyclerItemImage);
 
                 id = child.getKey();
+
+                whats.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        try {
+                            String smsNumber = "201206007713"; // E164 format without '+' sign
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                            sendIntent.putExtra("jid", user.getMobile() + "@s.whatsapp.net"); //phone number without "+" prefix
+                            sendIntent.setPackage("com.whatsapp");
+                            if (sendIntent.resolveActivity(NavigationSallerRecycler.this.getPackageManager()) == null) {
+                                Toast.makeText(NavigationSallerRecycler.this, "لا يوجد برنامج الواتس أب ", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            startActivity(sendIntent);
+                        } catch (Exception e) {
+                            Toast.makeText(NavigationSallerRecycler.this, user.getMobile(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+
+                call.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        try {
+
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:" + user.getMobile()));
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(NavigationSallerRecycler.this, user.getMobile(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+
+                mail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        try {
+                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + user.getEmail()));
+              /*  emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, body);*/
+//emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
+
+                            startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+                        } catch (Exception e) {
+                            Toast.makeText(NavigationSallerRecycler.this, user.getEmail(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+
+
 
             }
 
@@ -196,7 +265,9 @@ public class NavigationSallerRecycler extends AppCompatActivity {
         sallerRecyclerItemName = (TextView) findViewById(R.id.saller_recycler_item_name);
         sallerRecyclerItemImage = (ImageView) findViewById(R.id.saller_recycler_item_image);
         sallerRecyclerItemLocation = (TextView) findViewById(R.id.saller_recycler_item_location);
-        sallerRecyclerItemMobile = (TextView) findViewById(R.id.saller_recycler_item_mobile);
+        call = (ImageButton) findViewById(R.id.saller_recycler_call_icon_admin);
+        mail = (ImageButton) findViewById(R.id.saller_recycler_email_icon_admin);
+        whats = (ImageButton) findViewById(R.id.saller_recycler_whats_icon_admin);
         adminAdminContainer = (CardView) findViewById(R.id.admin_admin_container);
         searchView = (SearchView) findViewById(R.id.search_view);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -239,47 +310,6 @@ public class NavigationSallerRecycler extends AppCompatActivity {
 
     }
 
-    public static class AdminHolder extends RecyclerView.ViewHolder {
-
-
-        public View view;
-        ImageView saller_img;
-        TextView saller_name, saller_location, saller_number;
-
-
-        public AdminHolder(View itemView) {
-            super(itemView);
-            view = itemView;
-
-            saller_name = (TextView) view.findViewById(R.id.saller_recycler_item_name);
-            saller_location = (TextView) view.findViewById(R.id.saller_recycler_item_location);
-            saller_number = (TextView) view.findViewById(R.id.saller_recycler_item_mobile);
-
-            saller_img = (ImageView) view.findViewById(R.id.saller_recycler_item_image);
-
-        }
-
-        public void setItemName(String name) {
-
-            saller_name.setText(name);
-        }
-
-        public void setLocation(String location) {
-
-            saller_location.setText(location);
-        }
-
-        public void setNumber(String number) {
-
-            saller_number.setText(number);
-        }
-
-
-        public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).placeholder(saller_img.getDrawable()).fitCenter().into(saller_img);
-        }
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -3,6 +3,7 @@ package com.example.osman.grandresturant;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Adapters.SallerAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SallersRecycler extends AppCompatActivity {
 
@@ -49,7 +52,6 @@ public class SallersRecycler extends AppCompatActivity {
     private TextView sallerRecyclerItemName;
     private ImageView sallerRecyclerItemImage;
     private TextView sallerRecyclerItemLocation;
-    private TextView sallerRecyclerItemMobile;
     private CardView adminAdminContainer;
     private String id;
 
@@ -59,11 +61,15 @@ public class SallersRecycler extends AppCompatActivity {
     private ArrayList<SallersClass> sellers = new ArrayList<>();
     private SallerAdapter adapter;
 
-    MaterialBetterSpinner spinner;
+    MaterialBetterSpinner spinnerCountry, spinnerCity;
     TextView location;
-    ArrayAdapter<String> arrayAdapter;
-    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
-
+    ArrayAdapter<String> arrayAdapterCountry, arrayAdapterCity;
+    String[] spinnerListEgy = {"القاهرة", "البحيرة", "الإسكندرية", "المنوفية", "الإسماعيلية", "أسوان", "أسيوط", "الأقصر", "البحر الأحمر", "البحيرة", "بني سويف", "بورسعيد", "جنوب سيناء", "الدقهلية", "دمياط", "سوهاج", "السويس", "الشرقية", "شمال سيناء", "الغربية", "الفيوم", "القليوبية", "قنا", "كفر الشيخ", "مطروح", "المنيا", "الوادي الجديد"};
+    String[] spinnerListSudi = {"الرياض", "مكة", "المدينة المنورة", "بريدة", "بريدة", "تبوك", "الدمام", "الاحساء", "القطيف", "خميس مشيط", "الطائف", "نجران", "حفر الباطن", "الجبيل", "ضباء", "الخرج", "الثقبة", "ينبع البحر", "الخبر", "عرعر", "الحوية", "عنيزة", "سكاكا", "جيزان", "القريات", "الظهران", "الباحة", "الزلفي", "الرس", "وادي الدواسر", "بيشه", "سيهات", "شروره", "بحره", "تاروت", "الدوادمي", "صبياء", "بيش", "أحد رفيدة", "الفريش", "بارق", "الحوطة", "الأفلاج"};
+    String[] spinnerListCountries = {"مصر", "السعودية"};
+    String[] spinnerListDefualt = {};
+    ImageButton whats, call, mail;
+    String whatsAdmin, callAdmin, mailAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +85,16 @@ public class SallersRecycler extends AppCompatActivity {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        spinner = (MaterialBetterSpinner) findViewById(R.id.saller_spinner_place);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
-        spinner.setAdapter(arrayAdapter);
+        spinnerCountry = (MaterialBetterSpinner) findViewById(R.id.saller_spinner_country);
+        arrayAdapterCountry = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListCountries);
+        spinnerCountry.setAdapter(arrayAdapterCountry);
+
+
+        spinnerCity = (MaterialBetterSpinner) findViewById(R.id.saller_spinner_place);
+        arrayAdapterCity = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListDefualt);
+        spinnerCity.setAdapter(arrayAdapterCity);
+
+
         location = (TextView) findViewById(R.id.location_recycler_sallers);
         recyclerView = (RecyclerView) findViewById(R.id.saller_recycler_item_image_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -96,16 +109,57 @@ public class SallersRecycler extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         location.setText(HelperMethods.Home_Filtter_Country_name);
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+        spinnerCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                HelperMethods.Home_Filtter_Country_name = arrayAdapter.getItem(i);
+                if (Objects.equals(adapterView.getItemAtPosition(i).toString(), "مصر")) {
+                    arrayAdapterCity = new ArrayAdapter<String>(SallersRecycler.this, android.R.layout.simple_dropdown_item_1line, spinnerListEgy);
+                    spinnerCity.setAdapter(arrayAdapterCity);
+                } else {
+                    arrayAdapterCity = new ArrayAdapter<String>(SallersRecycler.this, android.R.layout.simple_dropdown_item_1line, spinnerListSudi);
+                    spinnerCity.setAdapter(arrayAdapterCity);
+                }
+
+
+            }
+        });
+
+
+        spinnerCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                HelperMethods.Home_Filtter_Country_name = adapterView.getItemAtPosition(i).toString();
                 location.setText(adapterView.getItemAtPosition(i).toString());
 
                 location.setText(HelperMethods.Home_Filtter_Country_name);
 
-                getSellers();
+                sellers.clear();
+                recyclerView.setAdapter(adapter);
+                HelperMethods.showDialog(SallersRecycler.this, "Wait", "Loading...");
+                mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot child : dataSnapshot.getChildren()) {
+                            SallersClass seller = child.getValue(SallersClass.class);
+                            seller.setId(child.getKey());
+                            if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                                sellers.add(seller);
+
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        HelperMethods.hideDialog(SallersRecycler.this);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
 
             }
@@ -166,14 +220,82 @@ public class SallersRecycler extends AppCompatActivity {
             public void onDataChange(final DataSnapshot dataSnapshot) {
 
                 final DataSnapshot child = dataSnapshot.getChildren().iterator().next();
-                SallersClass user = child.getValue(SallersClass.class);
+                final SallersClass user = child.getValue(SallersClass.class);
 
                 sallerRecyclerItemName.setText(user.getUsername());
                 sallerRecyclerItemLocation.setText(user.getCountry());
-                sallerRecyclerItemMobile.setText(user.getMobile());
+                callAdmin = user.getMobile();
+                whatsAdmin = user.getMobile();
+                mailAdmin = user.getMobile();
                 Glide.with(getApplicationContext()).load(user.getProfile_image()).placeholder(sallerRecyclerItemImage.getDrawable()).fitCenter().into(sallerRecyclerItemImage);
 
                 id = child.getKey();
+
+
+                whats.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        try {
+                            String smsNumber = "201206007713"; // E164 format without '+' sign
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
+                            sendIntent.putExtra("jid", user.getMobile() + "@s.whatsapp.net"); //phone number without "+" prefix
+                            sendIntent.setPackage("com.whatsapp");
+                            if (sendIntent.resolveActivity(SallersRecycler.this.getPackageManager()) == null) {
+                                Toast.makeText(SallersRecycler.this, "لا يوجد برنامج الواتس أب ", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            startActivity(sendIntent);
+                        } catch (Exception e) {
+                            Toast.makeText(SallersRecycler.this, user.getMobile(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+
+                call.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        try {
+
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:" + user.getMobile()));
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(SallersRecycler.this, user.getMobile(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
+
+                mail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        try {
+                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + user.getEmail()));
+              /*  emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, body);*/
+//emailIntent.putExtra(Intent.EXTRA_HTML_TEXT, body); //If you are using HTML in your body text
+
+                            startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+                        } catch (Exception e) {
+                            Toast.makeText(SallersRecycler.this, user.getEmail(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+
 
             }
 
@@ -198,43 +320,39 @@ public class SallersRecycler extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        getSellers();
+        sellers.clear();
+        recyclerView.setAdapter(adapter);
+        HelperMethods.showDialog(this, "Wait", "Loading...");
+        mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    SallersClass seller = child.getValue(SallersClass.class);
+                    seller.setId(child.getKey());
+                    if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
+                        sellers.add(seller);
 
-    }
-
-    private void getSellers() {
-        if (HelperMethods.Home_Filtter_Country_name != null) {
-            sellers.clear();
-            recyclerView.setAdapter(adapter);
-            HelperMethods.showDialog(this, "Wait", "Loading...");
-            mDatabaseReference.orderByChild("user_tpe").equalTo("company").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        SallersClass seller = child.getValue(SallersClass.class);
-                        seller.setId(child.getKey());
-                        System.out.println(seller.getCountry());
-                        if (seller.getCountry().equals(HelperMethods.Home_Filtter_Country_name)) {
-                            sellers.add(seller);
-                        }
                     }
-                    adapter.notifyDataSetChanged();
-                    HelperMethods.hideDialog(SallersRecycler.this);
                 }
+                adapter.notifyDataSetChanged();
+                HelperMethods.hideDialog(SallersRecycler.this);
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-        }
+            }
+        });
+
     }
 
     private void initView() {
         sallerRecyclerItemName = (TextView) findViewById(R.id.saller_recycler_item_name);
         sallerRecyclerItemImage = (ImageView) findViewById(R.id.saller_recycler_item_image);
         sallerRecyclerItemLocation = (TextView) findViewById(R.id.saller_recycler_item_location);
-        sallerRecyclerItemMobile = (TextView) findViewById(R.id.saller_recycler_item_mobile);
+        call = (ImageButton) findViewById(R.id.saller_recycler_call_icon_admin);
+        mail = (ImageButton) findViewById(R.id.saller_recycler_email_icon_admin);
+        whats = (ImageButton) findViewById(R.id.saller_recycler_whats_icon_admin);
         adminAdminContainer = (CardView) findViewById(R.id.admin_admin_container);
         searchView = (SearchView) findViewById(R.id.search_view);
         toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
@@ -277,47 +395,6 @@ public class SallersRecycler extends AppCompatActivity {
 
     }
 
-    public static class AdminHolder extends RecyclerView.ViewHolder {
-
-
-        public View view;
-        ImageView saller_img;
-        TextView saller_name, saller_location, saller_number;
-
-
-        public AdminHolder(View itemView) {
-            super(itemView);
-            view = itemView;
-
-            saller_name = (TextView) view.findViewById(R.id.saller_recycler_item_name);
-            saller_location = (TextView) view.findViewById(R.id.saller_recycler_item_location);
-            saller_number = (TextView) view.findViewById(R.id.saller_recycler_item_mobile);
-
-            saller_img = (ImageView) view.findViewById(R.id.saller_recycler_item_image);
-
-        }
-
-        public void setItemName(String name) {
-
-            saller_name.setText(name);
-        }
-
-        public void setLocation(String location) {
-
-            saller_location.setText(location);
-        }
-
-        public void setNumber(String number) {
-
-            saller_number.setText(number);
-        }
-
-
-        public void setItemImage(String image) {
-            Glide.with(view.getContext()).load(image).placeholder(saller_img.getDrawable()).fitCenter().into(saller_img);
-        }
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

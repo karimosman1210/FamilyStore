@@ -150,95 +150,119 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/input"
-        android:orientation="vertical">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:background="@drawable/input"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:padding="7dp">
-
-            <TextView
-                android:id="@+id/sign_location_textview"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="المدينة"
-                android:textColor="#000000"
-                android:textSize="18sp" />
 
-            <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_map_marker_grey600_18dp" />
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="7dp">
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-
-            android:weightSum="2">
-
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingBottom="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="20dp">
-
-                <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-                    android:id="@+id/location_dialog_spinner"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/sign_location_textview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:drawableEnd="@drawable/ic_chevron_down_white_24dp"
-                    android:hint="اختار المدينة"
-                    android:textColor="#000"
-                    app:met_textColorHint="#000000" />
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingBottom="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="20dp">
-
-                <Button
-                    android:id="@+id/location_dialog_btn_auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/colorPrimary"
-                    android:clickable="true"
-                    android:text="إختيار المكان الحالى"
+                    android:text="المدينة"
                     android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:textSize="18sp" />
 
-            </RelativeLayout>
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_map_marker_grey600_18dp" />
+
+
+            </LinearLayout>
+            <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                android:id="@+id/edit_profile_spinner_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:drawableEnd="@drawable/ic_chevron_down_black_24dp"
+                android:hint="اختار البلد"
+                app:met_textColorHint="#000000"
+                android:textColor="#000000"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+
+                android:weightSum="2">
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/edit_profile__spinner_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:drawableEnd="@drawable/ic_chevron_down_white_24dp"
+                        android:hint="اختار المدينة"
+                        app:met_textColorHint="#000000"
+                        android:textColor="#000000"
+                        />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="20dp">
+
+                    <Button
+                        android:id="@+id/location_dialog_btn_auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/colorPrimary"
+                        android:clickable="true"
+                        android:textColor="#000000"
+                        android:text="إختيار المكان الحالى"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
 
 
         </LinearLayout>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
 
 

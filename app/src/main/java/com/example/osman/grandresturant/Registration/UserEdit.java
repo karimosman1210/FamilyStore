@@ -37,6 +37,7 @@ import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.Model_user;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,11 +59,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class UserEdit extends AppCompatActivity {
-    EditText phoneEditProfile,  emailEditProfile, password_old, password_new, password_new2, PlaceEditProfile;
+    EditText phoneEditProfile, emailEditProfile, password_old, password_new, password_new2, PlaceEditProfile;
     TextView tv_email;
     Button change_password;
     de.hdodenhof.circleimageview.CircleImageView imageButton;
@@ -76,8 +78,12 @@ public class UserEdit extends AppCompatActivity {
     private StorageReference mStorageReference;
     boolean checkClick = false;
     boolean checkPass = false;
-    ArrayAdapter<String> arrayAdapter;
-    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    ArrayAdapter<String> arrayAdaptercity, arrayAdapterCountry;
+    String[] spinnerListEgy = {"القاهرة", "البحيرة", "الإسكندرية", "المنوفية", "الإسماعيلية", "أسوان", "أسيوط", "الأقصر", "البحر الأحمر", "البحيرة", "بني سويف", "بورسعيد", "جنوب سيناء", "الدقهلية", "دمياط", "سوهاج", "السويس", "الشرقية", "شمال سيناء", "الغربية", "الفيوم", "القليوبية", "قنا", "كفر الشيخ", "مطروح", "المنيا", "الوادي الجديد"};
+    String[] spinnerListSudi = {"الرياض", "مكة", "المدينة المنورة", "بريدة", "بريدة", "تبوك", "الدمام", "الاحساء", "القطيف", "خميس مشيط", "الطائف", "نجران", "حفر الباطن", "الجبيل", "ضباء", "الخرج", "الثقبة", "ينبع البحر", "الخبر", "عرعر", "الحوية", "عنيزة", "سكاكا", "جيزان", "القريات", "الظهران", "الباحة", "الزلفي", "الرس", "وادي الدواسر", "بيشه", "سيهات", "شروره", "بحره", "تاروت", "الدوادمي", "صبياء", "بيش", "أحد رفيدة", "الفريش", "بارق", "الحوطة", "الأفلاج"};
+    String[] spinnerListCountries = {"مصر", "السعودية"};
+    MaterialBetterSpinner spinnerCountry, spinnerCity;
+    String[] spinnerListDefualt = {};
     static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
     double latti;
@@ -106,7 +112,7 @@ public class UserEdit extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         phoneEditProfile = (EditText) findViewById(R.id.phoneEditProfile);
-            emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
+        emailEditProfile = (EditText) findViewById(R.id.emailEditProfile);
         editBtnProfile = (Button) findViewById(R.id.editBtnProfile);
         PlaceEditProfile = (EditText) findViewById(R.id.placeEditProfile);
         auth = FirebaseAuth.getInstance();
@@ -121,8 +127,16 @@ public class UserEdit extends AppCompatActivity {
         change_password = (Button) findViewById(R.id.change_password);
         mStorageReference = FirebaseStorage.getInstance().getReference();
         allLiniar = (LinearLayout) findViewById(R.id.allLiniar);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
-        spinner.setAdapter(arrayAdapter);
+
+        spinnerCountry = (MaterialBetterSpinner) findViewById(R.id.edit_profile_spinner_country);
+        spinnerCity = (MaterialBetterSpinner) findViewById(R.id.edit_profile__spinner_city);
+
+        arrayAdapterCountry = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListCountries);
+        arrayAdaptercity = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListDefualt);
+        spinnerCountry.setAdapter(arrayAdapterCountry);
+        spinnerCity.setAdapter(arrayAdaptercity);
+
+
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +148,25 @@ public class UserEdit extends AppCompatActivity {
             }
         });
 
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        spinnerCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (Objects.equals(adapterView.getItemAtPosition(i).toString(), "مصر")) {
+                    arrayAdaptercity = new ArrayAdapter<String>(UserEdit.this, android.R.layout.simple_dropdown_item_1line, spinnerListEgy);
+                    spinnerCity.setAdapter(arrayAdaptercity);
+                } else {
+                    arrayAdaptercity = new ArrayAdapter<String>(UserEdit.this, android.R.layout.simple_dropdown_item_1line, spinnerListSudi);
+                    spinnerCity.setAdapter(arrayAdaptercity);
+                }
+
+
+            }
+        });
+
+
+        spinnerCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -145,11 +177,12 @@ public class UserEdit extends AppCompatActivity {
             }
         });
 
+
         auto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 auto.setText(countryName1);
-                user_country=countryName1;
+                user_country = countryName1;
                 timer.cancel();
             }
         });
@@ -222,7 +255,14 @@ public class UserEdit extends AppCompatActivity {
                                 database.child(id_user).child("country").setValue(countryName1);
                                 database.child(id_user).child("username").setValue(email);
                                 database.child(id_user).child("mobile").setValue(phone);
-                                database.child(id_user).child("place").setValue(PlaceEditProfile.getText().toString());
+                                database.child(id_user).child("place").setValue(PlaceEditProfile.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        HelperMethods.hideDialog(UserEdit.this);
+                                        Toast.makeText(UserEdit.this, "تم التعديل", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(UserEdit.this, UserProfile.class));
+                                    }
+                                });
                                 try {
                                     if (checkClick == true) {
 
@@ -239,6 +279,7 @@ public class UserEdit extends AppCompatActivity {
                                                     HelperMethods.hideDialog(UserEdit.this);
 
                                                 }
+
                                             }
                                         });
                                     }

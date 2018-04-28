@@ -18,6 +18,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Registration.Login" />
         <activity android:name=".Registration.Sign" />
+        <activity android:name=".Registration.User_Profile_image" />
         <activity android:name=".VistorType" />
         <activity
             android:name=".Activity_upload"
@@ -75,6 +76,9 @@
         <activity android:name=".Registration.UserEdit" />
         <activity android:name=".AboutAs" />
         <activity android:name=".Privacy" />
+        <activity android:name=".Registration.LoginSallers" />
+        <activity android:name=".Registration.SignSallers"></activity>
+
     </application>
 
 </manifest>

@@ -42,26 +42,13 @@ public class Login extends AppCompatActivity {
         Tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login.this, Sign.class));
+                startActivity(new Intent(Login.this, SignSallers.class));
 
             }
         });
 
 
         auth = FirebaseAuth.getInstance();
-        authStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-
-                    startActivity(new Intent(Login.this, HomeScreen.class));
-
-                }
-
-
-            }
-        };
 
         logInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,17 +67,13 @@ public class Login extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authStateListener);
-    }
+
 
     private void logIn() {
         String myEmail = email.getText().toString().trim();
         String myPassword = password.getText().toString().trim();
         if (TextUtils.isEmpty(myEmail) || TextUtils.isEmpty(myPassword)) {
-            Toast.makeText(this, "Filed is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "أكمل البيانات", Toast.LENGTH_SHORT).show();
         } else {
             HelperMethods.showDialog(Login.this, "Wait...", "loading data");
             auth.signInWithEmailAndPassword(myEmail, myPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -101,6 +84,9 @@ public class Login extends AppCompatActivity {
 
                         Toast.makeText(Login.this, "email or password is incorrect", Toast.LENGTH_SHORT).show();
 
+                    }
+                    else {
+                        startActivity(new Intent(Login.this , HomeScreen.class));
                     }
                     HelperMethods.hideDialog(Login.this);
 

@@ -42,60 +42,7 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/sign_up_icon" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="20dp">
 
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:background="@drawable/input"
-                        android:gravity="right"
-                        android:orientation="horizontal">
-
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:layout_gravity="right"
-                            android:orientation="horizontal"
-                            android:padding="20dp"
-                            android:weightSum="2">
-
-
-                            <RadioButton
-                                android:id="@+id/radio_user"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:textColor="#fff"
-                                android:layout_weight="1"
-                                android:layoutDirection="rtl"
-                                android:onClick="onRadioButtonClicked"
-                                android:text="مستخدم"
-                                android:textAlignment="textStart" />
-
-
-                            <RadioButton
-                                android:id="@+id/radio_company"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:layout_weight="1"
-                                android:textColor="#fff"
-                                android:layoutDirection="rtl"
-                                android:onClick="onRadioButtonClicked"
-                                android:text="تاجر"
-                                android:textAlignment="textStart" />
-                        </RadioGroup>
-
-
-                    </RelativeLayout>
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -133,6 +80,17 @@
 
 
                         </LinearLayout>
+                        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                            android:id="@+id/location_dialog_spinner_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:drawableEnd="@drawable/ic_chevron_down_white_24dp"
+                            android:hint="اختار البلد"
+                            app:met_textColorHint="#fff"
+                            android:textColor="#ffffff"
+                            />
+
 
                         <LinearLayout
                             android:layout_width="match_parent"

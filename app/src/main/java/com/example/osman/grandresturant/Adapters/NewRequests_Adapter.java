@@ -1,5 +1,6 @@
 package com.example.osman.grandresturant.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemsRecycler;
 import com.example.osman.grandresturant.R;
@@ -54,6 +56,15 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
         final RequestsClass requestsClass = sellers.get(position);
         holder.updateUI(requestsClass);
 
+        holder.RequestItemdelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HelperMethods.delete_ads_id = requestsClass.getRequestID();
+                MyBasket_delete_dialog cdd = new MyBasket_delete_dialog((Activity) context);
+                cdd.show();
+            }
+        });
+
 
     }
 
@@ -65,6 +76,7 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
     class Holder extends RecyclerView.ViewHolder {
         View view;
         ImageView RequestItemImage;
+        ImageButton RequestItemdelete;
         de.hdodenhof.circleimageview.CircleImageView RequestUserImage;
         TextView RequestUserName, RequestUserEmail, RequestUserNumber, RequestItemName, RequestItemPrice, RequestItemAdded;
 
@@ -80,6 +92,8 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
 
 
             RequestItemImage = (ImageView) itemView.findViewById(R.id.request_item_image);
+            RequestItemdelete = (ImageButton) itemView.findViewById(R.id.request_item_delete);
+
             RequestUserImage = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.request_profile_image);
 
         }

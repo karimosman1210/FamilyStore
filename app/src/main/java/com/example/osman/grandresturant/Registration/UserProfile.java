@@ -110,6 +110,7 @@ public class UserProfile extends AppCompatActivity {
                     card_nuber.setText(snapshot.child("mobile").getValue().toString());
                     card_country.setText(snapshot.child("country").getValue().toString());
                     card_place.setText(snapshot.child("place").getValue().toString());
+                    tv_email.setText(snapshot.child("username").getValue().toString());
 
 
                 }

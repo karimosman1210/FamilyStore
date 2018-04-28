@@ -15,7 +15,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
+
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -56,6 +56,7 @@ import com.example.osman.grandresturant.NavigationActivities.NavigationCategorie
 import com.example.osman.grandresturant.NavigationActivities.NavigationSallerRecycler;
 import com.example.osman.grandresturant.NavigationActivities.RequstsRecycler;
 import com.example.osman.grandresturant.Registration.Login;
+import com.example.osman.grandresturant.Registration.LoginSallers;
 import com.example.osman.grandresturant.Registration.Sign;
 import com.example.osman.grandresturant.Registration.UserProfile;
 import com.example.osman.grandresturant.classes.ItemClass;
@@ -108,8 +109,8 @@ public class HomeScreen extends AppCompatActivity
     private DividerItemDecoration dividerItemDecoration;
     TextView nav_Text_view;
     de.hdodenhof.circleimageview.CircleImageView nav_Image_view;
-    String[] spinnerListCountry = {"الكل", "بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
-    DatabaseReference databaseReference;
+
+    DatabaseReference databaseReference, databaseReferenceAds;
     // MaterialBetterSpinner Country;
     // ArrayAdapter<String> CountrySpinnerAdapter;
     ArrayList<Item_recycle> arrayList;
@@ -131,6 +132,8 @@ public class HomeScreen extends AppCompatActivity
     MaterialSearchView searchView;
     LocationCallback mLocationCallback;
     private FusedLocationProviderClient mFusedLocationClient;
+
+    String fifthImage, fifthName, fourthName, fourthImage, thirdName, thirdImage, secondName, secondImage, firstName, firstImage;
 
 
     @SuppressLint("ResourceAsColor")
@@ -173,25 +176,51 @@ public class HomeScreen extends AppCompatActivity
         });
 
 
-        Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
-        Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
-        Hash_file_maps.put("Android Eclair", "http://androidblog.esy.es/images/eclair-3.png");
-        Hash_file_maps.put("Android Froyo", "http://androidblog.esy.es/images/froyo-4.png");
-        Hash_file_maps.put("Android GingerBread", "http://androidblog.esy.es/images/gingerbread-5.png");
+        databaseReferenceAds = FirebaseDatabase.getInstance().getReference("Ads");
+        databaseReferenceAds.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                fifthImage = dataSnapshot.child("fifthImage").getValue().toString();
+                fifthName = dataSnapshot.child("fifthName").getValue().toString();
+                fourthName = dataSnapshot.child("fourthName").getValue().toString();
+                fourthImage = dataSnapshot.child("fourthImage").getValue().toString();
+                thirdName = dataSnapshot.child("thirdName").getValue().toString();
+                thirdImage = dataSnapshot.child("thirdImage").getValue().toString();
+                secondName = dataSnapshot.child("secondName").getValue().toString();
+                secondImage = dataSnapshot.child("secondImage").getValue().toString();
+                firstName = dataSnapshot.child("firstName").getValue().toString();
+                firstImage = dataSnapshot.child("firstImage").getValue().toString();
 
-        for (String name : Hash_file_maps.keySet()) {
+                Hash_file_maps.put(fifthName, fifthImage);
+                Hash_file_maps.put(secondName, secondImage);
+                Hash_file_maps.put(thirdName,thirdImage );
+                Hash_file_maps.put(fourthName,fourthImage );
+                Hash_file_maps.put(fifthName,fifthImage );
 
-            TextSliderView textSliderView = new TextSliderView(HomeScreen.this);
-            textSliderView
-                    .description(name)
-                    .image(Hash_file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(HomeScreen.this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
-            sliderLayout.addSlider(textSliderView);
-        }
+
+                for (String name : Hash_file_maps.keySet()) {
+
+                    TextSliderView textSliderView = new TextSliderView(HomeScreen.this);
+                    textSliderView
+                            .description(name)
+                            .image(Hash_file_maps.get(name))
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(HomeScreen.this);
+                    textSliderView.bundle(new Bundle());
+                    textSliderView.getBundle()
+                            .putString("extra", name);
+                    sliderLayout.addSlider(textSliderView);
+            }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
         sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
         sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         sliderLayout.setCustomAnimation(new DescriptionAnimation());
@@ -307,7 +336,7 @@ public class HomeScreen extends AppCompatActivity
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);
 
                     mDatabase.child("user_tpe").addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
 
@@ -335,7 +364,7 @@ public class HomeScreen extends AppCompatActivity
 
 
                     mDatabase.child("profile_image").addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
 
@@ -353,7 +382,7 @@ public class HomeScreen extends AppCompatActivity
 
 
                     mDatabase.child("username").addValueEventListener(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
 
@@ -499,7 +528,8 @@ public class HomeScreen extends AppCompatActivity
 
             startActivity(new Intent(HomeScreen.this, Favorite_item.class));
 
-        }else if (id==R.id.naveAddAds){
+        } else if (id == R.id.nav_Login) {
+        }else if (id==R.id.nav_company_Add_new_item){
 
             startActivity(new Intent(HomeScreen.this, Activity_upload.class));
 
@@ -509,9 +539,16 @@ public class HomeScreen extends AppCompatActivity
             mAuth.signOut();
             startActivity(new Intent(HomeScreen.this, Login.class));
 
+        } else if (id == R.id.nav_Login_sallers) {
+            startActivity(new Intent(HomeScreen.this, LoginSallers.class));
+
         } else if (id == R.id.nav_company_sallers) {
 
             startActivity(new Intent(HomeScreen.this, NavigationSallerRecycler.class));
+
+        } else if (id == R.id.nav_company_Add_new_item) {
+
+            startActivity(new Intent(HomeScreen.this, Activity_upload.class));
 
         } else if (id == R.id.nav_company_Categories) {
 
@@ -555,7 +592,7 @@ public class HomeScreen extends AppCompatActivity
 
         } else if (id == R.id.nav_company_Log_Out) {
             mAuth.signOut();
-            startActivity(new Intent(HomeScreen.this, Login.class));
+            startActivity(new Intent(HomeScreen.this, HomeScreen.class));
 
 
         } else if (id == R.id.nav_User_Sallers) {
@@ -573,7 +610,6 @@ public class HomeScreen extends AppCompatActivity
             } else {
             }
 
-
         } else if (id == R.id.nav_User_favorite_Ads) {
 
         } else if (id == R.id.nav_User_FeedBack) {
@@ -589,7 +625,7 @@ public class HomeScreen extends AppCompatActivity
         } else if (id == R.id.nav_User_Log_Out) {
 
             mAuth.signOut();
-            startActivity(new Intent(HomeScreen.this, Login.class));
+            startActivity(new Intent(HomeScreen.this, HomeScreen.class));
 
 
         }

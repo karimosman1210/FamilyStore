@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:weightSum="8">
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp">
 
@@ -36,38 +36,23 @@
                     android:layout_height="match_parent"
                     android:background="#b8000000" />
 
-                <TextView
-                    android:id="@+id/saller_recycler_item_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/droid_kufi_bold"
-                    android:text="أسم المتجر"
-                    android:textColor="#fff"
-                    android:textSize="18sp" />
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
                     android:orientation="vertical"
-                    tools:ignore="RtlHardcoded">
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_place" />
+
+                    <TextView
+                        android:id="@+id/saller_recycler_item_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/droid_kufi_bold"
+                        android:text="أسم المتجر"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/saller_recycler_item_location"
@@ -76,34 +61,67 @@
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="@font/droid_kufi_regular"
                         android:text="المكان"
-                        android:textSize="14sp" />
+                        android:textColor="#b7cfcfcf"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#795548"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layoutDirection="rtl"
+                android:weightSum="3">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:orientation="vertical"
-                    tools:ignore="RtlHardcoded">
+                    android:layout_weight="1">
 
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/ic_local_phone" />
+                    <ImageButton
+                        android:id="@+id/saller_recycler_whats_icon_admin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/whats_icon" />
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/saller_recycler_item_mobile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:fontFamily="@font/droid_kufi_regular"
-                        android:text="الرقم"
-                        android:textSize="14sp" />
 
-                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/saller_recycler_call_icon_admin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/call_icon" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/saller_recycler_email_icon_admin"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/mail_icon" />
+                </RelativeLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 

@@ -39,6 +39,7 @@ import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,11 +53,15 @@ public class Sign extends AppCompatActivity {
     private StorageReference mStorageRef;
     DatabaseReference currentuser_db;
     String user_country;
-    MaterialBetterSpinner spinner;
+
     Button auto, manual;
     TextView location;
-    ArrayAdapter<String> arrayAdapter;
-    String[] spinnerList = {"بنى سويف", "الشرقية", "المنصورة", "المنوفية", "الجيزة", "القاهرة"};
+    ArrayAdapter<String> arrayAdaptercity ,arrayAdapterCountry ;
+    String[] spinnerListEgy = {"القاهرة", "البحيرة", "الإسكندرية", "المنوفية", "الإسماعيلية", "أسوان", "أسيوط", "الأقصر", "البحر الأحمر", "البحيرة", "بني سويف", "بورسعيد", "جنوب سيناء", "الدقهلية", "دمياط", "سوهاج", "السويس", "الشرقية", "شمال سيناء", "الغربية", "الفيوم", "القليوبية", "قنا", "كفر الشيخ", "مطروح", "المنيا", "الوادي الجديد"};
+    String[] spinnerListSudi = {"الرياض", "مكة", "المدينة المنورة", "بريدة",  "بريدة", "تبوك", "الدمام", "الاحساء", "القطيف", "خميس مشيط", "الطائف", "نجران", "حفر الباطن", "الجبيل", "ضباء", "الخرج", "الثقبة", "ينبع البحر","الخبر","عرعر","الحوية","عنيزة","سكاكا","جيزان","القريات","الظهران","الباحة","الزلفي","الرس","وادي الدواسر","بيشه","سيهات","شروره","بحره","تاروت","الدوادمي","صبياء","بيش","أحد رفيدة","الفريش","بارق","الحوطة","الأفلاج"};
+    String[] spinnerListCountries = {"مصر",  "السعودية"};
+    MaterialBetterSpinner spinnerCountry , spinnerCity;
+    String[] spinnerListDefualt = {};
     static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
     double latti;
@@ -76,12 +81,17 @@ public class Sign extends AppCompatActivity {
         mStorageRef = mStorageRef = FirebaseStorage.getInstance().getReference();
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
 
-        spinner = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
+        spinnerCountry = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner_country);
+        spinnerCity = (MaterialBetterSpinner) findViewById(R.id.location_dialog_spinner);
         auto = (Button) findViewById(R.id.location_dialog_btn_auto);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerList);
-        spinner.setAdapter(arrayAdapter);
+        arrayAdapterCountry = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListCountries);
+        arrayAdaptercity = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, spinnerListDefualt);
+        spinnerCountry.setAdapter(arrayAdapterCountry);
+        spinnerCity.setAdapter(arrayAdaptercity);
         signUpBtnSignUp = (Button) findViewById(R.id.signUpBtnSignUp);
+        signUpBtnCancel = (Button) findViewById(R.id.signUpBtnCancel);
+
         emailEtSignUp = (EditText) findViewById(R.id.emailEtSignUp);
         passwordEtSignUp = (EditText) findViewById(R.id.passwordEtSignUp);
         surepassSignUp = (EditText) findViewById(R.id.surepassSignUp);
@@ -198,7 +208,27 @@ public class Sign extends AppCompatActivity {
             }
         });
 
-        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinnerCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+               if(Objects.equals(adapterView.getItemAtPosition(i).toString(), "مصر"))
+               {
+                   arrayAdaptercity = new ArrayAdapter<String>(Sign.this, android.R.layout.simple_dropdown_item_1line, spinnerListEgy);
+                   spinnerCity.setAdapter(arrayAdaptercity);
+               }
+               else
+               {
+                   arrayAdaptercity = new ArrayAdapter<String>(Sign.this, android.R.layout.simple_dropdown_item_1line, spinnerListSudi);
+                   spinnerCity.setAdapter(arrayAdaptercity);
+               }
+
+
+            }
+        });
+
+
+        spinnerCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -255,8 +285,6 @@ public class Sign extends AppCompatActivity {
 
         } else if (!myPass.equals(passSure)) {
             Toast.makeText(this, "كلمة السر غير متطابقة", Toast.LENGTH_SHORT).show();
-        } else if (User_Type == null) {
-            Toast.makeText(this, "أختار حالة المستخدم ", Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(user_country)) {
             Toast.makeText(this, "أختار مدينة المستخدم  ", Toast.LENGTH_SHORT).show();
         }
@@ -283,7 +311,7 @@ public class Sign extends AppCompatActivity {
                             currentuser_db = mDatabaseUsers.child(user_id);
                             currentuser_db.child("username").setValue(nameEt.getText().toString());
                             currentuser_db.child("id").setValue(auth.getUid());
-                            currentuser_db.child("user_tpe").setValue(User_Type);
+                            currentuser_db.child("user_tpe").setValue("user");
                             currentuser_db.child("email").setValue(myEmail);
                             currentuser_db.child("mobile").setValue(mobile_code + user_mobile.getText().toString());
                             currentuser_db.child("country").setValue(user_country);
@@ -337,7 +365,7 @@ public class Sign extends AppCompatActivity {
 
     }
 
-    public void onRadioButtonClicked(View view) {
+    /*public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -355,5 +383,5 @@ public class Sign extends AppCompatActivity {
         }
 
 
-    }
+    }*/
 }

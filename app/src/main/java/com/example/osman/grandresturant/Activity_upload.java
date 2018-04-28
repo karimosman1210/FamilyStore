@@ -5,7 +5,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
+
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -345,7 +345,7 @@ public class Activity_upload extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
