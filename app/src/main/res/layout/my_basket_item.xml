@@ -1,128 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="5dp"
-    android:paddingTop="5dp">
+    android:layout_height="wrap_content">
 
-
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-
-
-        >
+        android:layout_height="130dp"
+        android:background="@color/colorCardView"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorCardView"
-            android:orientation="horizontal"
-            android:weightSum="8">
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="100">
+
+            <ImageView
+                android:id="@+id/My_Basket_item_image"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/item_defualt_image" />
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:gravity="right"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="100"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        android:id="@+id/My_Basket_item_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:fontFamily="casual"
-                        android:text="Name"
-                        android:textColor="@color/textItemColor"
-                        android:textSize="20sp" />
-
-                    <ImageView
-                        android:id="@+id/My_Basket_delete_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/delete_forever" />
-                </RelativeLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/My_Basket_item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="Price"
+                    android:textColor="@color/Default"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/My_Basket_item_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:text="Price"
-                        android:textColor="@color/Default"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="LE"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/colorView">
-
-                </View>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:layout_marginStart="4dp"
+                    android:text="جم"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/droid_kufi_bold"/>
+
+            </LinearLayout>
+        </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="100"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-                </LinearLayout>
+            <TextView
+                android:id="@+id/My_Basket_item_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/droid_kufi_regular"
+                android:text="الاسم"
+                android:textColor="@color/textItemColor"
+                android:textSize="18sp" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorView" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
+
+                <ImageButton
+                    android:id="@+id/increase_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_add_circle_black_24dp"/>
+
+                <TextView
+                    android:id="@+id/quantity_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="100"
+                    android:gravity="center"
+                    android:text="1" />
+
+                <ImageButton
+                    android:id="@+id/dec_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_remove_circle_black_24dp"/>
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="3">
+                android:orientation="horizontal"
+                android:weightSum="100">
 
-                <ImageView
-                    android:id="@+id/My_Basket_item_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="140dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="8dp"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/item_defualt_image"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="100"
+                    android:fontFamily="@font/droid_kufi_regular"
+                    android:text="الاجمالى" />
 
-                    />
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/subtotal_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100" />
 
+            </LinearLayout>
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/My_Basket_delete_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/delete_forever" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
 
 
-</android.support.constraint.ConstraintLayout>
 
 
 

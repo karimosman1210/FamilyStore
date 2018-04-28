@@ -9,6 +9,8 @@ import android.app.ProgressDialog;
 import android.net.Uri;
 
 import com.example.osman.grandresturant.classes.Encaps_Basket;
+import com.example.osman.grandresturant.classes.Order;
+import com.google.common.collect.ArrayListMultimap;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,8 @@ public class HelperMethods {
     public static String Home_Filtter_categoryName;
     public static String Home_Filtter_sallerID;
     public static String Home_Filtter_Country_name;
+
+    public static ArrayListMultimap<String, Order> orders = ArrayListMultimap.create();
 
 
 

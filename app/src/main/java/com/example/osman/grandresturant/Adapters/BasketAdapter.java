@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
     private Context context;
-    ArrayList <Encaps_Basket> arrayList;
+    ArrayList<Encaps_Basket> arrayList;
 
     public BasketAdapter(Context context, ArrayList<Encaps_Basket> arrayList) {
         this.context = context;
@@ -36,7 +36,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        Encaps_Basket encaps_basket=arrayList.get(position);
+        Encaps_Basket encaps_basket = arrayList.get(position);
 
         holder.nameBasket.setText(encaps_basket.getName());
         holder.priceBasket.setText(encaps_basket.getPrice());
@@ -60,22 +60,22 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
     }
 
     public class Holder extends RecyclerView.ViewHolder {
-            TextView nameBasket,priceBasket,companyNameBasket,placeItemBasket,numberItemBasket;
-            ImageView imageItemBasket;
-            ImageView decresedItemBasket,incresdItemBasket;
-            int i=0;
+        TextView nameBasket, priceBasket, companyNameBasket, placeItemBasket, numberItemBasket;
+        ImageView imageItemBasket;
+        ImageView decresedItemBasket, incresdItemBasket;
+        int i = 0;
 
         public Holder(View itemView) {
             super(itemView);
-            nameBasket=(TextView)itemView.findViewById(R.id.nameBasket);
-            priceBasket=(TextView)itemView.findViewById(R.id.priceBasket);
-            companyNameBasket=(TextView)itemView.findViewById(R.id.companyNameBasket);
-            placeItemBasket=(TextView)itemView.findViewById(R.id.placeItemBasket);
-            imageItemBasket=(ImageView)itemView.findViewById(R.id.imageItemBasket);
+            nameBasket = (TextView) itemView.findViewById(R.id.nameBasket);
+            priceBasket = (TextView) itemView.findViewById(R.id.priceBasket);
+            companyNameBasket = (TextView) itemView.findViewById(R.id.companyNameBasket);
+            placeItemBasket = (TextView) itemView.findViewById(R.id.placeItemBasket);
+            imageItemBasket = (ImageView) itemView.findViewById(R.id.imageItemBasket);
 
-            decresedItemBasket=(ImageView)itemView.findViewById(R.id.decresedItemBasket);
-            incresdItemBasket=(ImageView)itemView.findViewById(R.id.incresdItemBasket);
-            numberItemBasket=(TextView)itemView.findViewById(R.id.numberItemBasket);
+            decresedItemBasket = (ImageView) itemView.findViewById(R.id.decresedItemBasket);
+            incresdItemBasket = (ImageView) itemView.findViewById(R.id.incresdItemBasket);
+            numberItemBasket = (TextView) itemView.findViewById(R.id.numberItemBasket);
 
             incresdItemBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,19 +86,16 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
             decresedItemBasket.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (i<1) {
+                    if (i < 1) {
                         numberItemBasket.setText(String.valueOf(0));
 
-                    }
-                    else {
+                    } else {
                         numberItemBasket.setText(String.valueOf(--i));
 
                     }
 
-                    }
+                }
             });
-
-
 
 
         }

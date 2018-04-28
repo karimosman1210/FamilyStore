@@ -11,7 +11,7 @@ public class RequestsClass {
 
     public RequestsClass(){}
 
-    public RequestsClass(String requestUserName, String requestUserID, String requestUserEmail, String requestUserNumber, String requestUserImage, String requestItemID, String requestItemName, String requestItemPrice, String requestItemImage, String requestSallerID, String requestID, long requestTime) {
+    public RequestsClass(String requestUserName, String requestUserID, String requestUserEmail, String requestUserNumber, String requestUserImage, String requestItemID, String requestItemName, String requestItemPrice, String requestItemImage, String requestSallerID, long requestTime) {
         RequestUserName = requestUserName;
         RequestUserID = requestUserID;
         RequestUserEmail = requestUserEmail;
@@ -22,7 +22,6 @@ public class RequestsClass {
         RequestItemPrice = requestItemPrice;
         RequestItemImage = requestItemImage;
         RequestSallerID = requestSallerID;
-        RequestID = requestID;
         RequestTime = requestTime;
     }
 

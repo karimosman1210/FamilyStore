@@ -21,6 +21,8 @@ import com.example.osman.grandresturant.Dialogs.Registration_Dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.NavigationActivities.MyAds;
 import com.example.osman.grandresturant.NavigationActivities.MyBasket;
+import com.example.osman.grandresturant.classes.Order;
+import com.example.osman.grandresturant.classes.RequestsClass;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -113,7 +115,7 @@ public class ItemScreen extends AppCompatActivity {
                 user_number.setText(snapshot.child("UserNumber").getValue().toString());
                 user_mail.setText(snapshot.child("UserEmail").getValue().toString());
 
-         //       Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).placeholder(user_image.getDrawable()).fitCenter().into(user_image);
+                //       Glide.with(ItemScreen.this).load(snapshot.child("UserImage").getValue().toString()).placeholder(user_image.getDrawable()).fitCenter().into(user_image);
                 Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).placeholder(Item_image.getDrawable()).fitCenter().into(Item_image);
 
 
@@ -166,7 +168,6 @@ public class ItemScreen extends AppCompatActivity {
             databaseReferenceRequests = FirebaseDatabase.getInstance().getReference().child("Requests");
 
 
-
         } else {
 
         }
@@ -177,29 +178,32 @@ public class ItemScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (user != null) {
-                    databaseReferenceRequests.child(ItemID + UserID).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
+//                    databaseReferenceRequests.child(ItemID + UserID).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+//                        @Override
+//                        public void onDataChange(DataSnapshot snapshot) {
+//
+//                            if (snapshot.hasChildren()) {
+//
+//                                Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
+//
+//                            } else {
+//                                sendRequest();
+//
+//                            }
+//
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//
+//                    });
+                    RequestsClass order = new RequestsClass(Username, UserID, UserEmail, UserMobile, UserImage, ItemID, ItemName, ItemPrice, ItemImage, SallerID, System.currentTimeMillis() / 1000);
 
-                            if (snapshot.hasChildren()) {
-
-                                Toast.makeText(ItemScreen.this, "لقد قمت بطلب هذا المنتج مسبقاً", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                sendRequest();
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-
-                    });
+                    HelperMethods.orders.put(SallerID, new Order(order, 1));
 
                 } else {
                     Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
@@ -209,7 +213,6 @@ public class ItemScreen extends AppCompatActivity {
 
             }
         });
-
 
 
     }
@@ -252,6 +255,7 @@ public class ItemScreen extends AppCompatActivity {
                     HelperMethods.hideDialog(ItemScreen.this);
                 }
             });
+
 
 
             Toast.makeText(ItemScreen.this, "تم إرسال الطلب والإضافة الى السلة", Toast.LENGTH_SHORT).show();
