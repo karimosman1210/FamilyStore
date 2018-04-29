@@ -83,7 +83,7 @@ public class MyAds extends AppCompatActivity {
                 System.out.println(snapshot.getValue());
                 try {
                     profile_image_url = snapshot.child("profile_image").getValue().toString();
-                    collapsingToolbar.setTitle(snapshot.child("username").getValue().toString());
+                    collapsingToolbar.setTitle("  " +snapshot.child("username").getValue().toString()+"  ");
 
 
                 } catch (Exception e) {

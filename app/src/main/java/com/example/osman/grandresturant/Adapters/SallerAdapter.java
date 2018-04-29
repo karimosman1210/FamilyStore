@@ -62,7 +62,7 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
             public void onClick(View v) {
 
                 try {
-                    String smsNumber = "201206007713"; // E164 format without '+' sign
+
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
                     sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.");
@@ -90,7 +90,7 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
                 try {
 
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:0123456789"));
+                    intent.setData(Uri.parse(sallersClass.getMobile()));
                     context.startActivity(intent);
                 } catch (Exception e) {
                     Toast.makeText(context, sallersClass.getMobile(), Toast.LENGTH_SHORT).show();
