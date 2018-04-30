@@ -141,7 +141,7 @@ public class NavigationSallerRecycler extends AppCompatActivity {
 
                 sallerRecyclerItemName.setText(user.getUsername());
                 sallerRecyclerItemLocation.setText(user.getCountry());
-                sallerRecyclerItemMobile.setText(user.getMobile());
+//                sallerRecyclerItemMobile.setText(user.getMobile());
                 Glide.with(getApplicationContext()).load(user.getProfile_image()).placeholder(sallerRecyclerItemImage.getDrawable()).fitCenter().into(sallerRecyclerItemImage);
 
                 id = child.getKey();

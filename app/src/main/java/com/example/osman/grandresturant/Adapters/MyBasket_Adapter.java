@@ -1,9 +1,9 @@
 package com.example.osman.grandresturant.Adapters;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +13,14 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemScreen;
-import com.example.osman.grandresturant.ItemsRecycler;
 import com.example.osman.grandresturant.NavigationActivities.MyBasket;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.Order;
 import com.example.osman.grandresturant.classes.RequestsClass;
-
-import com.example.osman.grandresturant.classes.SallersClass;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +53,7 @@ public class MyBasket_Adapter extends RecyclerView.Adapter<MyBasket_Adapter.Hold
     }
 
     @Override
-    public void onBindViewHolder(MyBasket_Adapter.Holder holder, int position) {
+    public void onBindViewHolder(final MyBasket_Adapter.Holder holder, final int position) {
         final RequestsClass itemClass = sellers.get(position).getItem();
         holder.updateUI(itemClass, position);
 
@@ -80,11 +74,36 @@ public class MyBasket_Adapter extends RecyclerView.Adapter<MyBasket_Adapter.Hold
             public void onClick(View view) {
 
 
-                HelperMethods.delete_ads_id = itemClass.getRequestID();
-                MyBasket_delete_dialog cdd = new MyBasket_delete_dialog((Activity) context);
-                cdd.show();
+
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("هل متاكد من حذف هذا المنتج");
+
+                builder.setPositiveButton("نعم", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sellers.remove(position);
+                        HelperMethods.orders.get(itemClass.getRequestSallerID()).remove(position);
+                        notifyItemRemoved(position);
+                        notifyDataSetChanged();
+                        ((MyBasket) context).clearArray();
+                    }
+                });
+
+                builder.setNegativeButton("لا", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             }
+
+
+
         });
 
 

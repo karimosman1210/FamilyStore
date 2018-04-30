@@ -176,10 +176,11 @@ public class HomeScreen extends AppCompatActivity
         });
 
 
-        databaseReferenceAds = FirebaseDatabase.getInstance().getReference("Ads");
+        databaseReferenceAds = FirebaseDatabase.getInstance().getReference("Ads").child("0");
         databaseReferenceAds.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 fifthImage = dataSnapshot.child("fifthImage").getValue().toString();
                 fifthName = dataSnapshot.child("fifthName").getValue().toString();
                 fourthName = dataSnapshot.child("fourthName").getValue().toString();

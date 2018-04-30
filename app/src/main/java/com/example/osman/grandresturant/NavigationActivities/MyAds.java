@@ -71,6 +71,7 @@ public class MyAds extends AppCompatActivity {
         SallerImageView = (ImageView) findViewById(R.id.saller_app_bar_image);
         adapter = new MyAds_Adapter(my_ads_list, my_ads_list, MyAds.this);
 
+
         String id = firebaseAuth.getCurrentUser().getUid();
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(id);

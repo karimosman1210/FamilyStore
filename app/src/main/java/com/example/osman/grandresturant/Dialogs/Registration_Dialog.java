@@ -12,6 +12,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.Registration.Login;
 import com.example.osman.grandresturant.Registration.Sign;
 import com.google.firebase.database.DatabaseReference;
 
@@ -62,7 +63,7 @@ public class Registration_Dialog extends Dialog {
             @Override
             public void onClick(View view) {
 
-                getContext().startActivity(new Intent(getContext() , Sign.class));
+                getContext().startActivity(new Intent(getContext() , Login.class));
 
             }
         });

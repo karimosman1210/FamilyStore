@@ -119,6 +119,7 @@ public class ItemScreen extends AppCompatActivity {
                 Glide.with(ItemScreen.this).load(snapshot.child("image").getValue().toString()).placeholder(Item_image.getDrawable()).fitCenter().into(Item_image);
 
 
+
                 long timestamp = Long.parseLong(String.valueOf(snapshot.child("UploadedTime").getValue().toString())) * 1000L;
                 Item_time.setText(getDate(timestamp));
 
@@ -204,6 +205,8 @@ public class ItemScreen extends AppCompatActivity {
                     RequestsClass order = new RequestsClass(Username, UserID, UserEmail, UserMobile, UserImage, ItemID, ItemName, ItemPrice, ItemImage, SallerID, System.currentTimeMillis() / 1000);
 
                     HelperMethods.orders.put(SallerID, new Order(order, 1));
+                    Toast.makeText(ItemScreen.this, "تم اضافه الاعلان الي سله الطلبات", Toast.LENGTH_SHORT).show();
+                    finish();
 
                 } else {
                     Registration_Dialog cdd = new Registration_Dialog(ItemScreen.this);
@@ -212,6 +215,7 @@ public class ItemScreen extends AppCompatActivity {
 
 
             }
+
         });
 
 

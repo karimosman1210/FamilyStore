@@ -86,6 +86,9 @@ public class MyBasket extends AppCompatActivity {
             }
         });
 
+        clearArray();
+
+
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +105,29 @@ public class MyBasket extends AppCompatActivity {
                     mDatabaseReference.child(sellerID).push().setValue(currentOrder);
                 }
 
+                Toast.makeText(MyBasket.this, "تم ارسال طلباتك للتجار", Toast.LENGTH_SHORT).show();
+
+
+
+                adapter.sellers.clear();
+                adapter.notifyDataSetChanged();
+                null_layout.setVisibility(View.VISIBLE);
+
+
+
+
             }
         });
+    }
+
+    public void clearArray() {
+
+        if (adapter.sellers.isEmpty()){
+
+            null_layout.setVisibility(View.VISIBLE);
+
+
+        }
     }
 
     @Override
