@@ -121,7 +121,7 @@ public class MyAds_Adapter extends RecyclerView.Adapter<MyAds_Adapter.Holder> im
             myAds_name.setText(itemClass.getName());
             myAds_country.setText(itemClass.getCountryLocation());
             myAds_price.setText(itemClass.getPrice());
-            myAds_username.setText(itemClass.getUserName());
+            myAds_username.setText(itemClass.getItemType());
 
 
             Glide.with(context).load(itemClass.getImage()).placeholder(myAds_img.getDrawable()).fitCenter().into(myAds_img);

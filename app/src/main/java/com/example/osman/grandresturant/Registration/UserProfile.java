@@ -120,6 +120,7 @@ public class UserProfile extends AppCompatActivity {
                 }
 
                 Glide.with(UserProfile.this).load(snapshot.child("profile_image").getValue().toString()).into(imageButton);
+                mDatabase.removeEventListener(this);
             }
 
             @Override
@@ -148,5 +149,9 @@ public class UserProfile extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }
 

@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#F07923"
+        android:background="@color/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
         <RelativeLayout
@@ -29,9 +29,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="الـــســلـه "
-                    android:textColor="#b8ffffff"
+                    android:textColor="@color/Text_color"
                     android:textSize="22sp"
                     android:textStyle="bold"
+
                     android:fontFamily="@font/droid_kufi_bold"/>
 
                 <ImageButton
@@ -99,6 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="إرسال"
-        android:fontFamily="@font/droid_kufi_bold"/>
+        android:fontFamily="@font/droid_kufi_bold"
+        android:background="@drawable/btninput"/>
 
 </LinearLayout>

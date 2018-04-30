@@ -260,7 +260,6 @@ public class UserEdit extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         HelperMethods.hideDialog(UserEdit.this);
                                         Toast.makeText(UserEdit.this, "تم التعديل", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(UserEdit.this, UserProfile.class));
                                     }
                                 });
                                 try {
@@ -277,11 +276,13 @@ public class UserEdit extends AppCompatActivity {
 
                                                     Toast.makeText(UserEdit.this, "تم التعديل", Toast.LENGTH_SHORT).show();
                                                     HelperMethods.hideDialog(UserEdit.this);
-
+                                                    finish();
                                                 }
 
                                             }
                                         });
+                                    } else {
+                                        finish();
                                     }
 
 

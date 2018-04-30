@@ -56,6 +56,7 @@ public class Favorite_Adapter extends RecyclerView.Adapter<Favorite_Adapter.View
         holder.item_place.setText(itemClass.getPlaceLocation());
         holder.item_category.setText(itemClass.getItemType());
         Picasso.with(context).load(itemClass.getImage()).into(holder.item_image);
+
         holder.unfavoritBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

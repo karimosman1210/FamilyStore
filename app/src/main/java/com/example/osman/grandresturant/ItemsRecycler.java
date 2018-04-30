@@ -39,6 +39,7 @@ public class ItemsRecycler extends AppCompatActivity {
     ImageButton goHome;
     private SearchView searchView;
     TextView toolbar_title_item;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -81,7 +82,6 @@ public class ItemsRecycler extends AppCompatActivity {
         loadData();
 
 
-
     }
 
 
@@ -121,7 +121,6 @@ public class ItemsRecycler extends AppCompatActivity {
                 return false;
             }
         });
-
 
 
         databaseReference.orderByChild("UserID").equalTo(HelperMethods.Home_Filtter_sallerID).addListenerForSingleValueEvent(new ValueEventListener() {

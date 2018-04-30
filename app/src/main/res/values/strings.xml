@@ -1,13 +1,9 @@
 <resources>
     <string name="app_name">أسر الخير</string>
-    <string name="open">Open</string>
-    <string name="close">Close</string>
     <string name="title_activity_home_screen">HomeScreen</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="all_Countries">الكل</string>
 
     <string name="aboutUs">
 
@@ -33,6 +29,5 @@
 
 
     </string>
-    <string name="acc"> </string>
 
 </resources>

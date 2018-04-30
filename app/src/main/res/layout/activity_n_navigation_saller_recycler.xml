@@ -16,7 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#F07923"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
 
@@ -35,7 +35,7 @@
                     android:fontFamily="@font/droid_kufi_bold"
                     android:gravity="center"
                     android:text="التجار"
-                    android:textColor="#ffffff"
+                    android:textColor="@color/Text_color"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 

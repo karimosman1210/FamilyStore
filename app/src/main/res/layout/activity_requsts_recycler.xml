@@ -16,7 +16,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#F07923"
+        android:background="@color/colorPrimary"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
     <RelativeLayout
@@ -35,8 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="أستقبال الطلبات "
-            android:textColor="#b8ffffff"
-            android:textSize="22sp"
+            android:textColor="@color/Text_color"
+            android:textSize="20sp"
             android:textStyle="bold"
             />
 

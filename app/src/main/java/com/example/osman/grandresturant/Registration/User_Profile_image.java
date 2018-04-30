@@ -32,10 +32,11 @@ public class User_Profile_image extends AppCompatActivity {
     Button cancel , upload_image;
     ImageView profile_image;
     private static final int RUSLET_LOAD_IMAGE = 1;
+    Uri uri_usre_profile_image ;
     private StorageReference mStorageReference;
     private DatabaseReference mDatabase;
     FirebaseAuth firebaseAuth;
-    Uri uri_usre_profile_image ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

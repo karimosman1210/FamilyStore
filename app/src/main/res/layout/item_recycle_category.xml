@@ -33,10 +33,12 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="38dp"
             android:layout_marginTop="8dp"
-            android:textColor="@color/Default"
             android:layout_marginBottom="6dp "
-            android:fontFamily="monospace"
-            />
+            android:textColor="@color/Text_color"
+            android:fontFamily="@font/droid_kufi_regular"/>
+        <!--android:textColor="@color/Default"-->
+
+
     </RelativeLayout>
 
 </LinearLayout>

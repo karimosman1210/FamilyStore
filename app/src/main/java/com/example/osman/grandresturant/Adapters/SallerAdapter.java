@@ -157,8 +157,12 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
     @Override
     public Filter getFilter() {
         return new Filter() {
+
+
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
+
+
                 ArrayList<SallersClass> filteredResults = null;
                 if (constraint.length() == 0) {
                     filteredResults = sellersCopy;
@@ -176,6 +180,8 @@ public class SallerAdapter extends RecyclerView.Adapter<SallerAdapter.Holder> im
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 sellers = (ArrayList<SallersClass>) results.values;
                 SallerAdapter.this.notifyDataSetChanged();
+
+
             }
         };
     }

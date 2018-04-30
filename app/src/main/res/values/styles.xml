@@ -16,7 +16,7 @@
 
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
-        <item name="color">#b8f26522</item>
+        <item name="color">#e5f9dc1f</item>
     </style>
 
 
