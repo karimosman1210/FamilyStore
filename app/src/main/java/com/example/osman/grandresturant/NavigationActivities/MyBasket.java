@@ -112,7 +112,7 @@ public class MyBasket extends AppCompatActivity {
                 adapter.sellers.clear();
                 adapter.notifyDataSetChanged();
                 null_layout.setVisibility(View.VISIBLE);
-
+                HelperMethods.orders.clear();
 
 
 
