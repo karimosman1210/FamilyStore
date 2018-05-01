@@ -2,10 +2,11 @@ package com.example.osman.grandresturant.classes;
 
 import com.example.osman.grandresturant.Helper.OrderStatus;
 
+import static com.example.osman.grandresturant.Helper.OrderStatus.SENT;
+
 public class Order {
     private RequestsClass item;
     private int quantity;
-    private OrderStatus status;
 
     public Order() {
     }

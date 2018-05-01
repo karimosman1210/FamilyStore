@@ -20,6 +20,7 @@ import com.example.osman.grandresturant.Helper.OrderStatus;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.SallersRecycler;
 import com.example.osman.grandresturant.classes.Order;
+import com.example.osman.grandresturant.classes.OrderList;
 import com.example.osman.grandresturant.classes.RequestsClass;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -71,14 +72,14 @@ public class RequstsRecycler extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        Order order = child.getValue(Order.class);
-                        request_list.add(order);
+                        OrderList order = child.getValue(OrderList.class);
+                        request_list.addAll(order.getOrderList());
                     }
                     null_layout.setVisibility(View.GONE);
 
                     adapter.notifyDataSetChanged();
-                    HelperMethods.hideDialog(RequstsRecycler.this);
                 }
+                HelperMethods.hideDialog(RequstsRecycler.this);
             }
 
             @Override

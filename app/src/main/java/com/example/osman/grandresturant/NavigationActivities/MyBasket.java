@@ -23,11 +23,13 @@ import com.example.osman.grandresturant.Adapters.MyBasket_Adapter;
 import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
 import com.example.osman.grandresturant.Favorite_item;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.Helper.OrderStatus;
 import com.example.osman.grandresturant.HomeScreen;
 import com.example.osman.grandresturant.ItemScreen;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.classes.ItemClass;
 import com.example.osman.grandresturant.classes.Order;
+import com.example.osman.grandresturant.classes.OrderList;
 import com.example.osman.grandresturant.classes.RequestsClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.common.collect.ArrayListMultimap;
@@ -101,8 +103,9 @@ public class MyBasket extends AppCompatActivity {
                 }
 
                 for (String sellerID : orders.keySet()) {
-                    List<Order> currentOrder = new ArrayList<>(orders.get(sellerID));
-                    mDatabaseReference.child(sellerID).push().setValue(currentOrder);
+                    ArrayList<Order> currentOrder = new ArrayList<>(orders.get(sellerID));
+                    OrderList orderList = new OrderList(currentOrder, OrderStatus.SENT, System.currentTimeMillis());
+                    mDatabaseReference.child(sellerID).push().setValue(orderList);
                 }
 
                 Toast.makeText(MyBasket.this, "تم ارسال طلباتك للتجار", Toast.LENGTH_SHORT).show();
