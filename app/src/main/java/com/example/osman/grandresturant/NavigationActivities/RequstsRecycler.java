@@ -16,8 +16,10 @@ import com.bumptech.glide.Glide;
 import com.example.osman.grandresturant.Adapters.NewRequests_Adapter;
 import com.example.osman.grandresturant.Adapters.SallerAdapter;
 import com.example.osman.grandresturant.Helper.HelperMethods;
+import com.example.osman.grandresturant.Helper.OrderStatus;
 import com.example.osman.grandresturant.R;
 import com.example.osman.grandresturant.SallersRecycler;
+import com.example.osman.grandresturant.classes.Order;
 import com.example.osman.grandresturant.classes.RequestsClass;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -36,7 +38,7 @@ public class RequstsRecycler extends AppCompatActivity {
     DatabaseReference mDatabaseReference;
     FirebaseAuth firebaseAuth;
     RelativeLayout null_layout;
-    private ArrayList<RequestsClass> request_list = new ArrayList<>();
+    private ArrayList<Order> request_list = new ArrayList<>();
     private NewRequests_Adapter adapter;
 
     @Override
@@ -64,23 +66,19 @@ public class RequstsRecycler extends AppCompatActivity {
         request_list.clear();
         recyclerView.setAdapter(adapter);
         HelperMethods.showDialog(this, "Wait", "Loading...");
-        mDatabaseReference.orderByChild("RequestSallerID").equalTo(firebaseAuth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseReference.child(firebaseAuth.getCurrentUser().getUid()).orderByChild("status").equalTo(String.valueOf(OrderStatus.SENT)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    RequestsClass request = child.getValue(RequestsClass.class);
-
-                    if (dataSnapshot.hasChildren())
-                    {
-                        request_list.add(request);
-                        null_layout.setVisibility(View.GONE);
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                        Order order = child.getValue(Order.class);
+                        request_list.add(order);
                     }
+                    null_layout.setVisibility(View.GONE);
 
-
-
+                    adapter.notifyDataSetChanged();
+                    HelperMethods.hideDialog(RequstsRecycler.this);
                 }
-                adapter.notifyDataSetChanged();
-                HelperMethods.hideDialog(RequstsRecycler.this);
             }
 
             @Override
@@ -90,11 +88,7 @@ public class RequstsRecycler extends AppCompatActivity {
         });
 
 
-
     }
-
-
-
 
 
     @Override

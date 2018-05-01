@@ -20,6 +20,7 @@ import com.example.osman.grandresturant.Dialogs.MyBasket_delete_dialog;
 import com.example.osman.grandresturant.Helper.HelperMethods;
 import com.example.osman.grandresturant.ItemsRecycler;
 import com.example.osman.grandresturant.R;
+import com.example.osman.grandresturant.classes.Order;
 import com.example.osman.grandresturant.classes.RequestsClass;
 import com.example.osman.grandresturant.classes.SallersClass;
 import com.squareup.picasso.Picasso;
@@ -33,12 +34,12 @@ import java.util.Date;
  * Created by A.taher on 4/25/2018.
  */
 
-public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapter.Holder>  {
+public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapter.Holder> {
     private Context context;
-    ArrayList<RequestsClass> sellers;
-    ArrayList<RequestsClass> sellersCopy;
+    ArrayList<Order> sellers;
+    ArrayList<Order> sellersCopy;
 
-    public NewRequests_Adapter(ArrayList<RequestsClass> sellers, ArrayList<RequestsClass> sellersCopy, Context context) {
+    public NewRequests_Adapter(ArrayList<Order> sellers, ArrayList<Order> sellersCopy, Context context) {
         this.sellers = sellers;
         this.sellersCopy = sellers;
         this.context = context;
@@ -53,8 +54,9 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
 
     @Override
     public void onBindViewHolder(NewRequests_Adapter.Holder holder, int position) {
-        final RequestsClass requestsClass = sellers.get(position);
-        holder.updateUI(requestsClass);
+        Order order = sellers.get(position);
+        final RequestsClass requestsClass = order.getItem();
+        holder.updateUI(requestsClass, order.getQuantity());
 
         holder.RequestItemdelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +80,7 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
         ImageView RequestItemImage;
         ImageButton RequestItemdelete;
         de.hdodenhof.circleimageview.CircleImageView RequestUserImage;
-        TextView RequestUserName, RequestUserEmail, RequestUserNumber, RequestItemName, RequestItemPrice, RequestItemAdded;
+        TextView RequestUserName, RequestUserEmail, RequestUserNumber, RequestItemName, RequestItemPrice, RequestItemAdded, quantity;
 
         Holder(View itemView) {
             super(itemView);
@@ -95,20 +97,21 @@ public class NewRequests_Adapter extends RecyclerView.Adapter<NewRequests_Adapte
             RequestItemdelete = (ImageButton) itemView.findViewById(R.id.request_item_delete);
 
             RequestUserImage = (de.hdodenhof.circleimageview.CircleImageView) itemView.findViewById(R.id.request_profile_image);
+            quantity = (TextView) itemView.findViewById(R.id.request_item_quantity);
 
         }
 
-        void updateUI(RequestsClass requestsClass) {
+        void updateUI(RequestsClass requestsClass, int q) {
             RequestUserName.setText(requestsClass.getRequestUserName());
             RequestUserEmail.setText(requestsClass.getRequestUserEmail());
             RequestUserNumber.setText(requestsClass.getRequestUserNumber());
             RequestItemName.setText(requestsClass.getRequestItemName());
             RequestItemPrice.setText(requestsClass.getRequestItemPrice());
+            quantity.setText(String.valueOf(q));
 
 
             long timestamp = Long.parseLong(String.valueOf(requestsClass.getRequestTime())) * 1000L;
             RequestItemAdded.setText(getDate(timestamp));
-
 
 
             Glide.with(context).load(requestsClass.getRequestItemImage()).placeholder(RequestItemImage.getDrawable()).fitCenter().into(RequestItemImage);
